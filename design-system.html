@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System — Nomad Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  /* ── Design System page overrides ── */
+  .ds-wrap { max-width: 900px; margin: 0 auto; padding: 80px 32px 120px; }
+  .ds-section { margin-bottom: 80px; }
+  .ds-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .ds-row { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+  .ds-meta {
+    font-family: 'Lato', monospace;
+    font-size: 12px;
+    color: #aaa;
+    min-width: 220px;
+  }
+  .ds-meta strong { display: block; color: #666; font-size: 11px; margin-bottom: 2px; }
+
+  /* Swatch grid */
+  .swatch-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+  .swatch { width: 120px; }
+  .swatch__color { height: 80px; border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,.06); }
+  .swatch__name { font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; color: #333; }
+  .swatch__hex  { font-family: 'Lato', monospace; font-size: 11px; color: #888; }
+
+  /* Spacing */
+  .sp-grid { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+  .sp-item { text-align: center; }
+  .sp-box { background: #04cbc3; margin: 0 auto 8px; border-radius: 2px; }
+  .sp-val { font-family: 'Lato', monospace; font-size: 11px; color: #666; }
+  .sp-var { font-family: 'Lato', monospace; font-size: 10px; color: #aaa; }
+
+  /* Component strip */
+  .comp-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+
+  /* Radius */
+  .radius-row { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+  .radius-box {
+    background: #ecf1f4;
+    border: 2px solid #ccc;
+    width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lato', monospace; font-size: 11px; color: #888;
+    flex-direction: column; gap: 4px;
+  }
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <nav class="nav__menu">
+      <a href="index.html" class="nav__link">Nomad Design</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="me.html" class="nav__link">Me</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="portfolio.html" class="nav__link">Portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<div class="ds-wrap">
+  <h1 style="font-size:30px; letter-spacing:1.4px; margin-bottom:8px;">Design System</h1>
+  <p style="color:#999; font-size:14px; margin-bottom:60px; font-family:'Lato',sans-serif;">Nomad Design — Rachel Lee &nbsp;·&nbsp; 依照 nomad-design.webflow.io 規格建立</p>
+
+  <!-- ── 1. COLOR ── -->
+  <div class="ds-section">
+    <div class="ds-label">Color Palette</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch__color" style="background:#04CBC3;"></div>
+        <div class="swatch__name">Teal Accent</div>
+        <div class="swatch__hex">#04CBC3 &nbsp;·&nbsp; --accent</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#03a8a1;"></div>
+        <div class="swatch__name">Teal Dark</div>
+        <div class="swatch__hex">#03A8A1 &nbsp;·&nbsp; --accent-dark</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#333333;"></div>
+        <div class="swatch__name">Text Main</div>
+        <div class="swatch__hex">#333333 &nbsp;·&nbsp; --text-main</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#666666;"></div>
+        <div class="swatch__name">Text Secondary</div>
+        <div class="swatch__hex">#666666 &nbsp;·&nbsp; --text-second</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#ffffff; border:1px solid #e6e6e6;"></div>
+        <div class="swatch__name">BG White</div>
+        <div class="swatch__hex">#FFFFFF &nbsp;·&nbsp; --bg-even</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#ecf1f4;"></div>
+        <div class="swatch__name">BG Light</div>
+        <div class="swatch__hex">#ECF1F4 &nbsp;·&nbsp; --bg-odd</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#2c2c2c;"></div>
+        <div class="swatch__name">BG Dark Grey</div>
+        <div class="swatch__hex">#2C2C2C &nbsp;·&nbsp; --bg-grey</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch__color" style="background:#000000;"></div>
+        <div class="swatch__name">BG Black</div>
+        <div class="swatch__hex">#000000 &nbsp;·&nbsp; --bg-bk</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. TYPOGRAPHY ── -->
+  <div class="ds-section">
+    <div class="ds-label">Typography Scale &nbsp;— Orpheus Pro (serif) + Lato (sans)</div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-h2 &nbsp;·&nbsp; 50px &nbsp;·&nbsp; Section Heading</strong>letter-spacing: 1.4px &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:50px; font-weight:400; letter-spacing:1.4px; color:#fff; background:#000; padding:0 16px; border-radius:4px; line-height:1.3;">Projects</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-h3 &nbsp;·&nbsp; 40px &nbsp;·&nbsp; Category Accent</strong>letter-spacing: normal &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:40px; font-weight:400; color:#04CBC3; line-height:1.6;">/ UI Design /</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-h4 &nbsp;·&nbsp; 30px &nbsp;·&nbsp; Project Title / Page Title</strong>letter-spacing: 1.4px &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:30px; font-weight:400; letter-spacing:1.4px; color:#333; line-height:1.6;">Anti-Ransomware Software</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-h5 &nbsp;·&nbsp; 24px &nbsp;·&nbsp; Intro / Nav / Category Label</strong>letter-spacing: 1.4px &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:24px; font-weight:400; letter-spacing:1.4px; color:#333; line-height:1.6;">Thanks for stopping by my website!</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-h6 &nbsp;·&nbsp; 18px &nbsp;·&nbsp; Card Title / Button / Sub-label</strong>letter-spacing: 1.4px &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:18px; font-weight:400; letter-spacing:1.4px; color:#333; line-height:1.6;">Design System &nbsp;·&nbsp; View Detail</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-p &nbsp;·&nbsp; 16px &nbsp;·&nbsp; Body / Description</strong>letter-spacing: 0.056em &nbsp;/ weight: 300 &nbsp;/ Lato</div>
+      <div style="font-family:'Lato','Noto Sans TC',sans-serif; font-size:16px; font-weight:300; letter-spacing:.056em; color:#666; line-height:2; max-width:440px;">Endpoint detection and threat management software with real-time monitoring capabilities.</div>
+    </div>
+
+    <div class="ds-row">
+      <div class="ds-meta"><strong>--font-p2 &nbsp;·&nbsp; 14px &nbsp;·&nbsp; Caption / Meta / Small</strong>letter-spacing: 1.4px &nbsp;/ weight: 400</div>
+      <div style="font-family:'Orpheus Pro',serif; font-size:14px; font-weight:400; letter-spacing:1.4px; color:#999; line-height:1.8;">UI / UX &nbsp;·&nbsp; 2024 &nbsp;·&nbsp; Rachel Lee</div>
+    </div>
+  </div>
+
+  <!-- ── 3. SPACING ── -->
+  <div class="ds-section">
+    <div class="ds-label">Spacing Scale</div>
+    <div class="sp-grid">
+      <div class="sp-item"><div class="sp-box" style="width:4px; height:4px;"></div><div class="sp-val">4px</div><div class="sp-var">--sp-1</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:8px; height:8px;"></div><div class="sp-val">8px</div><div class="sp-var">--sp-2</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:16px; height:16px;"></div><div class="sp-val">16px</div><div class="sp-var">--sp-3</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:24px; height:24px;"></div><div class="sp-val">24px</div><div class="sp-var">--sp-4</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:36px; height:36px;"></div><div class="sp-val">36px</div><div class="sp-var">--sp-5</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:48px; height:48px;"></div><div class="sp-val">48px</div><div class="sp-var">--sp-6</div></div>
+      <div class="sp-item"><div class="sp-box" style="width:64px; height:64px;"></div><div class="sp-val">64px</div><div class="sp-var">--sp-8</div></div>
+    </div>
+  </div>
+
+  <!-- ── 4. BORDER RADIUS ── -->
+  <div class="ds-section">
+    <div class="ds-label">Border Radius</div>
+    <div class="radius-row">
+      <div>
+        <div class="radius-box" style="border-radius:2px;"><span>2px</span><span style="font-size:9px;">Button</span></div>
+      </div>
+      <div>
+        <div class="radius-box" style="border-radius:var(--radius-sm);"><span>6px</span><span style="font-size:9px;">--radius-sm</span></div>
+      </div>
+      <div>
+        <div class="radius-box" style="border-radius:var(--radius-md);"><span>12px</span><span style="font-size:9px;">--radius-md</span></div>
+      </div>
+      <div>
+        <div class="radius-box" style="border-radius:var(--radius-lg);"><span>20px</span><span style="font-size:9px;">--radius-lg</span></div>
+      </div>
+      <div>
+        <div class="radius-box" style="border-radius:50%; width:80px; height:80px;"><span>50%</span><span style="font-size:9px;">Avatar</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. COMPONENTS ── -->
+  <div class="ds-section">
+    <div class="ds-label">Components — Buttons</div>
+    <div class="comp-row">
+      <a class="btn btn--dark" href="#">View Detail</a>
+      <a class="btn btn--outline" href="#">Download CV</a>
+    </div>
+    <p style="font-size:12px; color:#aaa; font-family:'Lato',sans-serif; margin-top:8px;">
+      18px &nbsp;·&nbsp; Orpheus Pro &nbsp;·&nbsp; letter-spacing 1.4px &nbsp;·&nbsp; radius 2px &nbsp;·&nbsp; padding 12px 28px
+    </p>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-label">Components — Navigation</div>
+    <div style="background:#fff; border:1px solid #e6e6e6; border-radius:8px; padding:20px 32px; display:flex; align-items:center; gap:40px; font-family:'Orpheus Pro',serif; font-size:24px; letter-spacing:1.4px;">
+      <span style="color:#04CBC3;">Nomad Design</span>
+      <span style="color:#04CBC3; font-size:18px;">×</span>
+      <span style="color:#1a1a1a;">Me</span>
+      <span style="color:#04CBC3; font-size:18px;">×</span>
+      <span style="color:#1a1a1a;">Portfolio</span>
+    </div>
+    <p style="font-size:12px; color:#aaa; font-family:'Lato',sans-serif; margin-top:8px;">
+      24px &nbsp;·&nbsp; Orpheus Pro &nbsp;·&nbsp; letter-spacing 1.4px &nbsp;·&nbsp; height 88px &nbsp;·&nbsp; fixed top
+    </p>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-label">Components — Portfolio Card</div>
+    <div style="max-width:320px;">
+      <div class="pf-card">
+        <div class="pf-card__media" style="background:#ecf1f4; display:flex; align-items:center; justify-content:center;">
+          <span style="color:#ccc; font-size:14px; font-family:'Lato',sans-serif;">Cover Image 16:10</span>
+        </div>
+        <div class="pf-card__body">
+          <div class="pf-card__title">Anti-Ransomware Software</div>
+          <div class="pf-card__cat">UI / UX</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:#aaa; font-family:'Lato',sans-serif; margin-top:12px;">
+      Title: 18px Orpheus Pro &nbsp;·&nbsp; Cat: 14px accent &nbsp;·&nbsp; shadow: 0 10px 30px rgba(0,0,0,.08)
+    </p>
+  </div>
+
+  <div class="ds-section">
+    <div class="ds-label">Components — Section Layout (Dark / Grey / White)</div>
+    <div style="border-radius:8px; overflow:hidden; border:1px solid #e6e6e6;">
+      <div class="section--bk" style="padding:32px; text-align:center;">
+        <div class="section__h2 wh" style="margin-bottom:6px; padding-bottom:0;">Projects</div>
+        <div class="section__cat wh">/ UI Design /</div>
+        <p style="color:#888; font-size:12px; font-family:'Lato',sans-serif; margin-top:4px;">section--bk &nbsp;·&nbsp; background #000</p>
+      </div>
+      <div class="section--grey" style="padding:32px; text-align:center;">
+        <div class="section__h2 wh" style="margin-bottom:6px; padding-bottom:0;">Web Design</div>
+        <div class="section__cat wh">/ Web /</div>
+        <p style="color:#888; font-size:12px; font-family:'Lato',sans-serif; margin-top:4px;">section--grey &nbsp;·&nbsp; background #2c2c2c</p>
+      </div>
+      <div class="section--white" style="padding:32px; text-align:center; background:#fff;">
+        <div class="section__h2" style="margin-bottom:6px; padding-bottom:0;">Visual Design</div>
+        <div class="section__cat" style="color:#333;">/ Visual /</div>
+        <p style="color:#aaa; font-size:12px; font-family:'Lato',sans-serif; margin-top:4px;">section--white &nbsp;·&nbsp; background #fff</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. MOTION ── -->
+  <div class="ds-section">
+    <div class="ds-label">Motion &amp; Easing</div>
+    <div style="font-family:'Lato',monospace; font-size:13px; color:#555; line-height:2.4;">
+      <div><strong style="color:#333; font-size:11px; letter-spacing:1px; text-transform:uppercase;">--ease</strong><br>cubic-bezier(.2, .8, .2, 1) &nbsp;— 主要過渡（hover、reveal、modal）</div>
+      <div style="margin-top:12px;"><strong style="color:#333; font-size:11px; letter-spacing:1px; text-transform:uppercase;">Durations</strong><br>
+        Fast: 200ms &nbsp;·&nbsp; 按鈕 hover、顏色切換<br>
+        Normal: 300ms &nbsp;·&nbsp; 導航、卡片位移<br>
+        Slow: 500–700ms &nbsp;·&nbsp; 圖片 zoom、reveal scroll
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. TOKEN REFERENCE ── -->
+  <div class="ds-section">
+    <div class="ds-label">CSS Token Reference</div>
+    <pre style="background:#f4f4f4; border-radius:8px; padding:24px; font-family:'Lato',monospace; font-size:12px; line-height:2; color:#444; overflow-x:auto;">:root {
+  /* Colors */
+  --text-main:    #333;
+  --text-second:  #666;
+  --text-white:   #ffffff;
+  --bg-even:      #ffffff;
+  --bg-odd:       #ecf1f4;
+  --bg-bk:        #000000;
+  --bg-grey:      #2c2c2c;
+  --accent:       #04cbc3;
+  --accent-dark:  #03a8a1;
+  --line:         #e6e6e6;
+
+  /* Type Scale */
+  --font-h2:  50px;   /* Section heading */
+  --font-h3:  40px;   /* Category accent (teal) */
+  --font-h4:  30px;   /* Project / page title */
+  --font-h5:  24px;   /* Intro / nav / label */
+  --font-h6:  18px;   /* Card title / button */
+  --font-p:   16px;   /* Body / description */
+  --font-p2:  14px;   /* Caption / meta */
+
+  /* Spacing */
+  --sp-1: 4px;   --sp-2: 8px;
+  --sp-3: 16px;  --sp-4: 24px;
+  --sp-5: 36px;  --sp-6: 48px;  --sp-8: 64px;
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Layout */
+  --container: 1200px;
+  --nav-h:     88px;
+
+  /* Motion */
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}</pre>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <h3>Nomad Design</h3>
+        <div class="footer__tags">
+          <span>UI Design</span><span class="sep">·</span>
+          <span>UX Design</span><span class="sep">·</span>
+          <span>Visual Design</span>
+        </div>
+      </div>
+      <img src="img/rachelLogo.png" alt="Rachel Logo" class="footer__logo" />
+      <div class="footer__right">
+        <p>Design System v1.0</p>
+        <p>Based on nomad-design.webflow.io</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

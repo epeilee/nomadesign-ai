@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UpGPT AI Agent Platform — Rachel Lee Case Study</title>
+    <meta name="description" content="UpGPT AI Agent Platform 從 0 到 1 的產品設計過程" />
+    <link rel="icon" type="image/png" href="../img/rachelLogo.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+        /* Case study specific */
+        .case-hero { padding: 140px 0 72px; background: var(--bg-soft); border-bottom: 1px solid var(--line); }
+        .case-hero__back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); margin-bottom: 40px; font-weight: 500; transition: color .25s var(--ease); }
+        .case-hero__back:hover { color: var(--accent-dark); }
+        .case-hero__meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+        .case-hero__meta span { padding: 6px 14px; background: #fff; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--ink-soft); letter-spacing: .04em; }
+        .case-hero h1 { font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif; font-size: clamp(36px, 6vw, 72px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 24px; }
+        .case-hero p { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-soft); max-width: 720px; line-height: 1.7; }
+        .case-cover { aspect-ratio: 16/9; margin-top: 56px; border-radius: var(--radius-xl); background: linear-gradient(135deg, #0a0a0a 0%, #1a3d3a 50%, #04cbc3 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.02em; }
+
+        .case-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding: 64px 0; border-bottom: 1px solid var(--line); }
+        .case-info__item h5 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 10px; font-weight: 600; }
+        .case-info__item p { font-size: 16px; font-weight: 500; color: var(--ink); }
+
+        .case-body { padding: 96px 0; max-width: 820px; margin: 0 auto; }
+        .case-body h2 { font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif; font-size: clamp(26px, 3.2vw, 36px); font-weight: 700; margin: 64px 0 20px; letter-spacing: -.01em; }
+        .case-body h2:first-child { margin-top: 0; }
+        .case-body h3 { font-size: 22px; font-weight: 600; margin: 40px 0 12px; color: var(--accent-dark); }
+        .case-body p { font-size: 17px; line-height: 1.85; color: var(--ink-soft); margin-bottom: 20px; }
+        .case-body ul { padding-left: 20px; margin-bottom: 20px; }
+        .case-body ul li { font-size: 17px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 10px; list-style: disc; }
+        .case-body strong { color: var(--ink); font-weight: 600; }
+        .case-body blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; background: var(--accent-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: 32px 0; font-size: 18px; line-height: 1.7; color: var(--ink); font-style: italic; }
+
+        .case-image { margin: 48px 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 16/9; background: var(--bg-muted); display: flex; align-items: center; justify-content: center; color: var(--ink-mute); font-family: 'Space Grotesk', sans-serif; font-weight: 500; border: 1px dashed var(--line); }
+
+        .case-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 40px 0; }
+        .result-card { padding: 32px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); text-align: center; }
+        .result-card strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; color: var(--accent-dark); letter-spacing: -.02em; margin-bottom: 8px; }
+        .result-card p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+        .case-nav { padding: 64px 0 96px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+        .case-nav a { padding: 24px 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); transition: all .3s var(--ease); flex: 1; min-width: 240px; }
+        .case-nav a:hover { border-color: var(--accent); background: var(--accent-soft); }
+        .case-nav span { font-size: 12px; color: var(--ink-mute); letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .case-nav strong { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; }
+
+        @media (max-width: 768px) {
+            .case-info { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 40px 0; }
+            .case-results { grid-template-columns: 1fr; }
+            .case-body { padding: 64px 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav" id="nav">
+        <div class="nav__inner">
+            <nav class="nav__menu" id="navMenu">
+                <a href="../index.html" class="nav__link">Nomad Design</a>
+                <span class="nav__sep" aria-hidden="true">×</span>
+                <a href="../me.html" class="nav__link">Me</a>
+                <span class="nav__sep" aria-hidden="true">×</span>
+                <a href="../portfolio.html" class="nav__link is-active">Portfolio</a>
+            </nav>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Case Hero -->
+        <section class="case-hero">
+            <div class="container">
+                <a href="../index.html#works" class="case-hero__back">← Back to Works</a>
+                <div class="case-hero__meta">
+                    <span>AI Agent</span>
+                    <span>SaaS</span>
+                    <span>Product Design</span>
+                    <span>2024 – 2026</span>
+                </div>
+                <h1>UpGPT AI Agent Platform</h1>
+                <p>從 0 到 1 打造企業級 AI Agent 操作平台，讓非技術使用者也能輕鬆建立、管理並部署自己的 AI Agent。</p>
+                <div class="case-cover">UpGPT Platform Cover</div>
+            </div>
+        </section>
+
+        <!-- Case Info -->
+        <div class="container">
+            <div class="case-info">
+                <div class="case-info__item"><h5>Role</h5><p>Senior Product Designer</p></div>
+                <div class="case-info__item"><h5>Company</h5><p>安然 AI · UpGPT</p></div>
+                <div class="case-info__item"><h5>Timeline</h5><p>12+ months</p></div>
+                <div class="case-info__item"><h5>Tools</h5><p>Figma, FigJam, Notion</p></div>
+            </div>
+        </div>
+
+        <!-- Case Body -->
+        <article class="case-body container">
+            <h2>Overview</h2>
+            <p>
+                UpGPT 是安然 AI 推出的企業級 AI Agent 平台，讓企業能快速部署專屬的 AI 助理、自動化工作流、內部知識庫問答系統。
+                作為主要產品設計師，我負責從概念驗證、資訊架構、介面設計、設計系統建立，到持續的產品體驗優化。
+            </p>
+
+            <blockquote>
+                「讓每一個沒寫過程式的業務、行銷、客服，都能在 30 分鐘內建出自己的 AI Agent。」
+            </blockquote>
+
+            <h2>Challenge</h2>
+            <h3>使用者端：複雜概念的心智模型</h3>
+            <p>
+                AI Agent 這個概念對大多數使用者來說是全新的 — Prompt、Tools、Memory、Workflow 這些技術語彙
+                若直接暴露在介面上，會造成極大的認知負擔。如何把複雜的技術概念「翻譯」成使用者看得懂的視覺語言，是最大挑戰。
+            </p>
+
+            <h3>產品端：從 0 開始建立設計系統</h3>
+            <p>
+                一個 SaaS 產品會有大量重複的元件（表單、表格、對話介面、節點編輯器），
+                我們必須在早期就建立一套可擴充的設計系統，否則產品快速迭代時會累積大量的視覺債。
+            </p>
+
+            <div class="case-image">Process · Research · User Flows</div>
+
+            <h2>Process</h2>
+            <h3>1. 使用者研究與任務分析</h3>
+            <p>
+                透過訪談 10+ 位目標使用者（業務主管、行銷、客服負責人），建立出 3 個核心 Persona，
+                並拆解出他們最想自動化的 20+ 個任務情境，做為核心功能的優先順序依據。
+            </p>
+
+            <h3>2. 資訊架構與原型</h3>
+            <p>
+                以「Agent → Workflow → Task」為核心的三層資訊架構，搭配「Playground 試玩 → 發佈」的雙階段操作流程，
+                讓使用者可以在零風險的狀態下探索能力邊界。
+            </p>
+
+            <h3>3. 設計系統與元件庫</h3>
+            <p>
+                建立 100+ 個 Figma 元件，包含 tokens、typography、spacing、dark/light mode、8 種 node 類型，
+                供設計與工程團隊共享使用。
+            </p>
+
+            <div class="case-image">Design System · Components · Tokens</div>
+
+            <h2>Solution</h2>
+            <ul>
+                <li><strong>Agent 設定向導式流程</strong>：將 Agent 建立拆成 4 步驟，每一步只問一件事</li>
+                <li><strong>Workflow 視覺化編輯器</strong>：用節點式編輯器取代純文字 Prompt，讓流程一目瞭然</li>
+                <li><strong>Playground 即時試玩</strong>：任何調整都能立即看到效果，縮短迭代週期</li>
+                <li><strong>成效儀表板</strong>：任務成功率、對話品質、Token 用量一目瞭然</li>
+            </ul>
+
+            <div class="case-image">Key Screens · Dashboard · Workflow Editor</div>
+
+            <h2>Results</h2>
+            <div class="case-results">
+                <div class="result-card"><strong>30min</strong><p>平均 Agent 建立時間</p></div>
+                <div class="result-card"><strong>+65%</strong><p>使用者任務完成率</p></div>
+                <div class="result-card"><strong>4.6 / 5</strong><p>平均使用者體驗評分</p></div>
+            </div>
+
+            <h2>Learnings</h2>
+            <p>
+                AI 產品設計最大的挑戰，不是「把 AI 能做什麼呈現出來」，而是「把 AI 不能做什麼也清楚溝通出來」。
+                在這個專案中我們花了大量時間在設計「失敗狀態」、「降級方案」、「不確定性提示」等微互動，
+                這些細節才是讓使用者持續信任產品的關鍵。
+            </p>
+        </article>
+
+        <!-- Case Nav -->
+        <section class="container">
+            <div class="case-nav">
+                <a href="../index.html#works">
+                    <span>← All Works</span>
+                    <strong>回到作品集</strong>
+                </a>
+                <a href="../index.html#contact">
+                    <span>Interested?</span>
+                    <strong>Let's Talk →</strong>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+            <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
+            <a href="../index.html#top" class="footer__top">Back to Top ↑</a>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

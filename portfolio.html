@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Rachel Lee / Nomad Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" type="image/png" href="img/rachelLogo.png" />
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <nav class="nav__menu" id="navMenu">
+      <a href="index.html" class="nav__link">Nomad Design</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="me.html" class="nav__link">Me</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="pf-tabs">
+  <div class="container">
+    <div class="pf-tabs__inner" id="pfTabs">
+      <button class="pf-tab is-active" data-tab="ai">AI Agent</button>
+      <button class="pf-tab" data-tab="webui">Web UI</button>
+      <button class="pf-tab" data-tab="mobileui">Mobile UI</button>
+      <button class="pf-tab" data-tab="web">Web</button>
+      <button class="pf-tab" data-tab="visual">Visual</button>
+    </div>
+  </div>
+</div>
+
+<main class="pf-grid-wrap">
+  <div class="container">
+    <!-- AI Agent — empty for now -->
+    <div class="pf-pane" data-pane="ai">
+      <p class="pf-empty">Coming soon · AI Agent 作品準備中</p>
+    </div>
+
+    <!-- Web UI -->
+    <div class="pf-pane" data-pane="webui" hidden>
+      <div class="pf-grid">
+        <a href="portfolio-sonar.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroT5.jpg" alt="Anti-Ransomware" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Anti-Ransomware Software</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+        <a href="portfolio-system.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/system/color.png" alt="Design System" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Design System</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+        <a href="portfolio-vmware.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroEthan.jpg" alt="VMware Software" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">VMware Software</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+        <a href="portfolio-cmq.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/cmq/login/landing.png" alt="Fractal storage system" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Fractal Storage System</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile UI -->
+    <div class="pf-pane" data-pane="mobileui" hidden>
+      <div class="pf-grid">
+        <a href="portfolio-erp.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroERP.jpg" alt="ERP App" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">ERP App</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+        <a href="portfolio-mutok.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/mutok/mutok-1-display.jpg" alt="Secured Unified Communication" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Secured Unified Communication</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+        <a href="portfolio-flu.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroFlu.jpg" alt="Flu App" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Flu App</div><div class="pf-card__cat">UI / UX</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Web -->
+    <div class="pf-pane" data-pane="web" hidden>
+      <div class="pf-grid">
+        <a href="portfolio-good.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroGoodStudio.jpg" alt="The Good Studio" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">The Good Studio Interior</div><div class="pf-card__cat">Web</div></div>
+        </a>
+        <a href="portfolio-ww.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroWW.jpg" alt="Wassabi Warriors" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Wassabi Warriors Restaurant</div><div class="pf-card__cat">Web</div></div>
+        </a>
+        <a href="portfolio-aft.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroAft.jpg" alt="Afusion Webpages" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Afusion official website Webpages</div><div class="pf-card__cat">Web</div></div>
+        </a>
+        <a href="portfolio-taish.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroTS.jpg" alt="Taishin Website" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Taishin Website</div><div class="pf-card__cat">Web</div></div>
+        </a>
+        <a href="portfolio-game.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroPicasso.jpg" alt="Game Site" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Game Website</div><div class="pf-card__cat">Web</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Visual -->
+    <div class="pf-pane" data-pane="visual" hidden>
+      <div class="pf-grid">
+        <a href="portfolio-visual.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/heroLotus.jpg" alt="Poster" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Poster</div><div class="pf-card__cat">Visual</div></div>
+        </a>
+        <a href="portfolio-logo.html" class="pf-card">
+          <div class="pf-card__media"><img src="img/visual/JH logo-1.png" alt="Logo" /></div>
+          <div class="pf-card__body"><div class="pf-card__title">Logo</div><div class="pf-card__cat">Visual</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <h3>Nomad Design</h3>
+      <div class="footer__tags">
+        <span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
+      </div>
+    </div>
+    <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
+    <div class="footer__right">
+      <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+  // Portfolio tab switcher
+  (function(){
+    var tabs = document.querySelectorAll('.pf-tab');
+    var panes = document.querySelectorAll('.pf-pane');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var target = tab.getAttribute('data-tab');
+        tabs.forEach(function(t){ t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        panes.forEach(function(p){
+          if (p.getAttribute('data-pane') === target) p.hidden = false;
+          else p.hidden = true;
+        });
+      });
+    });
+    // Support URL hash deep-linking: portfolio.html#webui
+    var hash = (location.hash || '').replace('#','');
+    if (hash) {
+      var btn = document.querySelector('.pf-tab[data-tab="'+hash+'"]');
+      if (btn) btn.click();
+    }
+  })();
+</script>
+</body>
+</html>
