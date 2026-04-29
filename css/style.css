@@ -620,6 +620,7 @@ body { padding-top: var(--nav-h); }
     padding: 6px 2px;
     font-size: 30px;
     color: var(--text-main);
+    text-decoration: none;
     transition: color .2s var(--ease);
     white-space: nowrap;
 }
@@ -715,7 +716,8 @@ body { padding-top: var(--nav-h); }
 }
 .detail-nav {
     display: flex;
-    gap: 28px;
+    justify-content: space-between;
+    width: 100%;
     font-family: 'Orpheus Pro', serif;
     font-size: 24px;
     letter-spacing: 1.4px;
@@ -990,6 +992,29 @@ body { padding-top: var(--nav-h); }
     .nav__menu.is-open { transform: none; }
     .nav__sep { display: none; }
     .nav__toggle { display: block; }
+
+    /* Portfolio sub-menu */
+    .nav__sub {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-left: 16px;
+        margin-top: -12px;
+    }
+    .nav__sub-link {
+        font-size: 18px;
+        color: var(--ink-soft);
+        font-family: 'Orpheus Pro', serif;
+        letter-spacing: .06em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid transparent;
+        transition: color .2s var(--ease), border-color .2s var(--ease);
+    }
+    .nav__sub-link:hover,
+    .nav__sub-link.is-active {
+        color: var(--accent);
+        border-bottom: 1px solid var(--accent);
+    }
 
     .section { padding: 56px 0; }
     .section__h2 { font-size: 32px; }
