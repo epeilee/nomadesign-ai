@@ -537,6 +537,12 @@ body { padding-top: var(--nav-h); }
     font-size: 22px;
     color: var(--text-main);
 }
+.toolbox__logo--wide {
+    width: 60%; height: 48px;
+}
+.toolbox__logo--wide img {
+    width: 100%; height: 100%; object-fit: contain;
+}
 .toolbox__name {
     font-family: 'Orpheus Pro', serif;
     font-size: var(--font-p);
