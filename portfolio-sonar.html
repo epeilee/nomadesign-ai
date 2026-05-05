@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
@@ -51,47 +51,140 @@
   </div>
 </section>
 <main>
-<section class="detail-hero">
-  <div class="container">
-    <img src="img/T5/Summary report - Report Detail - Anti-Ransomware@1.5x.jpg" alt="Anti-Ransomware Dashboard" />
-  </div>
-</section><section class="detail-section ">
+
+<section class="detail-hero detail-hero--full">
+  <img src="img/T5/671a0089c542b2520c744359_192-5-p-1600.png" alt="Anti-Ransomware Dashboard" />
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">About this Project</h2>
-    <div class="detail-about">
-      <div class="detail-about__text"><p>Anti-Ransomware 端點防護與威脅鑑識平台，旨在針對端點（電腦）進行威脅檢測與識別，以有效應對勒索病毒攻擊，確保企業系統及機敏資料的安全。</p>
+    <div class="detail-about detail-about--text-only">
+      <div class="detail-about__text">
+        <p>Anti-Ransomware 端點防護與威脅鑑識平台，旨在針對端點（電腦）進行威脅檢測與識別，以有效應對勒索病毒攻擊，確保企業系統及機敏資料的安全。</p>
         <p>在威脅攻擊發生前，平臺會持續收集威脅情報，並進行全面的事件分析，形成威脅情資資料庫。</p>
         <p>在威脅攻擊發生時，能即時偵測威脅事件，快速分析判斷威脅程度，並採取預防措施。</p>
         <p>在威脅攻擊發生後，產出威脅事件分析及處理報告，供企業事先防範並加強控管。</p>
-        <p>提供企業端點監控 (EDR) 與資安託管服務 (MSSP) 兩種服務，透過主動防護，收集可疑攻擊事件並進行即時分析，從而提升企業整體的安全防護能力。</p></div>
-      <div class="detail-about__media"><img src="img/T5/Dashboard - MDR in Light.jpg" alt="About" loading="lazy" /></div>
+        <p>提供企業端點監控 (EDR) 與資安託管服務 (MSSP) 兩種服務，透過主動防護，收集可疑攻擊事件並進行即時分析，從而提升企業整體的安全防護能力。</p>
+      </div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Filter Enhancement</h2>
+    <div class="detail-case">
+      <div class="detail-case__row">
+        <span class="detail-case__label">基本資料</span>
+        <p class="detail-case__content">為管理者／代理商／客戶多重角色的 B to B 操作管理介面，Filter 覆蓋整個畫面單據／燈圖 Client / Department，保留原有的 Filter，優化後也能有一致性的元件樣觀。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">痛點</span>
+        <p class="detail-case__content">每個功能因需要不同客戶單據／多項客戶以及多項／不同部門的需求，有多種 Filter，導致為多個 Clients、多選 Departments，造成拿取資料量負擔過多，讀取出來的資料也無法有系統的分群。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">需求</span>
+        <p class="detail-case__content">全面一致化資料搜尋，管理者／代理商可搜尋多個體／單一客戶的資料，但 Summary Report 限定單一客戶／各個部門，來延伸轉動至全站設定，其他功能員效優先再量化。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">設計策略</span>
+        <p class="detail-case__content">優化篩選原有的設計，設計一套單選 Client／橫選 Departments 的元件變化，也要解決資料量過大的問題。原為為選擇 Clients／橫選 Depts，此次優化單選 Clients／橫選 Depts 與原有的 Filter 操作一致，故提供三款設計規劃，經討論後採用 Optional 1 方案。</p>
+      </div>
+    </div>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/T5/departments.png" alt="Filter Enhancement 1" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/departments2.png" alt="Filter Enhancement 2" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/Mask group.png" alt="Filter Enhancement 3" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/T5/slider-1.jpg" alt="Filter Enhancement 1" loading="lazy" />
+          <div class="slicecontent">原有為複選Clients/複選Depts，此次優化單選Clients/複選Depts需與原有的Filter操作一致，故提供三款設計規劃，經討論後採用Optional 1方案。</div>
+        </div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/T5/slider-2.jpg" alt="Filter Enhancement 2" loading="lazy" />
+          <div class="slicecontent">
+            <ul role="list" class="dropdownslicelist">
+              <li class="dropdownslicelisttitle">Error情境</li>
+              <li class="listcontent">展開 - 列出 dropdown 的 Error 位置，收起 - 在欄位下方呈現Error</li>
+            </ul>
+            <ul role="list" class="dropdownslicelist">
+              <li class="dropdownslicelisttitle">Default情境</li>
+              <li class="listcontent">選擇單一Client，預設為所有Depts全選。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/T5/slider-3.jpg" alt="Filter Enhancement 3" loading="lazy" />
+          <div class="slicecontent">
+            <ul role="list" class="dropdownslicelist">
+              <li class="dropdownslicelisttitle">情境</li>
+              <li class="listcontent">Client 底下沒有任何Depts部會展開第二層選單，並給提示訊息。</li>
+            </ul>
+            <ul role="list" class="dropdownslicelist">
+              <li class="dropdownslicelisttitle">流程說明</li>
+              <li class="listcontent">Client C 已選部分Depts，如另選Client B，再選回Client C，會保留之前的選擇</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
       <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">Custom Dashboard</h2>
-    <div class="slider">
-      <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
-      <div class="slider__track">
-        <div class="slider__slide"><img src="img/T5/Dashboard - MDR in Dark.jpg" alt="Custom Dashboard 1" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/Dashboard - MDR in Light.jpg" alt="Custom Dashboard 2" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/Dashboard - Skeleton.png" alt="Custom Dashboard 3" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/192.png" alt="Custom Dashboard 4" loading="lazy" /></div><div class="slider__slide"><img src="img/T5/192-2.png" alt="Custom Dashboard 5" loading="lazy" /></div>
+    <h3 class="detail-section__subtitle">Custom Dashboard Flow</h3>
+    <div class="detail-case">
+      <div class="detail-case__row">
+        <span class="detail-case__label">基本資料</span>
+        <p class="detail-case__content">因應 RWD 而重新規劃 Dashboard，各功能面面已完全，重新規劃可依客戶不同需求客製化的 Dashboard。</p>
       </div>
-      <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">痛點</span>
+        <p class="detail-case__content">搜尋操作太複雜，資料不符客戶使用情境，即時監測卻不能進行資料分析頁。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">需求</span>
+        <p class="detail-case__content">搜尋操作變更為單一 Client／多個 Depts，只有 SuperAdmin 權限可以選 All clients，不可選 Dept；以此操作搜尋的資料才是有效的資料，可客製化對客戶重要的資料呈現，需要 Dark mode。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">設計策略</span>
+        <p class="detail-case__content">將個別功能微整成 widget 並提升數據，授權操作為單一 Client（橫選 Depts）／ All Clients 兩日期區間，可拖拉、改變尺寸、可縮圖。Grid 設定寬度有 4 格，高低固定 4 格，可往下延伸。可縮圖、拖拉、批拉功能，可達至詳細資料頁面，點擊數字背有放大凸顯的特效。</p>
+      </div>
+    </div>
+    <div class="detail-widgets-full">
+      <img src="img/T5/Custom Dashboard Flow.png" alt="Custom Dashboard Flow" loading="lazy" />
     </div>
   </div>
 </section>
+
+<section class="detail-section detail-section--alt">
+  <div class="container">
+    <h2 class="detail-section__title">Dashboard Widgets</h2>
+    <div class="detail-about detail-about--text-only">
+      <div class="detail-about__text">
+        <p>Widget 根據大、中、小尺寸，尺寸小是簡略數據，大尺寸可呈現時間區間為一個月的資料，hover 將出更詳細的數據，點擊重置欄位進入相同的選達條件，專頁詳細的資料頁，有縮圖、改變尺寸，更新資料監控功能，資料讀取時呈現 skeleton 減少載入時間的使用感，skeleton 同步縮大、中、小尺寸，也同時展現 widget 的 thumbnail 呈現。</p>
+      </div>
+    </div>
+    <div class="detail-widgets-full">
+      <img src="img/T5/Dashboard Widgets.png" alt="Dashboard Widgets" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<section class="detail-section detail-section--overview">
+  <div class="container">
+    <h2 class="detail-section__title">Overview</h2>
+    <div class="detail-overview">
+      <img src="img/T5/Dashboard - MDR in Light.jpg" alt="Light Mode" loading="lazy" />
+      <img src="img/T5/Dashboard - MDR in Dark.jpg" alt="Dark Mode" loading="lazy" />
+      <img src="img/T5/Dashboard - Skeleton.png" alt="Skeleton" loading="lazy" />
+    </div>
+  </div>
+</section>
+
 </main>
 <section class="detail-bottom-nav">
   <div class="container">
