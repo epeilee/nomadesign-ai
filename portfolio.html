@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -27,6 +35,8 @@
 </header>
 
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <button class="pf-tab is-active" data-tab="ai">AI Agent</button>
@@ -137,6 +147,7 @@
     </div>
     <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
     <div class="footer__right">
+      For any feedback regarding my website or work, please send it to my email. I will get back to you as soon as possible!<br />
       <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a>
     </div>
   </div>

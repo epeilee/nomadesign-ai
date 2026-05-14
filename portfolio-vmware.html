@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -26,6 +34,8 @@
   </div>
 </header>
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <a href="portfolio.html" class="pf-tab">AI Agent</a>
@@ -66,11 +76,10 @@
 </section><section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">About this Project</h2>
-    <div class="detail-about">
+    <div class="detail-about detail-about--text-only">
       <div class="detail-about__text"><p>虛擬機管理者介面設計 VMware Management Console Interface。客戶為澳洲電信科技商 Ethan Group，主要業務為虛擬機軟體開發維護，最大客戶為 Melbourne Airport。</p>
         <p>工作別包含執行 Dashboard、Form Management、Finance Management、Service Request、My Tickets、My Documents等專案頁面規劃，包含客戶需求 User Story、Design System、定義使用者權限、規劃操作流程 User Flow，及視覺延展 Mockup / Prototype 設計。</p>
         <p>RWD 規劃：各裝置比重為 Desktop(60%) / Tablet(30%) / Mobile(10%)。</p></div>
-      <div class="detail-about__media"><img src="img/ethan/slide-dashboard.png" alt="About" loading="lazy" /></div>
     </div>
   </div>
 </section><section class="detail-section">
@@ -85,40 +94,71 @@
       <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section">
+</section><section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Dashboard</h2>
-    <div class="slider">
-      <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
-      <div class="slider__track">
-        <div class="slider__slide"><img src="img/ethan/dashboard/home V2-Announcements-viewAll.png" alt="Dashboard" loading="lazy" /></div>
+    <div class="detail-split detail-split--7-5">
+      <div class="detail-split__text">
+        <p><strong>Dashboard包含功能有：</strong></p>
+        <p>公告：是進入頁面的快捷方式，只顯示3條新公告。</p>
+        <p>服務請求：可以快速訂購服務，訂購服務後會進入子頁面。</p>
+        <p>我的事件：將顯示我最近的5張票務。</p>
+        <p>財務管理：只在管理層顯示，終端用戶不顯示。</p>
+        <p>我的文件：會顯示管理員給員工查看的文檔，根據權限不同，會有不同的顯示。</p>
       </div>
-      <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span></div>
+      <div class="detail-split__media">
+        <img src="img/ethan/dashboard/home V2-Announcements-viewAll.png" alt="Dashboard" loading="lazy" />
+      </div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">Form Management</h2>
-    <div class="slider">
-      <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
-      <div class="slider__track">
-        <div class="slider__slide"><img src="img/ethan/form/form creator-canvas-1.jpg" alt="Form creator" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/form creator-canvas-addElement.jpg" alt="Add Element" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/form creator-behaviour.jpg" alt="Form Behaviour" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/form creator-dependentActions.jpg" alt="Dependent Actions" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/form creator-rules.jpg" alt="Rules" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/actions-CW-mainform-attachments.jpg" alt="Attachments" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/form/actions-email-basic editor.jpg" alt="Email editor" loading="lazy" /></div>
+    <div class="detail-split detail-split--8-4">
+      <div class="detail-split__slider">
+        <div class="slider">
+          <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
+          <div class="slider__track">
+            <div class="slider__slide"><img src="img/ethan/form/form creator-canvas-1.jpg" alt="Form creator" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/form creator-canvas-addElement.jpg" alt="Add Element" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/form creator-behaviour.jpg" alt="Form Behaviour" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/form creator-dependentActions.jpg" alt="Dependent Actions" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/form creator-rules.jpg" alt="Rules" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/actions-CW-mainform-attachments.jpg" alt="Attachments" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/form/actions-email-basic editor.jpg" alt="Email editor" loading="lazy" /></div>
+          </div>
+          <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
+          <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+        </div>
       </div>
-      <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="detail-split__text">
+        <p>表單系統涉及三個角色，用戶、表單管理員和表單審核員。三個角色針對不同的權限有不同的頁面佈局。這是一個非常龐大和復雜的項目，需要考慮到各個層面用戶的不同習慣。</p>
+        <p>The form system included three roles, the end-user, the form administrator, and the form auditor. The three roles have different page layouts for different permission levels. This is a very large and complex project, with the different user habits at every level taken into consideration.</p>
+      </div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Finance</h2>
-    <div class="slider">
-      <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
-      <div class="slider__track">
-        <div class="slider__slide"><img src="img/ethan/finance/spendTrends-category.jpg" alt="Spend Trends" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/finance/spendVariance-category.jpg" alt="Spend Variance" loading="lazy" /></div><div class="slider__slide"><img src="img/ethan/finance/cost center-expendAll-addNotes(ProductDescription&ServcieID).jpg" alt="Cost Center" loading="lazy" /></div>
+    <div class="detail-split detail-split--4-8">
+      <div class="detail-split__text">
+        <p>財務系統包含三部分，一個是消費趨勢，一個是消費差異，最後是各部門花費。可以完整的呈現每個月、每個部門的財報，甚至可以輸入每個月的預算分配，並且列出超支的月份，可以提出費用明細查詢。</p>
+        <p>The financial system consists of three parts, spending trends, the spending variance, and the cost center budget allocation. It can create monthly and departmental financial reports, compile the budget allocation for each month, list the months with overspending observed, and make cost breakdown inquiries.</p>
       </div>
-      <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="detail-split__slider">
+        <div class="slider">
+          <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
+          <div class="slider__track">
+            <div class="slider__slide"><img src="img/ethan/finance/spendTrends-category.jpg" alt="Spend Trends" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/finance/spendVariance-category.jpg" alt="Spend Variance" loading="lazy" /></div>
+            <div class="slider__slide"><img src="img/ethan/finance/cost center-expendAll-addNotes(ProductDescription&ServcieID).jpg" alt="Cost Center" loading="lazy" /></div>
+          </div>
+          <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
+          <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -26,6 +34,8 @@
   </div>
 </header>
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <a href="portfolio.html" class="pf-tab">AI Agent</a>
@@ -51,36 +61,52 @@
   </div>
 </section>
 <main>
-<section class="detail-hero">
-  <div class="container">
-    <img src="img/tgs/goodstudio.png" alt="The Good Studio" />
-  </div>
-</section><section class="detail-section ">
+
+<section class="detail-hero detail-hero--full">
+  <img src="img/good/goodstudio@2x.png" alt="The Good Studio Interior" />
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">About this Project</h2>
     <div class="detail-about">
-      <div class="detail-about__text"><p><strong>設計風格</strong></p>
+      <div class="detail-about__text">
+        <p><strong>設計風格</strong></p>
         <p>融合東方與西方設計特色，表現沈穩大方，以滿版視覺表現大器空間感，包含商業空間規劃以及住宅空間案例。</p>
-        <p>使用一頁式網頁瀏覽滿版視覺，呈現每個案例不同的空間風格。圖片點入即可進到內頁瀏覽細節空間規劃以及設計師的規畫概念。</p>
+        <p>使用一頁式網頁瀏覽滿版視覺，呈現每個案例不同的空間風格，圖片點入即可進到內頁瀏覽細節空間規劃以及設計師的規畫概念。</p>
         <p><strong>主色彩</strong></p>
         <p>色彩鮮明突出，強調中西融合</p>
-        <p>● #FFDE32 - Bright Yellow<br/>● #252638 - Black</p></div>
-      <div class="detail-about__media"><img src="img/tgs/screen_pad_phone-good-studio.png" alt="About" loading="lazy" /></div>
+        <div class="color-swatch">
+          <span class="color-swatch__dot" style="background-color:#FFDE32;"></span>
+          <span>#FFDE32 - Bright Yellow</span>
+        </div>
+        <div class="color-swatch">
+          <span class="color-swatch__dot" style="background-color:#252638;"></span>
+          <span>#252638 - Bright Yellow</span>
+        </div>
+      </div>
+      <div class="detail-about__media">
+        <img src="img/tgs/screen_pad_phone-good-studio.png" alt="The Good Studio" loading="lazy" />
+      </div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Details</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/tgs/screen_pad_phone-good-studio.png" alt="Details 1" loading="lazy" /></div><div class="slider__slide"><img src="img/tgs/about.jpg" alt="Details 2" loading="lazy" /></div><div class="slider__slide"><img src="img/tgs/project1.jpg" alt="Details 3" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--sm"><img src="img/good/project1.jpg" alt="Project" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--sm"><img src="img/good/about.jpg" alt="About" loading="lazy" /></div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span></div>
     </div>
   </div>
 </section>
+
 </main>
 <section class="detail-bottom-nav">
   <div class="container">

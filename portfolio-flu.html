@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -26,6 +34,8 @@
   </div>
 </header>
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <a href="portfolio.html" class="pf-tab">AI Agent</a>
@@ -51,46 +61,121 @@
   </div>
 </section>
 <main>
+
 <section class="detail-section">
   <div class="container">
-    <h2 class="detail-section__title">User Story + Flow Chart</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/flu/influenzas_fast_testing_flowchart.png" alt="Flow Chart" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/influenzas_fast_testing_uiflow.png" alt="UI Flow" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/cover.png" alt="Cover" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/Home.png" alt="Home" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/flu/influenzas_fast_testing_flowchart.png" alt="User Story + Flow Chart" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">User Story + Flow Chart</div>
+            <div class="hero-caption__body">專為醫療專業人員設計流感檢測App可拍照流感試紙，檢測結果儲存資料，查詢資料四種使用者行為再規劃使用步驟</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/flu/influenzas_fast_testing_uiflow.png" alt="UI Flow" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">UI Flow</div>
+            <div class="hero-caption__body">流程須用最少的步驟達到最快速的效果</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/flu/influenzas_fast_testing_1.png" alt="Test pages" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">Test pages</div>
+            <div class="hero-caption__body">介面單純乾淨<br />視覺重點在檢測結果及<br />下一步行爲的按鈕</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/flu/influenzas_fast_testing_2.png" alt="Result pages" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">Result pages</div>
+            <div class="hero-caption__body">結果頁告知流感類型及注意事項<br />可編輯個人資料並儲存為資料庫</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/flu/influenzas_fast_testing_4.png" alt="User Guide" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">User Guide</div>
+            <div class="hero-caption__body">插畫強調拍照試紙<br />三秒後即可得到檢測結果</div>
+          </div>
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section detail-section--alt">
+</section>
+
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">About this Project</h2>
     <div class="detail-about">
-      <div class="detail-about__text"><p>這個流感測試 App 是為執行大量測試的專業醫療人員而設計的。</p>
+      <div class="detail-about__text">
+        <p>這個流感測試 App 是為執行大量測試的專業醫療人員而設計的。</p>
         <ol>
-          <li>使用手機的內置鏡頭拍攝測試紙</li>
+          <li>使用手機的內置鏡頭拍攝測試試紙</li>
           <li>3秒鐘分析流感結果</li>
-          <li>測試結果將顯示 A 型和 B 型流感陽性或陰性，並顯示會出現的症狀</li>
-          <li>將測試結果和數據儲存在資料庫中，方便專業人員進行大規模篩選和記錄</li>
+          <li>測試結果將顯示A型和B型流感陽性或陰性，並顯示會出現的症狀</li>
+          <li>將測試結果和數據儲存在資料庫中，方便專業人員進行大規模篩选和記錄</li>
         </ol>
-        <p>This flu-testing app is designed for medical professionals to perform and record a large number of tests, with the ability to upload or sync with patient database if required.</p></div>
-      <div class="detail-about__media"><img src="img/flu/flu_app_display.png" alt="About" loading="lazy" /></div>
+        <p>This flu-testing app is designed for medical professionals to perform and record a large number of tests, with the ability to upload or sync with patient database if required.</p>
+        <ol>
+          <li>Take a picture of the testing strip with the internal camera in the phone.</li>
+          <li>Wait for 3 seconds of analysis of flu results.</li>
+          <li>The test results will either be shown as positive or negative for the Influenza A and/or B viruses, and will tell you what the expected/ common symptoms are.</li>
+          <li>Save the test results and the data will be uploaded to the database. Reduce the testing process and upload the test results manually, and allows for mass screening and documentation.</li>
+        </ol>
+      </div>
+      <div class="detail-about__media">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/W3WUI3fFirg" title="Flu app" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">Details</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/flu/cover.png" alt="Cover" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/Home.png" alt="Home" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/user_guide_1.png" alt="Guide 1" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/user_guide_2.png" alt="Guide 2" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/user_guide_3.png" alt="Guide 3" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/shooting.png" alt="Shooting" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/editing_result_1.png" alt="Editing Result" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/testing_result.png" alt="Testing Result" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/record_details_1.png" alt="Record Details" loading="lazy" /></div><div class="slider__slide"><img src="img/flu/records_summary_1.png" alt="Records Summary" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/flu/cover.png" alt="Cover" loading="lazy" />
+          <img src="img/flu/Home.png" alt="Home" loading="lazy" />
+          <img src="img/flu/shooting.png" alt="Shooting" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/flu/testing_result.png" alt="Testing Result" loading="lazy" />
+          <img src="img/flu/saving_result_fillinData_1.png" alt="Saving Result" loading="lazy" />
+          <img src="img/flu/records_summary_1.png" alt="Records Summary" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/flu/editing_result_1.png" alt="Editing Result" loading="lazy" />
+          <img src="img/flu/record_details_1.png" alt="Record Details" loading="lazy" />
+          <img src="img/flu/Guidelines_for_use.png" alt="Guidelines for Use" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/flu/user_guide_1.png" alt="User Guide 1" loading="lazy" />
+          <img src="img/flu/user_guide_2.png" alt="User Guide 2" loading="lazy" />
+          <img src="img/flu/user_guide_3.png" alt="User Guide 3" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/flu/Guidelines_for_use.png" alt="Guidelines 1" loading="lazy" />
+          <img src="img/flu/Guidelines_for_use_1.png" alt="Guidelines 2" loading="lazy" />
+          <img src="img/flu/Guidelines_for_use_2.png" alt="Guidelines 3" loading="lazy" />
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
 </section>
+
 </main>
 <section class="detail-bottom-nav">
   <div class="container">

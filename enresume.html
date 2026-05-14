@@ -4,18 +4,102 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>English Resume — Rachel Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="icon" type="image/png" href="img/rachelLogo.png" />
+<style>
+.rv-page { background: #efefef; padding: 40px 16px 64px; min-height: 100vh; }
+.rv-actions { max-width: 940px; margin: 24px auto 0; display: flex; gap: 12px; justify-content: center; }
+.rv-wrap {
+  max-width: 940px; margin: 0 auto; background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,.10);
+  font-family: 'Lato', 'Noto Sans TC', sans-serif;
+}
+.rv-bar { height: 7px; background: #c49a2a; }
+.rv-hd {
+  display: grid; grid-template-columns: 120px 1fr auto;
+  align-items: center; gap: 20px 28px; padding: 28px 40px 22px;
+}
+.rv-hd__photo { width: 110px; height: 110px; border-radius: 50%; overflow: hidden; }
+.rv-hd__photo img { width: 100%; height: 100%; object-fit: cover; }
+.rv-hd__h1 { font-size: 26px; font-weight: 300; letter-spacing: .5px; color: #333333; margin: 0 0 4px; font-family: 'Lato', sans-serif; }
+.rv-hd__name { font-size: 15px; color: #c49a2a; letter-spacing: .5px; }
+.rv-hd__ct { text-align: right; font-size: 12px; color: #333; line-height: 2; }
+.rv-hd__ct a { color: #333; text-decoration: none; }
+.rv-hd__ct a:hover { color: #c49a2a; }
+.rv-rule { height: 1px; background: #ddd; margin: 0 40px; }
+.rv-bd { display: grid; grid-template-columns: 1fr 1fr; padding: 0 40px 48px; }
+.rv-l { padding-right: 28px; border-right: 1px solid #e8e8e8; }
+.rv-r { padding-left: 28px; }
+.rv-sec { margin-top: 28px; }
+.rv-sec__h {
+  font-size: 15px; font-weight: 700; color: #333333;
+  display: inline-block; margin: 0 0 10px; padding-bottom: 3px;
+  border-bottom: 1.5px solid #c49a2a;
+}
+.rv-prose { font-size: 12px; color: #333; line-height: 1.8; letter-spacing: 0.015em; }
+.rv-prose p { margin: 0 0 8px; }
+.rv-prose p:last-child { margin: 0; }
+.rv-edu { margin-bottom: 16px; }
+.rv-edu__dept { font-size: 12px; color: #333; letter-spacing: 0.02em; }
+.rv-edu__school { font-size: 12.5px; font-weight: 700; color: #333333; letter-spacing: 0.02em; }
+.rv-edu__date { font-size: 12px; color: #c49a2a; margin-top: 3px; letter-spacing: 0.02em; }
+.rv-skill {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; letter-spacing: 0.02em;
+}
+.rv-skill:last-child { border-bottom: none; }
+.rv-skill__icon { width: 17px; height: 17px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.rv-skill__icon img { width: 100%; height: 100%; object-fit: contain; }
+.rv-skill__name { color: #333333; flex: 1; }
+.rv-skill__lv { color: #c49a2a; font-size: 12px; text-align: right; letter-spacing: 0.02em; }
+.rv-exp { margin-bottom: 24px; }
+.rv-exp__title { font-size: 14px; font-weight: 700; color: #333333; margin-bottom: 3px; letter-spacing: 0.02em; }
+.rv-exp__meta { font-size: 12px; color: #888; margin-bottom: 6px; letter-spacing: 0.02em; }
+.rv-exp__list { margin: 0; padding: 0; list-style: none; }
+.rv-exp__list li {
+  position: relative; padding-left: 14px;
+  font-size: 14px; color: #c49a2a; line-height: 1.85; margin-bottom: 5px;
+  letter-spacing: 0.02em;
+}
+.rv-exp__list li::before { content: '•'; position: absolute; left: 0; }
+.rv-cert { margin-bottom: 10px; }
+.rv-cert__name { font-size: 13px; font-weight: 700; color: #333333; letter-spacing: 0.02em; }
+.rv-cert__date { font-size: 12px; color: #c49a2a; margin-top: 3px; }
+@media (max-width: 680px) {
+  .rv-hd { grid-template-columns: 90px 1fr; padding: 20px; }
+  .rv-hd__ct { grid-column: 1 / -1; text-align: left; }
+  .rv-rule { margin: 0 20px; }
+  .rv-bd { grid-template-columns: 1fr; padding: 0 20px 40px; }
+  .rv-l { padding-right: 0; border-right: none; }
+  .rv-r { padding-left: 0; }
+}
+@media print {
+  .nav, .footer, .rv-actions { display: none !important; }
+  .rv-page { background: none; padding: 0; }
+  .rv-wrap { box-shadow: none; }
+}
+</style>
 </head>
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link is-active">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -23,14 +107,178 @@
   </div>
 </header>
 
-<main class="resume-viewer">
-  <div class="container">
-    <h1>English Resume</h1>
-    <img src="img/rachelEnResume.jpg" alt="Rachel Lee English Resume" />
-    <div class="resume-viewer__actions">
-      <a href="img/rachelEnResume.jpg" download class="btn btn--dark">Download</a>
-      <a href="me.html" class="btn btn--outline">Back to Me</a>
+<main class="rv-page">
+  <div class="rv-wrap">
+    <div class="rv-bar"></div>
+
+    <div class="rv-hd">
+      <div class="rv-hd__photo">
+        <img src="img/me/mePhoto.png" alt="Rachel Lee" />
+      </div>
+      <div>
+        <div class="rv-hd__h1">UI / Web / Visual Designer</div>
+        <div class="rv-hd__name">Rachel Lee &nbsp;&nbsp; 李宜珮</div>
+      </div>
+      <div class="rv-hd__ct">
+        <div>&#9679; <a href="https://nomad-design.webflow.io/" target="_blank">https://nomad-design.webflow.io/</a></div>
+        <div>&#9990; 0955-376910 &nbsp;&nbsp; &#9993; <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a></div>
+      </div>
     </div>
+
+    <div class="rv-rule"></div>
+
+    <div class="rv-bd">
+      <!-- LEFT -->
+      <div class="rv-l">
+
+        <div class="rv-sec">
+          <div class="rv-sec__h">About Me</div>
+          <div class="rv-prose">
+            <p>I'm Rachel Lee, a designer passionate about UI, web, and visual design. I graduated from Ming Chuan University with a Bachelor's degree in Commercial Design. My friendly and outgoing nature helps me enrich my life experiences. In my free time, I love to travel, read novels, enjoy fitness, and watch dramas.</p>
+            <p>As a UI designer, I have successfully executed comprehensive design processes, including Design Systems, Flowcharts, Wireframes, UI flows, Prototypes, and Mockups, delivering these to engineers for development. Before that, I was an in-house designer responsible for product interface design as well as the company's corporate identity and promotional materials. During my time at an advertising agency, I designed corporate identity systems and external promotional materials for clients, accumulating valuable experience in graphic and packaging design, along with a strong understanding of corporate branding guidelines and advertising print processes.</p>
+            <p>I changed career from nurse to designer, starting with graphic design, then web design, and finally diving deep into UI/UX design. My passion for design drives me to continuously explore new trends and create innovative styles. My design style leans toward simplicity and elegance, emphasizing a balance between visual appeal and functionality. I am good at working independently and can also collaborate efficiently with a team.</p>
+            <p>I am ready to embrace new innovations and challenges. I look forward to integrating my design skills into my new job. Thank you for your time, and I hope to grow together with your company!</p>
+          </div>
+        </div>
+
+        <div class="rv-sec">
+          <div class="rv-sec__h">Education</div>
+          <div class="rv-edu">
+            <div class="rv-edu__dept">Bachelor's Degree in Commercial Design /</div>
+            <div class="rv-edu__school">Ming Chuan University</div>
+            <div class="rv-edu__date">1999/06 – 2002/06</div>
+          </div>
+          <div class="rv-edu">
+            <div class="rv-edu__dept">Department of Nursing /</div>
+            <div class="rv-edu__school">Chang Gung University of Science and Technology</div>
+            <div class="rv-edu__date">1993/06 – 1998/06</div>
+          </div>
+        </div>
+
+        <div class="rv-sec">
+          <div class="rv-sec__h">Skills</div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="img/me/claude-ai.svg" alt="Claude Design" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Claude Design</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="img/me/claude-ai.svg" alt="Claude Code" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Claude Code</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Figma</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webflow/webflow-original.svg" alt="Webflow" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Webflow</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" alt="Illustrator" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Illustrator</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" alt="Photoshop" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Photoshop</div>
+            <div class="rv-skill__lv">Proficient</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">VS Code</div>
+            <div class="rv-skill__lv">Html / CSS structure</div>
+          </div>
+          <div class="rv-skill">
+            <div class="rv-skill__icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" alt="Jira" onerror="this.style.opacity='0'" /></div>
+            <div class="rv-skill__name">Agile &amp; Jira</div>
+            <div class="rv-skill__lv">Project Management</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="rv-r">
+
+        <div class="rv-sec">
+          <div class="rv-sec__h">Experience</div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">UI/UX Designer / Art Solutions Technology</div>
+            <div class="rv-exp__meta">2025/01 – Present</div>
+            <ul class="rv-exp__list">
+              <li>Designing AI Agent platform interfaces; converting development documents into UI specifications and implementing in Figma.</li>
+              <li>Managing Design System, component guidelines, User Flow, Prototype, and Wireframe.</li>
+            </ul>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">Product designer / Dupu Digital Security Technology</div>
+            <div class="rv-exp__meta">2023/02 – 2024/09 &nbsp; 1y6m</div>
+            <ul class="rv-exp__list">
+              <li>Design the user interface for cybersecurity software with endpoint monitoring, threat event scanning, whitelist configuration, user permission settings, and support for both on-premises and cloud-based platforms.</li>
+            </ul>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">UI/UX designer / Cyber Security Inc.</div>
+            <div class="rv-exp__meta">2021/03 – 2023/02 &nbsp; 2y</div>
+            <ul class="rv-exp__list">
+              <li>Designed multiple fractal system web apps and online fractal cloud software which can be used in various platforms of SaaS / on-premises / Server Box.</li>
+              <li>Designed the logo, CIS, branding, website, interfaces, and the complete visual presence for this start-up company.</li>
+              <li>Collaborate with PMs and RDs to create interfaces, websites and other design materials.</li>
+            </ul>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">Senior UI designer / Cenpiph international company</div>
+            <div class="rv-exp__meta">2017/08 – 2021/03 &nbsp; 3y8m</div>
+            <ul class="rv-exp__list">
+              <li>Worked with the development team to design and implement the VMWare (virtual machine) management web application for our headquarters and business clients in Australia.</li>
+              <li>Completed a lot of independent projects such as Financial reporting, Tickets management, Approval process on VMWare (virtual machine) UI.</li>
+            </ul>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">Senior UI designer / Afusion international company</div>
+            <div class="rv-exp__meta">2012/08 – 2017/05 &nbsp; 4y8m</div>
+            <ul class="rv-exp__list">
+              <li>Worked at a Hong Kong design agency located in Neihu, Taipei.</li>
+              <li>Building design guidelines, responsive web design, wireframe, banner, icon, UI, key vision, etc for international companies.</li>
+              <li>Independently completes project design. Requires close collaboration and communication with PM and front-end engineers.</li>
+            </ul>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">Australia work and study tour</div>
+            <div class="rv-exp__meta">2010/04 – 2011/04 &nbsp; 1y</div>
+          </div>
+
+          <div class="rv-exp">
+            <div class="rv-exp__title">Canada study tour</div>
+            <div class="rv-exp__meta">2008/06 – 2008/09 &nbsp; 3m</div>
+          </div>
+
+        </div>
+
+        <div class="rv-sec">
+          <div class="rv-sec__h">Certification</div>
+          <div class="rv-cert">
+            <div class="rv-cert__name">Google UX Design Professional Certificate</div>
+            <div class="rv-cert__date">2024/09</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="rv-actions">
+    <a href="me.html" class="btn btn--outline">&larr; Back to Me</a>
+    <button onclick="window.print()" class="btn btn--dark">Print / Download PDF</button>
   </div>
 </main>
 
@@ -44,6 +292,7 @@
     </div>
     <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
     <div class="footer__right">
+      For any feedback regarding my website or work, please send it to my email. I will get back to you as soon as possible!<br />
       <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a>
     </div>
   </div>

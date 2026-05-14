@@ -55,7 +55,24 @@
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-in'));
     }
 
-    /* ---------- 4. Portfolio Detail Sliders ---------- */
+    /* ---------- 4a. pf-tab active state from current URL ---------- */
+    const currentFile = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.pf-tab').forEach(tab => {
+        const tabFile = tab.getAttribute('href').split('/').pop();
+        if (tabFile === currentFile) tab.classList.add('is-active');
+    });
+
+    /* ---------- 4. pf-tabs scroll arrows ---------- */
+    const pfTabsInner = document.getElementById('pfTabs');
+    const tabBtnPrev = document.querySelector('.pf-tabs__btn--prev');
+    const tabBtnNext = document.querySelector('.pf-tabs__btn--next');
+    if (pfTabsInner && tabBtnPrev && tabBtnNext) {
+        const scrollAmt = 120;
+        tabBtnPrev.addEventListener('click', () => pfTabsInner.scrollBy({ left: -scrollAmt, behavior: 'smooth' }));
+        tabBtnNext.addEventListener('click', () => pfTabsInner.scrollBy({ left: scrollAmt, behavior: 'smooth' }));
+    }
+
+    /* ---------- 5. Portfolio Detail Sliders ---------- */
     document.querySelectorAll('.slider').forEach(slider => {
         const track = slider.querySelector('.slider__track');
         const slides = slider.querySelectorAll('.slider__slide');
@@ -64,11 +81,18 @@
         const dots = slider.querySelectorAll('.slider__dot');
         if (!track || slides.length === 0) return;
 
+        const isV = slider.classList.contains('slider--v');
         let current = 0;
+
         const go = i => {
             current = Math.max(0, Math.min(slides.length - 1, i));
-            const slideWidth = slides[0].getBoundingClientRect().width;
-            track.scrollTo({ left: current * slideWidth, behavior: 'smooth' });
+            if (isV) {
+                const h = slides[0].getBoundingClientRect().height;
+                track.scrollTo({ top: current * h, behavior: 'smooth' });
+            } else {
+                const w = slides[0].getBoundingClientRect().width;
+                track.scrollTo({ left: current * w, behavior: 'smooth' });
+            }
             dots.forEach((d, idx) => d.classList.toggle('is-active', idx === current));
         };
 
@@ -80,11 +104,14 @@
         track.addEventListener('scroll', () => {
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(() => {
-                const slideWidth = slides[0].getBoundingClientRect().width;
-                const idx = Math.round(track.scrollLeft / slideWidth);
-                if (idx !== current) {
-                    current = idx;
-                    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+                if (isV) {
+                    const h = slides[0].getBoundingClientRect().height;
+                    const idx = Math.round(track.scrollTop / h);
+                    if (idx !== current) { current = idx; dots.forEach((d, i) => d.classList.toggle('is-active', i === current)); }
+                } else {
+                    const w = slides[0].getBoundingClientRect().width;
+                    const idx = Math.round(track.scrollLeft / w);
+                    if (idx !== current) { current = idx; dots.forEach((d, i) => d.classList.toggle('is-active', i === current)); }
                 }
             }, 80);
         }, { passive: true });

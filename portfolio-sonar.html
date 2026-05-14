@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -26,6 +34,8 @@
   </div>
 </header>
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <a href="portfolio.html" class="pf-tab">AI Agent</a>
@@ -74,24 +84,6 @@
 <section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Filter Enhancement</h2>
-    <div class="detail-case">
-      <div class="detail-case__row">
-        <span class="detail-case__label">基本資料</span>
-        <p class="detail-case__content">為管理者／代理商／客戶多重角色的 B to B 操作管理介面，Filter 覆蓋整個畫面單據／燈圖 Client / Department，保留原有的 Filter，優化後也能有一致性的元件樣觀。</p>
-      </div>
-      <div class="detail-case__row">
-        <span class="detail-case__label">痛點</span>
-        <p class="detail-case__content">每個功能因需要不同客戶單據／多項客戶以及多項／不同部門的需求，有多種 Filter，導致為多個 Clients、多選 Departments，造成拿取資料量負擔過多，讀取出來的資料也無法有系統的分群。</p>
-      </div>
-      <div class="detail-case__row">
-        <span class="detail-case__label">需求</span>
-        <p class="detail-case__content">全面一致化資料搜尋，管理者／代理商可搜尋多個體／單一客戶的資料，但 Summary Report 限定單一客戶／各個部門，來延伸轉動至全站設定，其他功能員效優先再量化。</p>
-      </div>
-      <div class="detail-case__row">
-        <span class="detail-case__label">設計策略</span>
-        <p class="detail-case__content">優化篩選原有的設計，設計一套單選 Client／橫選 Departments 的元件變化，也要解決資料量過大的問題。原為為選擇 Clients／橫選 Depts，此次優化單選 Clients／橫選 Depts 與原有的 Filter 操作一致，故提供三款設計規劃，經討論後採用 Optional 1 方案。</p>
-      </div>
-    </div>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
@@ -129,6 +121,24 @@
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
       <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
+    <div class="detail-case">
+      <div class="detail-case__row">
+        <span class="detail-case__label">基本資料</span>
+        <p class="detail-case__content">為管理者／代理商／客戶多重角色的 B to B 操作管理介面，Filter 覆蓋整個畫面單據／燈圖 Client / Department，保留原有的 Filter，優化後也能有一致性的元件樣觀。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">痛點</span>
+        <p class="detail-case__content">每個功能因需要不同客戶單據／多項客戶以及多項／不同部門的需求，有多種 Filter，導致為多個 Clients、多選 Departments，造成拿取資料量負擔過多，讀取出來的資料也無法有系統的分群。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">需求</span>
+        <p class="detail-case__content">全面一致化資料搜尋，管理者／代理商可搜尋多個體／單一客戶的資料，但 Summary Report 限定單一客戶／各個部門，來延伸轉動至全站設定，其他功能員效優先再量化。</p>
+      </div>
+      <div class="detail-case__row">
+        <span class="detail-case__label">設計策略</span>
+        <p class="detail-case__content">優化篩選原有的設計，設計一套單選 Client／橫選 Departments 的元件變化，也要解決資料量過大的問題。原為為選擇 Clients／橫選 Depts，此次優化單選 Clients／橫選 Depts 與原有的 Filter 操作一致，故提供三款設計規劃，經討論後採用 Optional 1 方案。</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -136,6 +146,9 @@
   <div class="container">
     <h2 class="detail-section__title">Custom Dashboard</h2>
     <h3 class="detail-section__subtitle">Custom Dashboard Flow</h3>
+    <div class="detail-widgets-full">
+      <img src="img/T5/Custom Dashboard Flow.png" alt="Custom Dashboard Flow" loading="lazy" />
+    </div>
     <div class="detail-case">
       <div class="detail-case__row">
         <span class="detail-case__label">基本資料</span>
@@ -154,22 +167,19 @@
         <p class="detail-case__content">將個別功能微整成 widget 並提升數據，授權操作為單一 Client（橫選 Depts）／ All Clients 兩日期區間，可拖拉、改變尺寸、可縮圖。Grid 設定寬度有 4 格，高低固定 4 格，可往下延伸。可縮圖、拖拉、批拉功能，可達至詳細資料頁面，點擊數字背有放大凸顯的特效。</p>
       </div>
     </div>
-    <div class="detail-widgets-full">
-      <img src="img/T5/Custom Dashboard Flow.png" alt="Custom Dashboard Flow" loading="lazy" />
-    </div>
   </div>
 </section>
 
 <section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Dashboard Widgets</h2>
+    <div class="detail-widgets-full">
+      <img src="img/T5/Dashboard Widgets.png" alt="Dashboard Widgets" loading="lazy" />
+    </div>
     <div class="detail-about detail-about--text-only">
       <div class="detail-about__text">
         <p>Widget 根據大、中、小尺寸，尺寸小是簡略數據，大尺寸可呈現時間區間為一個月的資料，hover 將出更詳細的數據，點擊重置欄位進入相同的選達條件，專頁詳細的資料頁，有縮圖、改變尺寸，更新資料監控功能，資料讀取時呈現 skeleton 減少載入時間的使用感，skeleton 同步縮大、中、小尺寸，也同時展現 widget 的 thumbnail 呈現。</p>
       </div>
-    </div>
-    <div class="detail-widgets-full">
-      <img src="img/T5/Dashboard Widgets.png" alt="Dashboard Widgets" loading="lazy" />
     </div>
   </div>
 </section>

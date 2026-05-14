@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
@@ -13,12 +13,20 @@
 <body>
 <header class="nav" id="nav">
   <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
     <nav class="nav__menu" id="navMenu">
       <a href="index.html" class="nav__link">Nomad Design</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="me.html" class="nav__link">Me</a>
       <span class="nav__sep" aria-hidden="true">×</span>
       <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -26,6 +34,8 @@
   </div>
 </header>
 <div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
   <div class="container">
     <div class="pf-tabs__inner" id="pfTabs">
       <a href="portfolio.html" class="pf-tab">AI Agent</a>
@@ -51,70 +61,139 @@
   </div>
 </section>
 <main>
+
 <section class="detail-section">
   <div class="container">
-    
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/mutok/mutok-1-display.jpg" alt="Display 1" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-3.jpg" alt="Display 2" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-4.jpg" alt="Display 3" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/2login.jpg" alt="Login" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/6reset-new-pw.jpg" alt="Reset Password" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/mutok/mutokGroup01.png" alt="Login" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">Login</div>
+            <div class="hero-caption__body">強調通訊資訊碎形化<br />機敏開會內容無法竊取</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/mutok/mutokGroup02.png" alt="加密網路電話" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">加密網路電話</div>
+            <div class="hero-caption__body">機敏通話內容碎形化儲存</div>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--hero-caption">
+          <img src="img/mutok/mutokGroup03.png" alt="加密訊息" loading="lazy" />
+          <div class="hero-caption">
+            <div class="hero-caption__title">加密訊息</div>
+            <div class="hero-caption__body">可區分私人與公用群組<br />並將群組權限角色區分</div>
+          </div>
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section detail-section--alt">
+</section>
+
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">About this Project</h2>
     <div class="detail-about">
-      <div class="detail-about__text"><p>加密通訊軟體 Mutok</p>
-        <ol>
+      <div class="detail-about__text">
+        <p>加密通訊軟體 Mutok</p>
+        <ul class="list--2col">
           <li>加密訊息</li>
           <li>語音電話</li>
           <li>群組通話</li>
           <li>加密會議</li>
           <li>網路電話</li>
-        </ol></div>
-      <div class="detail-about__media"><img src="img/mutok/mutokGroup01.png" alt="About" loading="lazy" /></div>
+        </ul>
+      </div>
+      <div class="detail-about__media"><img src="img/mutok/mutok-1-display.jpg" alt="Mutok Display" loading="lazy" /></div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">UX planning</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/mutok/user-flow.jpeg" alt="User Flow" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/user-flow-diagram.jpeg" alt="User Flow Diagram" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutokGroup01.png" alt="UX 1" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutokGroup02.png" alt="UX 2" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutokGroup03.png" alt="UX 3" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/mutok/mutok-login.jpeg" alt="Login Flow" loading="lazy" />
+          <div class="slicecontent">
+            <p><strong>Login Flow</strong></p>
+            <p>首頁是強調產品個性的機會將加密碎形溝通的特性加入可與一般通訊軟體做區別。</p>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/mutok/user-flow-diagram.jpeg" alt="User Flow" loading="lazy" />
+          <div class="slicecontent">
+            <p><strong>User Flow</strong></p>
+            <p>分析App註冊登入流程，未來會加入OTP認證功能，即可清楚規劃或增減流程步驟。</p>
+          </div>
+        </div>
+        <div class="slider__slide slider__slide--captioned">
+          <img src="img/mutok/user-flow.jpeg" alt="Wireframe" loading="lazy" />
+          <div class="slicecontent">
+            <p><strong>Wireframe</strong></p>
+            <p>此軟體匯整三種強大的即時通訊wireframe能在設計之前發現相容或衝突的畫面即可隨時提出與PM討論功能</p>
+          </div>
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section detail-section--alt">
   <div class="container">
     <h2 class="detail-section__title">Login</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/mutok/1welcome.jpg" alt="Welcome" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/2login.jpg" alt="Login" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/4notice.jpg" alt="Notice" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/6reset-new-pw.jpg" alt="Reset" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/7create-new-account-1.jpg" alt="Create account 1" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/8create-new-account-2.jpg" alt="Create account 2" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/9create-new-account-done.jpg" alt="Done" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/mutok/1welcome.jpg" alt="Welcome" loading="lazy" />
+          <img src="img/mutok/2login.jpg" alt="Login" loading="lazy" />
+          <img src="img/mutok/4notice.jpg" alt="Notice" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/mutok/6reset-new-pw.jpg" alt="Reset Password" loading="lazy" />
+          <img src="img/mutok/7create-new-account-1.jpg" alt="Create Account 1" loading="lazy" />
+          <img src="img/mutok/8create-new-account-2.jpg" alt="Create Account 2" loading="lazy" />
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span></div>
     </div>
   </div>
-</section><section class="detail-section">
+</section>
+
+<section class="detail-section">
   <div class="container">
     <h2 class="detail-section__title">Details</h2>
     <div class="slider">
       <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
       <div class="slider__track">
-        <div class="slider__slide"><img src="img/mutok/mutok-6.jpg" alt="Detail 1" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-6-2.jpg" alt="Detail 2" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-6-3.jpg" alt="Detail 3" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-7.jpg" alt="Detail 4" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-8.jpg" alt="Detail 5" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-9.jpg" alt="Detail 6" loading="lazy" /></div><div class="slider__slide"><img src="img/mutok/mutok-11.jpg" alt="Detail 7" loading="lazy" /></div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/mutok/mutok-3.jpg" alt="Detail 1-1" loading="lazy" />
+          <img src="img/mutok/mutok-4.jpg" alt="Detail 1-2" loading="lazy" />
+          <img src="img/mutok/mutok-6.jpg" alt="Detail 1-3" loading="lazy" />
+        </div>
+        <div class="slider__slide slider__slide--triple">
+          <img src="img/mutok/mutok-6-2.jpg" alt="Detail 2-1" loading="lazy" />
+          <img src="img/mutok/mutok-6-3.jpg" alt="Detail 2-2" loading="lazy" />
+          <img src="img/mutok/mutok-8.jpg" alt="Detail 2-3" loading="lazy" />
+        </div>
       </div>
       <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+      <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span></div>
     </div>
   </div>
 </section>
+
 </main>
 <section class="detail-bottom-nav">
   <div class="container">
