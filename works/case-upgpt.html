@@ -9,51 +9,106 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="../css/style.css" />
     <style>
-        /* Case study specific */
-        .case-hero { padding: 140px 0 72px; background: var(--bg-soft); border-bottom: 1px solid var(--line); }
-        .case-hero__back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); margin-bottom: 40px; font-weight: 500; transition: color .25s var(--ease); }
-        .case-hero__back:hover { color: var(--accent-dark); }
-        .case-hero__meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
-        .case-hero__meta span { padding: 6px 14px; background: #fff; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--ink-soft); letter-spacing: .04em; }
-        .case-hero h1 { font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif; font-size: clamp(36px, 6vw, 72px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 24px; }
-        .case-hero p { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-soft); max-width: 720px; line-height: 1.7; }
-        .case-cover { aspect-ratio: 16/9; margin-top: 56px; border-radius: var(--radius-xl); background: linear-gradient(135deg, #0a0a0a 0%, #1a3d3a 50%, #04cbc3 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.02em; }
+        :root {
+            --primary: #14C6DE;
+            --primary-hover: #07B2D3;
+            --primary-active: #1095AF;
+            --primary-tint: #E9F3F8;
+            --secondary: #4694B5;
+            --accent-yellow: #FFDA47;
+            --bg-canvas: #FCFBF7;
+            --bg-app: #FFFFFF;
+            --bg-hover: rgba(20, 198, 222, 0.08);
+            --bg-selected: #D6F7FF;
+            --text-primary: #444444;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --border-subtle: #E8E8E8;
+            --shadow-default: 0 1px 1px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 1px 5px rgba(0,0,0,0.12);
+            --shadow-hover: 0 8px 16px rgba(153,153,153,0.2);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --ease: cubic-bezier(.2,.8,.2,1);
+        }
 
-        .case-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding: 64px 0; border-bottom: 1px solid var(--line); }
-        .case-info__item h5 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 10px; font-weight: 600; }
-        .case-info__item p { font-size: 16px; font-weight: 500; color: var(--ink); }
+        /* Case study specific — 方案 E 升級版 */
+        .case-hero { padding: 140px 0 72px; background: var(--bg-canvas); border-bottom: 1px solid var(--border-subtle); }
+        .case-hero__back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-tertiary); margin-bottom: 40px; font-weight: 500; transition: all .25s var(--ease); }
+        .case-hero__back:hover { color: var(--primary-active); }
+        .case-hero__meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+        .case-hero__meta span { padding: 6px 14px; background: #fff; border: 1px solid var(--border-subtle); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: .04em; }
+        .case-hero h1 { font-family: 'Noto Sans TC', sans-serif; font-size: clamp(36px, 6vw, 72px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 24px; color: var(--text-primary); }
+        .case-hero p { font-size: clamp(17px, 1.6vw, 20px); color: var(--text-secondary); max-width: 720px; line-height: 1.7; }
+        .case-cover { aspect-ratio: 16/9; margin-top: 56px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #0a0a0a 0%, #1a3d3a 50%, #14C6DE 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Noto Sans TC', sans-serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.02em; box-shadow: var(--shadow-default); }
+
+        .case-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding: 64px 0; border-bottom: 1px solid var(--border-subtle); }
+        .case-info__item h5 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; font-weight: 600; }
+        .case-info__item p { font-size: 16px; font-weight: 500; color: var(--text-primary); }
 
         .case-body { padding: 96px 0; max-width: 820px; margin: 0 auto; }
-        .case-body h2 { font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif; font-size: clamp(26px, 3.2vw, 36px); font-weight: 700; margin: 64px 0 20px; letter-spacing: -.01em; }
+        .case-body h2 { font-family: 'Noto Sans TC', sans-serif; font-size: clamp(26px, 3.2vw, 36px); font-weight: 700; margin: 64px 0 20px; letter-spacing: -.01em; color: var(--text-primary); }
         .case-body h2:first-child { margin-top: 0; }
-        .case-body h3 { font-size: 22px; font-weight: 600; margin: 40px 0 12px; color: var(--accent-dark); }
-        .case-body p { font-size: 17px; line-height: 1.85; color: var(--ink-soft); margin-bottom: 20px; }
+        .case-body h3 { font-size: 22px; font-weight: 600; margin: 40px 0 12px; color: var(--primary-active); }
+        .case-body p { font-size: 16px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 20px; }
         .case-body ul { padding-left: 20px; margin-bottom: 20px; }
-        .case-body ul li { font-size: 17px; line-height: 1.8; color: var(--ink-soft); margin-bottom: 10px; list-style: disc; }
-        .case-body strong { color: var(--ink); font-weight: 600; }
-        .case-body blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; background: var(--accent-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: 32px 0; font-size: 18px; line-height: 1.7; color: var(--ink); font-style: italic; }
+        .case-body ul li { font-size: 16px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 10px; list-style: disc; }
+        .case-body strong { color: var(--text-primary); font-weight: 600; }
+        .case-body blockquote { border-left: 3px solid var(--primary); padding: 16px 24px; background: var(--bg-selected); border-radius: 0 var(--radius-md) var(--radius-md) 0; margin: 32px 0; font-size: 18px; line-height: 1.7; color: var(--text-primary); font-style: italic; }
 
-        .case-image { margin: 48px 0; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 16/9; background: var(--bg-muted); display: flex; align-items: center; justify-content: center; color: var(--ink-mute); font-family: 'Space Grotesk', sans-serif; font-weight: 500; border: 1px dashed var(--line); }
+        /* Process 區域 — 步驟條 */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin: 48px 0; }
+        .process-step { padding: 20px 16px; background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); text-align: center; transition: all .25s var(--ease); cursor: pointer; }
+        .process-step:hover { border-color: var(--primary); background: var(--bg-hover); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .process-step-num { font-family: 'Roboto', sans-serif; font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .process-step-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
+        .process-step img { width: 100%; height: auto; border-radius: var(--radius-md); }
+        .process-step-desc { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; }
 
+        /* Solution 互動展示 */
+        .solution-demo { margin: 32px 0; padding: 24px; background: var(--bg-selected); border: 1px solid var(--primary-tint); border-radius: var(--radius-lg); }
+        .solution-demo__header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .solution-demo__icon { font-size: 24px; }
+        .solution-demo__title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        .solution-demo__action { margin-top: 16px; }
+        .demo-btn { padding: 10px 20px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .25s var(--ease); }
+        .demo-btn:hover { background: var(--primary-hover); box-shadow: 0 4px 8px rgba(20,198,222,0.3); }
+        .demo-btn:active { background: var(--primary-active); }
+
+        /* Design System 分區 */
+        .design-showcase { padding: 64px 0; background: var(--bg-app); margin: 64px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+        .showcase-header { text-align: center; margin-bottom: 48px; }
+        .showcase-header h2 { font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+        .showcase-header p { font-size: 16px; color: var(--text-secondary); }
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .showcase-card { padding: 24px; background: var(--bg-canvas); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+        .showcase-card h4 { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; }
+        .color-palette { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .color-swatch { width: 40px; height: 40px; border-radius: 4px; border: 1px solid var(--border-subtle); }
+
+        /* Results 升級 */
         .case-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 40px 0; }
-        .result-card { padding: 32px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); text-align: center; }
-        .result-card strong { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 48px; font-weight: 700; color: var(--accent-dark); letter-spacing: -.02em; margin-bottom: 8px; }
-        .result-card p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+        .result-card { padding: 32px; background: linear-gradient(135deg, var(--bg-selected) 0%, #FFFFFF 100%); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); text-align: center; transition: all .25s var(--ease); box-shadow: var(--shadow-default); }
+        .result-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .result-card strong { display: block; font-family: 'Roboto', sans-serif; font-size: 48px; font-weight: 700; color: var(--primary); letter-spacing: -.02em; margin-bottom: 8px; }
+        .result-card p { font-size: 14px; color: var(--text-secondary); margin: 0; }
 
-        .case-nav { padding: 64px 0 96px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-        .case-nav a { padding: 24px 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); transition: all .3s var(--ease); flex: 1; min-width: 240px; }
-        .case-nav a:hover { border-color: var(--accent); background: var(--accent-soft); }
-        .case-nav span { font-size: 12px; color: var(--ink-mute); letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
-        .case-nav strong { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 18px; }
+        .case-nav { padding: 64px 0 96px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+        .case-nav a { padding: 24px 32px; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); transition: all .25s var(--ease); flex: 1; min-width: 240px; }
+        .case-nav a:hover { border-color: var(--primary); background: var(--bg-selected); transform: translateY(-2px); }
+        .case-nav span { font-size: 12px; color: var(--text-tertiary); letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .case-nav strong { font-family: 'Noto Sans TC', sans-serif; font-weight: 600; font-size: 18px; color: var(--text-primary); }
 
         @media (max-width: 768px) {
             .case-info { grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 40px 0; }
             .case-results { grid-template-columns: 1fr; }
             .case-body { padding: 64px 0; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .showcase-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -133,8 +188,6 @@
                 我們必須在早期就建立一套可擴充的設計系統，否則產品快速迭代時會累積大量的視覺債。
             </p>
 
-            <div class="case-image">Process · Research · User Flows</div>
-
             <h2>Process</h2>
             <h3>1. 使用者研究與任務分析</h3>
             <p>
@@ -154,7 +207,47 @@
                 供設計與工程團隊共享使用。
             </p>
 
-            <div class="case-image">Design System · Components · Tokens</div>
+            <h3 style="margin-top: 48px; margin-bottom: 24px;">AI Agent 執行工作流 — 實際案例</h3>
+            <p style="margin-bottom: 32px;">以下是 Work Agent 文件代理中心的完整執行流程，展示如何利用 AI 自動化檔案分析和資訊提取：</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-step-num">1</div>
+                    <div class="process-step-title">上傳檔案</div>
+                    <img src="../img/upgpt-process/01-upload.jpg" alt="上傳檔案">
+                    <div class="process-step-desc">用戶上傳待處理的檔案</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">2</div>
+                    <div class="process-step-title">選擇模板</div>
+                    <img src="../img/upgpt-process/02-template.jpg" alt="選擇模板">
+                    <div class="process-step-desc">選擇對應的 AI 處理模板</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">3</div>
+                    <div class="process-step-title">連結帳戶</div>
+                    <img src="../img/upgpt-process/03-connect.jpg" alt="連結帳戶">
+                    <div class="process-step-desc">授權連結資料來源</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">4</div>
+                    <div class="process-step-title">執行 Agent</div>
+                    <img src="../img/upgpt-process/04-run.jpg" alt="執行 Agent">
+                    <div class="process-step-desc">點擊觸發 AI 處理</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">5</div>
+                    <div class="process-step-title">處理中</div>
+                    <img src="../img/upgpt-process/05-processing.jpg" alt="處理中">
+                    <div class="process-step-desc">實時進度與狀態更新</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-num">6</div>
+                    <div class="process-step-title">完成結果</div>
+                    <img src="../img/upgpt-process/06-complete.jpg" alt="完成結果">
+                    <div class="process-step-desc">展示 AI 分析結果</div>
+                </div>
+            </div>
 
             <h2>Solution</h2>
             <ul>
@@ -164,7 +257,16 @@
                 <li><strong>成效儀表板</strong>：任務成功率、對話品質、Token 用量一目瞭然</li>
             </ul>
 
-            <div class="case-image">Key Screens · Dashboard · Workflow Editor</div>
+            <div class="solution-demo">
+                <div class="solution-demo__header">
+                    <div class="solution-demo__icon">▶️</div>
+                    <div class="solution-demo__title">互動試玩：Agent 執行狀態演示</div>
+                </div>
+                <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">點擊下方按鈕查看 Agent 在不同階段的工作狀態，包含「正在生成中」、「生成完成」及「錯誤降級」等實際場景。</p>
+                <div class="solution-demo__action">
+                    <button class="demo-btn" id="playgroundBtn">📊 查看 Agent 執行狀態</button>
+                </div>
+            </div>
 
             <h2>Results</h2>
             <div class="case-results">
@@ -173,6 +275,61 @@
                 <div class="result-card"><strong>4.6 / 5</strong><p>平均使用者體驗評分</p></div>
             </div>
 
+            <h2>Design System — 統一的設計語言</h2>
+            <p>
+                UpGPT、UpAgent 與 Work Agent 共享同一套設計系統，但針對各產品線的特性做出差異化的背景色和品牌色。
+                這確保了三個產品既有視覺一致性，又能展現各自的功能特色。
+            </p>
+        </article>
+        
+        <section class="design-showcase">
+            <div class="container">
+                <div class="showcase-header">
+                    <h2>設計系統對比</h2>
+                    <p>同一套 Design Token、Typography、Spacing 系統，三種產品線各自呈現</p>
+                </div>
+                <div class="showcase-grid">
+                    <div class="showcase-card">
+                        <h4>🔷 UpGPT Portal</h4>
+                        <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;">企業知識庫入口</p>
+                        <div class="color-palette">
+                            <div class="color-swatch" style="background: #FCFBF7;" title="Canvas: 暖奶油白"></div>
+                            <div class="color-swatch" style="background: #14C6DE;" title="Primary: Cyan-Blue"></div>
+                            <div class="color-swatch" style="background: #FFFFFF;" title="Surface: White"></div>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-tertiary);">
+                            <strong>特色：</strong>暖色系背景、卡片式佈局、對話介面
+                        </p>
+                    </div>
+                    <div class="showcase-card">
+                        <h4>🔶 UpAgent Desktop</h4>
+                        <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;">桌面應用程式</p>
+                        <div class="color-palette">
+                            <div class="color-swatch" style="background: #FAFEFF;" title="Canvas: 極淡藍白"></div>
+                            <div class="color-swatch" style="background: #4694B5;" title="Primary: Steel Blue"></div>
+                            <div class="color-swatch" style="background: #EFF9FB;" title="Sidebar: 淡藍白"></div>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-tertiary);">
+                            <strong>特色：</strong>冷淡藍白、Sidebar 導航、檔案查詢導向
+                        </p>
+                    </div>
+                    <div class="showcase-card">
+                        <h4>⚙️ Work Agent Flow</h4>
+                        <p style="font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px;">批次工作流</p>
+                        <div class="color-palette">
+                            <div class="color-swatch" style="background: #FAFEFF;" title="Canvas: 極淡藍白"></div>
+                            <div class="color-swatch" style="background: #4694B5;" title="Primary: Steel Blue"></div>
+                            <div class="color-swatch" style="background: #FFDA47;" title="Accent: Yellow"></div>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-tertiary);">
+                            <strong>特色：</strong>步驟條追蹤、狀態指示、批次處理
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <article class="case-body container">
             <h2>Learnings</h2>
             <p>
                 AI 產品設計最大的挑戰，不是「把 AI 能做什麼呈現出來」，而是「把 AI 不能做什麼也清楚溝通出來」。
@@ -204,5 +361,37 @@
     </footer>
 
     <script src="../js/script.js"></script>
+    <script>
+        // Agent 互動演示
+        const playgroundBtn = document.getElementById('playgroundBtn');
+        if (playgroundBtn) {
+            playgroundBtn.addEventListener('click', function() {
+                const message = [
+                    '▶️ Agent 開始執行...',
+                    '⏳ 正在分析檔案 (25%)',
+                    '⏳ 正在提取資訊 (50%)',
+                    '⏳ 正在生成報告 (75%)',
+                    '✅ 完成！結果已生成'
+                ].join('\n');
+                
+                alert(message);
+                
+                // 添加簡單的視覺反饋
+                this.style.opacity = '0.7';
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                }, 300);
+            });
+        }
+
+        // Process 步驟卡片互動
+        const processSteps = document.querySelectorAll('.process-step');
+        processSteps.forEach((step, index) => {
+            step.addEventListener('click', function() {
+                processSteps.forEach(s => s.style.borderColor = 'var(--border-subtle)');
+                this.style.borderColor = 'var(--primary)';
+            });
+        });
+    </script>
 </body>
 </html>

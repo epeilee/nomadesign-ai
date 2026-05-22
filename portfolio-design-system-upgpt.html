@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UpGPT × UpAgent Design System — Rachel Lee</title>
+    <meta name="description" content="統一的 AI 產品設計系統，涵蓋 UpGPT Portal、UpAgent Desktop、Work Agent Flow" />
+    <link rel="icon" type="image/png" href="img/rachelLogo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --primary: #14C6DE;
+            --primary-hover: #07B2D3;
+            --primary-active: #1095AF;
+            --primary-tint: #E9F3F8;
+            --secondary: #4694B5;
+            --accent-yellow: #FFDA47;
+            --bg-canvas: #FCFBF7;
+            --bg-app: #FFFFFF;
+            --text-primary: #444444;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --border-subtle: #E8E8E8;
+            --shadow-default: 0 1px 1px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 1px 5px rgba(0,0,0,0.12);
+            --shadow-hover: 0 8px 16px rgba(153,153,153,0.2);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --ease: cubic-bezier(.2,.8,.2,1);
+        }
+
+        body { background: var(--bg-canvas); color: var(--text-primary); }
+        .ds-hero { padding: 120px 0 80px; background: var(--bg-app); border-bottom: 1px solid var(--border-subtle); }
+        .ds-hero__back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-tertiary); margin-bottom: 40px; font-weight: 500; transition: all .25s var(--ease); cursor: pointer; }
+        .ds-hero__back:hover { color: var(--primary-active); }
+        .ds-hero h1 { font-family: 'Noto Sans TC', sans-serif; font-size: 52px; font-weight: 700; margin-bottom: 16px; }
+        .ds-hero p { font-size: 18px; color: var(--text-secondary); max-width: 600px; line-height: 1.8; }
+
+        .ds-section { padding: 80px 0; }
+        .ds-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
+        .ds-section > p { font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; max-width: 720px; line-height: 1.8; }
+
+        /* 色彩卡片 */
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px; }
+        .color-card { padding: 24px; background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+        .color-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
+        .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .color-swatch { width: 48px; height: 48px; border-radius: 4px; border: 1px solid var(--border-subtle); }
+        .color-card p { font-size: 13px; color: var(--text-tertiary); margin: 0; }
+
+        /* 產品對比 */
+        .product-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
+        .product-card { padding: 32px; background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); transition: all .25s var(--ease); }
+        .product-card:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); }
+        .product-icon { font-size: 32px; margin-bottom: 12px; }
+        .product-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+        .product-card .subtitle { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; font-weight: 600; }
+        .product-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px; }
+
+        /* Typography 表格 */
+        .typo-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+        .typo-table th, .typo-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border-subtle); }
+        .typo-table th { background: var(--bg-canvas); font-weight: 600; color: var(--text-primary); font-size: 13px; }
+        .typo-table td { font-size: 14px; color: var(--text-secondary); }
+        .typo-sample { font-size: 16px; font-weight: 500; color: var(--text-primary); }
+
+        /* Token 展示 */
+        .token-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+        .token-item { padding: 12px; background: var(--bg-canvas); border: 1px solid var(--border-subtle); border-radius: 4px; font-size: 12px; }
+        .token-name { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; font-family: monospace; }
+        .token-value { color: var(--text-tertiary); font-family: monospace; }
+
+        .ds-nav { display: flex; gap: 16px; margin: 40px 0; flex-wrap: wrap; }
+        .ds-nav a { padding: 12px 24px; background: var(--primary); color: #fff; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; transition: all .25s var(--ease); }
+        .ds-nav a:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+        @media (max-width: 768px) {
+            .ds-hero { padding: 80px 0 60px; }
+            .ds-hero h1 { font-size: 36px; }
+            .color-grid { grid-template-columns: repeat(2, 1fr); }
+            .product-showcase { grid-template-columns: 1fr; }
+            .typo-table th, .typo-table td { padding: 12px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav" id="nav">
+        <div class="nav__inner">
+            <a href="index.html" class="nav__brand">Nomad Design</a>
+            <nav class="nav__menu" id="navMenu">
+                <a href="index.html" class="nav__link">Nomad Design</a>
+                <span class="nav__sep" aria-hidden="true">×</span>
+                <a href="me.html" class="nav__link">Me</a>
+                <span class="nav__sep" aria-hidden="true">×</span>
+                <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+                <div class="nav__sub">
+                    <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+                    <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+                    <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+                    <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+                    <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+                </div>
+            </nav>
+            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="ds-hero">
+            <div class="container">
+                <a href="portfolio.html" class="ds-hero__back">← Back to Portfolio</a>
+                <h1>UpGPT × UpAgent Design System</h1>
+                <p>統一規範，多線產品。同一套 Design Token、Typography、Spacing，針對三個產品線（UpGPT Portal、UpAgent Desktop、Work Agent Flow）進行差異化配置。</p>
+            </div>
+        </section>
+
+        <!-- 品牌色彩 -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>🎨 品牌色彩系統</h2>
+                <p>三款產品各自搭配不同的品牌色與背景色系，確保視覺一致性同時展現各自特色。</p>
+
+                <div class="color-grid">
+                    <div class="color-card">
+                        <h3>UpGPT Portal</h3>
+                        <div class="color-swatches">
+                            <div class="color-swatch" style="background: #14C6DE; border: 1px solid #ccc;" title="Primary: #14C6DE"></div>
+                            <div class="color-swatch" style="background: #FCFBF7; border: 1px solid #e8e8e8;" title="Canvas: #FCFBF7"></div>
+                            <div class="color-swatch" style="background: #F3F3EE; border: 1px solid #e8e8e8;" title="Sidebar: #F3F3EE"></div>
+                        </div>
+                        <p>Cyan-Blue 品牌色，暖奶油白背景</p>
+                    </div>
+
+                    <div class="color-card">
+                        <h3>UpAgent Desktop</h3>
+                        <div class="color-swatches">
+                            <div class="color-swatch" style="background: #4694B5; border: 1px solid #ccc;" title="Primary: #4694B5"></div>
+                            <div class="color-swatch" style="background: #FAFEFF; border: 1px solid #e8e8e8;" title="Canvas: #FAFEFF"></div>
+                            <div class="color-swatch" style="background: #EFF9FB; border: 1px solid #e8e8e8;" title="Sidebar: #EFF9FB"></div>
+                        </div>
+                        <p>Steel Blue 品牌色，極淡藍白背景</p>
+                    </div>
+
+                    <div class="color-card">
+                        <h3>Work Agent Flow</h3>
+                        <div class="color-swatches">
+                            <div class="color-swatch" style="background: #4694B5; border: 1px solid #ccc;" title="Primary: #4694B5"></div>
+                            <div class="color-swatch" style="background: #FFDA47; border: 1px solid #e8e8e8;" title="Accent: #FFDA47"></div>
+                            <div class="color-swatch" style="background: #FAFEFF; border: 1px solid #e8e8e8;" title="Canvas: #FAFEFF"></div>
+                        </div>
+                        <p>Steel Blue 主 + 黃色強調，批次流程導向</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 排版系統 -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>🔤 排版系統</h2>
+                <p>統一的字型規範與大小比例，確保各產品線的閱讀體驗一致。</p>
+
+                <table class="typo-table">
+                    <thead>
+                        <tr>
+                            <th>層級</th>
+                            <th>大小</th>
+                            <th>粗細</th>
+                            <th>用途</th>
+                            <th>示例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>H1</td>
+                            <td>36px</td>
+                            <td>700 Bold</td>
+                            <td>頁面主標題</td>
+                            <td><span class="typo-sample" style="font-size: 36px;">標題示例</span></td>
+                        </tr>
+                        <tr>
+                            <td>H2</td>
+                            <td>28px</td>
+                            <td>700 Bold</td>
+                            <td>區塊標題</td>
+                            <td><span class="typo-sample" style="font-size: 28px;">次級標題</span></td>
+                        </tr>
+                        <tr>
+                            <td>H3</td>
+                            <td>20px</td>
+                            <td>700 Bold</td>
+                            <td>小標題</td>
+                            <td><span class="typo-sample" style="font-size: 20px;">小標題</span></td>
+                        </tr>
+                        <tr>
+                            <td>Body</td>
+                            <td>16px</td>
+                            <td>400 Regular</td>
+                            <td>標準內文</td>
+                            <td><span class="typo-sample" style="font-size: 16px;">這是標準內文</span></td>
+                        </tr>
+                        <tr>
+                            <td>Small</td>
+                            <td>14px</td>
+                            <td>400 Regular</td>
+                            <td>輔助文字</td>
+                            <td><span class="typo-sample" style="font-size: 14px;">輔助文字說明</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 間距 Token -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>📐 間距系統</h2>
+                <p>基於 4px 基礎單位，所有間距均為 4 的倍數。</p>
+
+                <div class="token-grid">
+                    <div class="token-item">
+                        <div class="token-name">--space-xs</div>
+                        <div class="token-value">4px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--space-sm</div>
+                        <div class="token-value">8px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--space-md</div>
+                        <div class="token-value">16px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--space-lg</div>
+                        <div class="token-value">24px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--space-xl</div>
+                        <div class="token-value">36px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--space-2xl</div>
+                        <div class="token-value">48px</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 圓角 -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>🔘 圓角規範</h2>
+                <p>從細緻到圓潤，統一的圓角系統。</p>
+
+                <div class="token-grid">
+                    <div class="token-item">
+                        <div class="token-name">--radius-sm</div>
+                        <div class="token-value">4px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--radius-md</div>
+                        <div class="token-value">8px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--radius-lg</div>
+                        <div class="token-value">12px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--radius-xl</div>
+                        <div class="token-value">16px</div>
+                    </div>
+                    <div class="token-item">
+                        <div class="token-name">--radius-full</div>
+                        <div class="token-value">999px</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 產品特色 -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>🎯 三款產品的設計亮點</h2>
+                <p>同一套系統，三種詮釋方式。</p>
+
+                <div class="product-showcase">
+                    <div class="product-card">
+                        <div class="product-icon">🔷</div>
+                        <h3>UpGPT Portal</h3>
+                        <div class="subtitle">企業知識庫入口</div>
+                        <p>
+                            <strong>定位：</strong>知識庫與 AI 對話的核心平台<br />
+                            <strong>視覺：</strong>暖色系背景，卡片式佈局<br />
+                            <strong>互動：</strong>對話介面、知識卡片、Agent 管理
+                        </p>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-icon">🔶</div>
+                        <h3>UpAgent Desktop</h3>
+                        <div class="subtitle">本機文件查詢應用</div>
+                        <p>
+                            <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br />
+                            <strong>視覺：</strong>冷淡藍白，Sidebar 導航<br />
+                            <strong>互動：</strong>檔案查詢、Sidebar 列表、抽屜操作
+                        </p>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-icon">⚙️</div>
+                        <h3>Work Agent Flow</h3>
+                        <div class="subtitle">批次工作流程管理</div>
+                        <p>
+                            <strong>定位：</strong>企業自動化工作流編排與執行<br />
+                            <strong>視覺：</strong>步驟條追蹤，黃色強調<br />
+                            <strong>互動：</strong>步驟進度、狀態指示、批次提交
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 導航 -->
+        <section class="ds-section">
+            <div class="container">
+                <h2>📚 進一步了解</h2>
+                <div class="ds-nav">
+                    <a href="works/case-upgpt.html">查看 UpGPT 案例研究 →</a>
+                    <a href="portfolio.html">回到 Portfolio →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+            <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
+            <a href="index.html#top" class="footer__top">Back to Top ↑</a>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
