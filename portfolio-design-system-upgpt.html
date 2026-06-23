@@ -1,378 +1,1630 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UpGPT × UpAgent Design System — Rachel Lee</title>
-    <meta name="description" content="統一的 AI 產品設計系統，涵蓋 UpGPT Portal、UpAgent Desktop、Work Agent Flow" />
-    <link rel="icon" type="image/png" href="img/rachelLogo.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
-    <style>
-        :root {
-            --primary: #14C6DE;
-            --primary-hover: #07B2D3;
-            --primary-active: #1095AF;
-            --primary-tint: #E9F3F8;
-            --secondary: #4694B5;
-            --accent-yellow: #FFDA47;
-            --bg-canvas: #FCFBF7;
-            --bg-app: #FFFFFF;
-            --text-primary: #444444;
-            --text-secondary: #666666;
-            --text-tertiary: #999999;
-            --border-subtle: #E8E8E8;
-            --shadow-default: 0 1px 1px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 1px 5px rgba(0,0,0,0.12);
-            --shadow-hover: 0 8px 16px rgba(153,153,153,0.2);
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --ease: cubic-bezier(.2,.8,.2,1);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UpGPT × UpAgent Design System — Rachel Lee</title>
+<meta name="description" content="統一的 AI 產品設計系統，涵蓋 UpGPT Portal、UpAgent Desktop、Work Agent Flow" />
+<link rel="icon" type="image/png" href="img/rachelLogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+/* ============================================================
+   PRIMITIVE LAYER — 原始值，不直接在元件中使用
+   命名規則：--upgpt-[category]-[scale]
+   ============================================================ */
+:root {
+  /* Color Primitives */
+  --upgpt-cyan-100: #E9F8FB;
+  --upgpt-cyan-200: #C2EEF5;
+  --upgpt-cyan-500: #14C6DE;
+  --upgpt-cyan-600: #07B2D3;
+  --upgpt-cyan-700: #1095AF;
+  --upgpt-blue-100: #EFF9FB;
+  --upgpt-blue-200: #D0EAF3;
+  --upgpt-blue-500: #4694B5;
+  --upgpt-blue-600: #3A7FA0;
+  --upgpt-yellow-300: #FFE980;
+  --upgpt-yellow-400: #FFDA47;
+  --upgpt-yellow-500: #F5C800;
+  --upgpt-neutral-0:   #FFFFFF;
+  --upgpt-neutral-50:  #FCFBF7;
+  --upgpt-neutral-100: #F3F3EE;
+  --upgpt-neutral-150: #FAFEFF;
+  --upgpt-neutral-200: #E8E8E8;
+  --upgpt-neutral-400: #999999;
+  --upgpt-neutral-600: #666666;
+  --upgpt-neutral-800: #444444;
+  --upgpt-neutral-900: #222222;
 
-        body { background: var(--bg-canvas); color: var(--text-primary); }
-        .ds-hero { padding: 120px 0 80px; background: var(--bg-app); border-bottom: 1px solid var(--border-subtle); }
-        .ds-hero__back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-tertiary); margin-bottom: 40px; font-weight: 500; transition: all .25s var(--ease); cursor: pointer; }
-        .ds-hero__back:hover { color: var(--primary-active); }
-        .ds-hero h1 { font-family: 'Noto Sans TC', sans-serif; font-size: 52px; font-weight: 700; margin-bottom: 16px; }
-        .ds-hero p { font-size: 18px; color: var(--text-secondary); max-width: 600px; line-height: 1.8; }
+  /* Spacer Primitives (AP: +4 / GP: x2) */
+  --upgpt-spacer-1:  4px;
+  --upgpt-spacer-2:  8px;
+  --upgpt-spacer-3:  12px;
+  --upgpt-spacer-4:  16px;
+  --upgpt-spacer-5:  20px;
+  --upgpt-spacer-6:  24px;
+  --upgpt-spacer-8:  32px;
+  --upgpt-spacer-12: 48px;
+  --upgpt-spacer-16: 64px;
+  --upgpt-spacer-24: 96px;
+  --upgpt-spacer-32: 128px;
 
-        .ds-section { padding: 80px 0; }
-        .ds-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary); }
-        .ds-section > p { font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; max-width: 720px; line-height: 1.8; }
+  /* Border Radius Primitives */
+  --upgpt-radius-0:    0px;
+  --upgpt-radius-1:    4px;
+  --upgpt-radius-2:    8px;
+  --upgpt-radius-3:    12px;
+  --upgpt-radius-4:    16px;
+  --upgpt-radius-full: 999px;
 
-        /* 色彩卡片 */
-        .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px; }
-        .color-card { padding: 24px; background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
-        .color-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
-        .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-        .color-swatch { width: 48px; height: 48px; border-radius: 4px; border: 1px solid var(--border-subtle); }
-        .color-card p { font-size: 13px; color: var(--text-tertiary); margin: 0; }
+  /* Border Width Primitives */
+  --upgpt-border-width-1: 1px;
+  --upgpt-border-width-2: 2px;
 
-        /* 產品對比 */
-        .product-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px; }
-        .product-card { padding: 32px; background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); transition: all .25s var(--ease); }
-        .product-card:hover { border-color: var(--primary); box-shadow: var(--shadow-hover); }
-        .product-icon { font-size: 32px; margin-bottom: 12px; }
-        .product-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-        .product-card .subtitle { font-size: 13px; color: var(--text-tertiary); margin-bottom: 16px; font-weight: 600; }
-        .product-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px; }
+  /* Font Size Primitives */
+  --upgpt-font-size-xs:   12px;
+  --upgpt-font-size-sm:   14px;
+  --upgpt-font-size-md:   16px;
+  --upgpt-font-size-lg:   20px;
+  --upgpt-font-size-xl:   28px;
+  --upgpt-font-size-2xl:  36px;
+  --upgpt-font-size-3xl:  52px;
 
-        /* Typography 表格 */
-        .typo-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
-        .typo-table th, .typo-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border-subtle); }
-        .typo-table th { background: var(--bg-canvas); font-weight: 600; color: var(--text-primary); font-size: 13px; }
-        .typo-table td { font-size: 14px; color: var(--text-secondary); }
-        .typo-sample { font-size: 16px; font-weight: 500; color: var(--text-primary); }
+  /* Font Weight Primitives */
+  --upgpt-font-weight-regular: 400;
+  --upgpt-font-weight-medium:  500;
+  --upgpt-font-weight-semibold:600;
+  --upgpt-font-weight-bold:    700;
 
-        /* Token 展示 */
-        .token-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
-        .token-item { padding: 12px; background: var(--bg-canvas); border: 1px solid var(--border-subtle); border-radius: 4px; font-size: 12px; }
-        .token-name { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; font-family: monospace; }
-        .token-value { color: var(--text-tertiary); font-family: monospace; }
+  /* Line Height Primitives */
+  --upgpt-line-height-tight:  1.3;
+  --upgpt-line-height-normal: 1.6;
+  --upgpt-line-height-loose:  1.8;
 
-        .ds-nav { display: flex; gap: 16px; margin: 40px 0; flex-wrap: wrap; }
-        .ds-nav a { padding: 12px 24px; background: var(--primary); color: #fff; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; transition: all .25s var(--ease); }
-        .ds-nav a:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  /* Motion Primitives */
+  --upgpt-motion-duration-fast:     150ms;
+  --upgpt-motion-duration-standard: 250ms;
+  --upgpt-motion-duration-slow:     400ms;
+  --upgpt-motion-easing-enter:      cubic-bezier(.2,.8,.2,1);
+  --upgpt-motion-easing-exit:       cubic-bezier(.4,0,1,1);
+  --upgpt-motion-easing-standard:   cubic-bezier(.4,0,.2,1);
 
-        @media (max-width: 768px) {
-            .ds-hero { padding: 80px 0 60px; }
-            .ds-hero h1 { font-size: 36px; }
-            .color-grid { grid-template-columns: repeat(2, 1fr); }
-            .product-showcase { grid-template-columns: 1fr; }
-            .typo-table th, .typo-table td { padding: 12px; font-size: 12px; }
-        }
-    </style>
+  /* Opacity Primitives */
+  --upgpt-opacity-0:   0;
+  --upgpt-opacity-10:  0.10;
+  --upgpt-opacity-50:  0.50;
+  --upgpt-opacity-100: 1;
+
+  /* Z-index Primitives */
+  --upgpt-z-index-base:     0;
+  --upgpt-z-index-raised:   10;
+  --upgpt-z-index-dropdown: 100;
+  --upgpt-z-index-overlay:  200;
+  --upgpt-z-index-modal:    300;
+  --upgpt-z-index-tooltip:  400;
+  --upgpt-z-index-floating: 500;
+}
+/* ============================================================
+   SEMANTIC LAYER — 語意 Token，元件直接引用此層
+   命名規則：--upgpt-[object]-[base]-[modifier]
+   ============================================================ */
+
+/* === Default Theme (共用基礎) === */
+:root {
+  /* Surface */
+  --upgpt-surface-canvas:       var(--upgpt-neutral-50);
+  --upgpt-surface-default:      var(--upgpt-neutral-0);
+  --upgpt-surface-raised:       var(--upgpt-neutral-0);
+  --upgpt-surface-subtle:       var(--upgpt-neutral-100);
+
+  /* Color (Text) */
+  --upgpt-color-default:        var(--upgpt-neutral-800);
+  --upgpt-color-muted:          var(--upgpt-neutral-600);
+  --upgpt-color-subtle:         var(--upgpt-neutral-400);
+  --upgpt-color-fixed-light:    var(--upgpt-neutral-0);
+
+  /* Border */
+  --upgpt-border-color-default: var(--upgpt-neutral-200);
+  --upgpt-border-color-subtle:  var(--upgpt-neutral-100);
+
+  /* Elevation (Shadow) */
+  --upgpt-elevation-surface-1: 0 1px 1px rgba(0,0,0,0.20), 0 2px 2px rgba(0,0,0,0.14), 0 1px 5px rgba(0,0,0,0.12);
+  --upgpt-elevation-surface-2: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+  --upgpt-elevation-surface-3: 0 8px 16px rgba(153,153,153,0.20);
+  --upgpt-elevation-edge-top:   0 -2px 8px rgba(0,0,0,0.08);
+
+  /* Primary (Brand) — default = UpGPT */
+  --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
+  --upgpt-primary-bg-active:    var(--upgpt-cyan-700);
+  --upgpt-primary-bg-subtle:    var(--upgpt-cyan-100);
+  --upgpt-primary-border-color: var(--upgpt-cyan-500);
+  --upgpt-primary-color-default:var(--upgpt-color-fixed-light);
+
+  /* Typography */
+  --upgpt-font-family-brand: 'Noto Sans TC', sans-serif;
+  --upgpt-font-family-body:  'Roboto', sans-serif;
+  --upgpt-font-size-body-sm: var(--upgpt-font-size-sm);
+  --upgpt-font-size-body-md: var(--upgpt-font-size-md);
+  --upgpt-font-size-heading-sm: var(--upgpt-font-size-lg);
+  --upgpt-font-size-heading-md: var(--upgpt-font-size-xl);
+  --upgpt-font-size-heading-lg: var(--upgpt-font-size-2xl);
+  --upgpt-font-size-display:    var(--upgpt-font-size-3xl);
+  --upgpt-line-height-body:     var(--upgpt-line-height-loose);
+  --upgpt-line-height-heading:  var(--upgpt-line-height-tight);
+
+  /* Spacing (Semantic) */
+  --upgpt-padding-xs:  var(--upgpt-spacer-1);
+  --upgpt-padding-sm:  var(--upgpt-spacer-2);
+  --upgpt-padding-md:  var(--upgpt-spacer-4);
+  --upgpt-padding-lg:  var(--upgpt-spacer-6);
+  --upgpt-padding-xl:  var(--upgpt-spacer-12);
+  --upgpt-gap-xs:      var(--upgpt-spacer-1);
+  --upgpt-gap-sm:      var(--upgpt-spacer-2);
+  --upgpt-gap-md:      var(--upgpt-spacer-4);
+  --upgpt-gap-lg:      var(--upgpt-spacer-6);
+  --upgpt-gap-xl:      var(--upgpt-spacer-8);
+  --upgpt-margin-md:   var(--upgpt-spacer-6);
+  --upgpt-margin-lg:   var(--upgpt-spacer-12);
+
+  /* Border Radius (Semantic) */
+  --upgpt-border-radius-sm: var(--upgpt-radius-1);
+  --upgpt-border-radius-md: var(--upgpt-radius-2);
+  --upgpt-border-radius-lg: var(--upgpt-radius-3);
+  --upgpt-border-radius-xl: var(--upgpt-radius-4);
+
+  /* Motion (Semantic) */
+  --upgpt-motion-fast:     var(--upgpt-motion-duration-fast) var(--upgpt-motion-easing-standard);
+  --upgpt-motion-standard: var(--upgpt-motion-duration-standard) var(--upgpt-motion-easing-standard);
+  --upgpt-motion-enter:    var(--upgpt-motion-duration-standard) var(--upgpt-motion-easing-enter);
+  --upgpt-motion-exit:     var(--upgpt-motion-duration-fast) var(--upgpt-motion-easing-exit);
+
+  /* Accent */
+  --upgpt-accent-bg-default:    transparent;
+  --upgpt-accent-color-default: var(--upgpt-color-default);
+}
+
+/* ============================================================
+   THEME LAYER — 三個產品各自的 Theme 覆蓋
+   使用方式：<body data-theme="upgpt|upagent|workagent">
+   ============================================================ */
+
+[data-theme="upgpt"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-50);
+  --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
+  --upgpt-primary-bg-active:    var(--upgpt-cyan-700);
+  --upgpt-primary-bg-subtle:    var(--upgpt-cyan-100);
+  --upgpt-primary-border-color: var(--upgpt-cyan-500);
+  --upgpt-accent-bg-default:    transparent;
+}
+
+[data-theme="upagent"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-150);
+  --upgpt-surface-subtle:       var(--upgpt-blue-100);
+  --upgpt-primary-bg-default:   var(--upgpt-blue-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-blue-600);
+  --upgpt-primary-bg-active:    var(--upgpt-blue-600);
+  --upgpt-primary-bg-subtle:    var(--upgpt-blue-100);
+  --upgpt-primary-border-color: var(--upgpt-blue-500);
+  --upgpt-accent-bg-default:    transparent;
+}
+
+[data-theme="workagent"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-150);
+  --upgpt-surface-subtle:       var(--upgpt-blue-100);
+  --upgpt-primary-bg-default:   var(--upgpt-blue-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-blue-600);
+  --upgpt-primary-bg-active:    var(--upgpt-blue-600);
+  --upgpt-primary-bg-subtle:    var(--upgpt-blue-100);
+  --upgpt-primary-border-color: var(--upgpt-blue-500);
+  --upgpt-accent-bg-default:    var(--upgpt-yellow-400);
+  --upgpt-accent-color-default: var(--upgpt-neutral-900);
+}
+/* ============================================================
+   COMPONENT-SPECIFIC TOKENS
+   命名規則：--upgpt-[component]-[role]-[property]-[modifier]
+   ============================================================ */
+:root {
+  /* Button */
+  --upgpt-btn-primary-bg-default:   var(--upgpt-primary-bg-default);
+  --upgpt-btn-primary-bg-hover:     var(--upgpt-primary-bg-hover);
+  --upgpt-btn-primary-color-default:var(--upgpt-primary-color-default);
+  --upgpt-btn-primary-border-radius:var(--upgpt-border-radius-md);
+  --upgpt-btn-label-padding-x:      var(--upgpt-padding-lg);
+  --upgpt-btn-label-padding-y:      var(--upgpt-padding-sm);
+
+  /* Card */
+  --upgpt-card-bg-default:          var(--upgpt-surface-default);
+  --upgpt-card-border-color:        var(--upgpt-border-color-default);
+  --upgpt-card-border-radius:       var(--upgpt-border-radius-lg);
+  --upgpt-card-padding-x:           var(--upgpt-padding-lg);
+  --upgpt-card-padding-y:           var(--upgpt-padding-lg);
+  --upgpt-card-elevation-default:   var(--upgpt-elevation-surface-1);
+  --upgpt-card-elevation-hover:     var(--upgpt-elevation-surface-3);
+
+  /* Badge / Chip */
+  --upgpt-badge-bg-default:         var(--upgpt-primary-bg-subtle);
+  --upgpt-badge-color-default:      var(--upgpt-primary-bg-active);
+  --upgpt-badge-border-radius:      var(--upgpt-radius-full);
+  --upgpt-badge-padding-x:          var(--upgpt-spacer-2);
+  --upgpt-badge-padding-y:          var(--upgpt-spacer-1);
+
+  /* Token swatch item */
+  --upgpt-token-item-bg:            var(--upgpt-surface-canvas);
+  --upgpt-token-item-border-color:  var(--upgpt-border-color-default);
+  --upgpt-token-item-border-radius: var(--upgpt-border-radius-sm);
+}
+
+/* ============================================================
+   LAYOUT & PAGE STYLES
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--upgpt-surface-canvas);
+  color: var(--upgpt-color-default);
+  font-family: var(--upgpt-font-family-body);
+  font-size: var(--upgpt-font-size-body-md);
+  line-height: var(--upgpt-line-height-body);
+  transition: background var(--upgpt-motion-standard), color var(--upgpt-motion-standard);
+}
+
+/* DS Page Layout: Hero + Two-column (sidenav + content) */
+.ds-hero {
+  padding: 80px 0 60px;
+  background: var(--upgpt-surface-default);
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.ds-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--upgpt-gap-sm);
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-subtle);
+  margin-bottom: var(--upgpt-margin-md);
+  font-weight: var(--upgpt-font-weight-medium);
+  transition: color var(--upgpt-motion-fast);
+  cursor: pointer;
+  text-decoration: none;
+}
+.ds-hero__back:hover { color: var(--upgpt-primary-bg-active); }
+
+.ds-hero h1 {
+  font-family: var(--upgpt-font-family-brand);
+  font-size: var(--upgpt-font-size-display);
+  font-weight: var(--upgpt-font-weight-bold);
+  line-height: var(--upgpt-line-height-heading);
+  margin-bottom: var(--upgpt-padding-md);
+  color: var(--upgpt-color-default);
+}
+.ds-hero__desc {
+  font-size: var(--upgpt-font-size-body-md);
+  color: var(--upgpt-color-muted);
+  max-width: 640px;
+  line-height: var(--upgpt-line-height-body);
+}
+
+/* Theme Switcher */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--upgpt-gap-sm);
+  margin-top: var(--upgpt-padding-lg);
+  flex-wrap: wrap;
+}
+.theme-switcher__label {
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-muted);
+  margin-right: var(--upgpt-gap-xs);
+}
+.theme-btn {
+  padding: 6px 16px;
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  border-radius: var(--upgpt-border-radius-md);
+  background: var(--upgpt-surface-default);
+  color: var(--upgpt-color-muted);
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--upgpt-motion-fast);
+}
+.theme-btn:hover { border-color: var(--upgpt-primary-bg-default); color: var(--upgpt-primary-bg-default); }
+.theme-btn.is-active {
+  background: var(--upgpt-primary-bg-default);
+  border-color: var(--upgpt-primary-bg-default);
+  color: var(--upgpt-color-fixed-light);
+}
+
+/* Two-column DS layout */
+.ds-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  align-items: start;
+}
+
+/* Sidebar nav */
+.ds-sidenav {
+  position: sticky;
+  top: 80px;
+  padding: 48px 0 48px 0;
+  border-right: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  min-height: calc(100vh - 80px);
+}
+.ds-sidenav__title {
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--upgpt-color-subtle);
+  padding: 0 24px var(--upgpt-padding-sm);
+  margin-bottom: var(--upgpt-padding-xs);
+}
+.ds-sidenav__link {
+  display: block;
+  padding: 8px 24px;
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all var(--upgpt-motion-fast);
+}
+.ds-sidenav__link:hover {
+  color: var(--upgpt-color-default);
+  background: var(--upgpt-surface-subtle);
+}
+.ds-sidenav__link.is-active {
+  color: var(--upgpt-primary-bg-default);
+  border-left-color: var(--upgpt-primary-bg-default);
+  font-weight: var(--upgpt-font-weight-semibold);
+  background: var(--upgpt-primary-bg-subtle);
+}
+
+/* Main content */
+.ds-content {
+  padding: 48px 0 80px 48px;
+}
+
+.ds-section {
+  padding: 0 0 72px 0;
+  scroll-margin-top: 100px;
+}
+.ds-section + .ds-section {
+  border-top: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle);
+  padding-top: 56px;
+}
+.ds-section__label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--upgpt-primary-bg-default);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.ds-section h2 {
+  font-family: var(--upgpt-font-family-brand);
+  font-size: var(--upgpt-font-size-heading-lg);
+  font-weight: var(--upgpt-font-weight-bold);
+  line-height: var(--upgpt-line-height-heading);
+  margin-bottom: var(--upgpt-padding-sm);
+  color: var(--upgpt-color-default);
+}
+.ds-section__desc {
+  font-size: var(--upgpt-font-size-body-md);
+  color: var(--upgpt-color-muted);
+  max-width: 640px;
+  line-height: var(--upgpt-line-height-body);
+  margin-bottom: var(--upgpt-padding-xl);
+}
+.ds-section h3 {
+  font-size: var(--upgpt-font-size-heading-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  margin: var(--upgpt-margin-md) 0 var(--upgpt-padding-md) 0;
+  color: var(--upgpt-color-default);
+}
+
+/* Token Grid */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+}
+.token-item {
+  padding: var(--upgpt-padding-md);
+  background: var(--upgpt-token-item-bg);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-token-item-border-color);
+  border-radius: var(--upgpt-token-item-border-radius);
+}
+.token-name {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.token-value {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+}
+.token-ref {
+  font-size: 11px;
+  color: var(--upgpt-primary-bg-default);
+  margin-top: 2px;
+}
+
+/* Color Swatch */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-lg);
+  margin-top: var(--upgpt-padding-md);
+}
+.color-card {
+  background: var(--upgpt-card-bg-default);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-card-border-color);
+  border-radius: var(--upgpt-card-border-radius);
+  padding: var(--upgpt-card-padding-x);
+  box-shadow: var(--upgpt-card-elevation-default);
+  transition: box-shadow var(--upgpt-motion-fast);
+}
+.color-card:hover { box-shadow: var(--upgpt-card-elevation-hover); }
+.color-card__title {
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.color-swatches { display: flex; gap: var(--upgpt-gap-sm); flex-wrap: wrap; margin-bottom: var(--upgpt-padding-sm); }
+.color-swatch {
+  width: 40px; height: 40px;
+  border-radius: var(--upgpt-border-radius-sm);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.color-card__desc {
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+}
+
+/* Ramp Row */
+.color-ramp {
+  display: flex;
+  gap: var(--upgpt-gap-xs);
+  margin-bottom: var(--upgpt-gap-md);
+  flex-wrap: wrap;
+}
+.ramp-item { text-align: center; }
+.ramp-swatch {
+  width: 48px; height: 48px;
+  border-radius: var(--upgpt-border-radius-sm);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  display: block;
+  margin-bottom: 4px;
+}
+.ramp-label { font-size: 11px; color: var(--upgpt-color-subtle); }
+
+/* Typography Table */
+.typo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--upgpt-padding-xl);
+}
+.typo-table th, .typo-table td {
+  padding: var(--upgpt-padding-md);
+  text-align: left;
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.typo-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.typo-table td { font-size: var(--upgpt-font-size-body-sm); color: var(--upgpt-color-muted); }
+.typo-table code {
+  font-size: 12px;
+  background: var(--upgpt-surface-canvas);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  border-radius: var(--upgpt-border-radius-sm);
+  padding: 2px 6px;
+  color: var(--upgpt-primary-bg-active);
+  font-family: monospace;
+}
+
+/* Impact Table */
+.impact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--upgpt-padding-md);
+}
+.impact-table th, .impact-table td {
+  padding: var(--upgpt-padding-md);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  font-size: var(--upgpt-font-size-body-sm);
+  vertical-align: top;
+}
+.impact-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  text-align: left;
+}
+.impact-table td { color: var(--upgpt-color-muted); }
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--upgpt-badge-border-radius);
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+}
+.badge--low  { background: #e6f9ef; color: #1a7a3a; }
+.badge--med  { background: #fff4e0; color: #a85e00; }
+.badge--high { background: #fdecea; color: #c0392b; }
+
+/* Elevation showcase */
+.elevation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--upgpt-gap-xl);
+  margin-top: var(--upgpt-padding-md);
+  padding: var(--upgpt-padding-xl) 0;
+}
+.elevation-card {
+  background: var(--upgpt-surface-default);
+  border-radius: var(--upgpt-card-border-radius);
+  padding: var(--upgpt-padding-lg);
+  text-align: center;
+}
+.elevation-label {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: 4px;
+}
+.elevation-value { font-size: 11px; color: var(--upgpt-color-subtle); }
+
+/* Motion showcase */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+}
+.motion-item {
+  padding: var(--upgpt-padding-md);
+  background: var(--upgpt-token-item-bg);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-token-item-border-color);
+  border-radius: var(--upgpt-token-item-border-radius);
+}
+.motion-demo {
+  width: 100%;
+  height: 4px;
+  background: var(--upgpt-border-color-default);
+  border-radius: 2px;
+  margin-top: var(--upgpt-gap-sm);
+  position: relative;
+  overflow: hidden;
+}
+.motion-demo::after {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--upgpt-primary-bg-default);
+  border-radius: 2px;
+}
+.motion-item:hover .motion-demo::after {
+  left: 0;
+  transition: left var(--upgpt-motion-standard);
+}
+
+/* Z-index table */
+.zindex-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--upgpt-padding-md);
+}
+.zindex-table th, .zindex-table td {
+  padding: var(--upgpt-padding-md);
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  font-size: var(--upgpt-font-size-body-sm);
+  text-align: left;
+}
+.zindex-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+}
+.zindex-table td { color: var(--upgpt-color-muted); }
+
+/* Token layer diagram */
+.layer-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--upgpt-gap-sm);
+  margin: var(--upgpt-padding-md) 0;
+}
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: var(--upgpt-gap-md);
+  padding: var(--upgpt-padding-sm) var(--upgpt-padding-md);
+  border-radius: var(--upgpt-border-radius-md);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  background: var(--upgpt-surface-default);
+}
+.layer-row__num {
+  width: 24px; height: 24px;
+  border-radius: var(--upgpt-radius-full);
+  background: var(--upgpt-primary-bg-default);
+  color: var(--upgpt-color-fixed-light);
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.layer-row__name {
+  font-weight: var(--upgpt-font-weight-semibold);
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-default);
+  min-width: 160px;
+}
+.layer-row__example {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--upgpt-primary-bg-active);
+  background: var(--upgpt-primary-bg-subtle);
+  padding: 2px 8px;
+  border-radius: var(--upgpt-border-radius-sm);
+}
+.layer-row__desc { font-size: 12px; color: var(--upgpt-color-subtle); }
+
+/* Product cards */
+.product-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--upgpt-gap-xl);
+  margin-top: var(--upgpt-padding-md);
+}
+.product-card {
+  padding: var(--upgpt-card-padding-x);
+  background: var(--upgpt-card-bg-default);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-card-border-color);
+  border-radius: var(--upgpt-card-border-radius);
+  box-shadow: var(--upgpt-card-elevation-default);
+  transition: all var(--upgpt-motion-standard);
+}
+.product-card:hover {
+  border-color: var(--upgpt-primary-bg-default);
+  box-shadow: var(--upgpt-card-elevation-hover);
+}
+.product-card__icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.product-card h3 {
+  font-size: var(--upgpt-font-size-heading-sm);
+  font-weight: var(--upgpt-font-weight-bold);
+  margin-bottom: 4px;
+  color: var(--upgpt-color-default);
+}
+.product-card__subtitle {
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+  font-weight: var(--upgpt-font-weight-semibold);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.product-card p { font-size: var(--upgpt-font-size-body-sm); color: var(--upgpt-color-muted); line-height: 1.8; }
+.product-card__theme {
+  margin-top: var(--upgpt-padding-md);
+  padding-top: var(--upgpt-padding-md);
+  border-top: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  display: flex;
+  gap: var(--upgpt-gap-sm);
+  flex-wrap: wrap;
+}
+.theme-chip {
+  font-size: 11px;
+  font-family: monospace;
+  padding: 2px 8px;
+  border-radius: var(--upgpt-badge-border-radius);
+  background: var(--upgpt-surface-canvas);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  color: var(--upgpt-color-muted);
+}
+
+/* DS Nav CTA */
+.ds-nav {
+  display: flex;
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+  flex-wrap: wrap;
+}
+.ds-nav a {
+  padding: 12px 24px;
+  background: var(--upgpt-btn-primary-bg-default);
+  color: var(--upgpt-btn-primary-color-default);
+  border-radius: var(--upgpt-btn-primary-border-radius);
+  font-weight: var(--upgpt-font-weight-semibold);
+  text-decoration: none;
+  font-size: var(--upgpt-font-size-body-sm);
+  transition: all var(--upgpt-motion-fast);
+}
+.ds-nav a:hover {
+  background: var(--upgpt-btn-primary-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--upgpt-elevation-surface-3);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ds-body { grid-template-columns: 1fr; }
+  .ds-sidenav { display: none; }
+  .ds-content { padding: 32px 0; }
+  .ds-hero h1 { font-size: var(--upgpt-font-size-2xl); }
+  .product-showcase { grid-template-columns: 1fr; }
+  .color-grid { grid-template-columns: repeat(2, 1fr); }
+  .token-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .ds-hero h1 { font-size: 28px; }
+  .color-ramp .ramp-swatch { width: 36px; height: 36px; }
+}
+</style>
 </head>
 <body>
-    <header class="nav" id="nav">
-        <div class="nav__inner">
-            <a href="index.html" class="nav__brand">Nomad Design</a>
-            <nav class="nav__menu" id="navMenu">
-                <a href="index.html" class="nav__link">Nomad Design</a>
-                <span class="nav__sep" aria-hidden="true">×</span>
-                <a href="me.html" class="nav__link">Me</a>
-                <span class="nav__sep" aria-hidden="true">×</span>
-                <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
-                <div class="nav__sub">
-                    <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
-                    <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
-                    <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
-                    <a href="portfolio-good.html" class="nav__sub-link">Web</a>
-                    <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
-                </div>
-            </nav>
-            <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
+<!-- ===== PRESERVED: Header ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
+    <nav class="nav__menu" id="navMenu">
+      <a href="index.html" class="nav__link">Nomad Design</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="me.html" class="nav__link">Me</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
-    <div class="pf-tabs">
-        <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
-        <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
-        <div class="container">
-            <div class="pf-tabs__inner" id="pfTabs">
-                <a href="portfolio.html" class="pf-tab">AI Agent</a>
-                <a href="portfolio-sonar.html" class="pf-tab">Web UI</a>
-                <a href="portfolio-erp.html" class="pf-tab">Mobile UI</a>
-                <a href="portfolio-good.html" class="pf-tab">Web</a>
-                <a href="portfolio-visual.html" class="pf-tab">Visual</a>
-            </div>
-        </div>
+<!-- ===== PRESERVED: Sub-menu tabs ===== -->
+<div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
+  <div class="container">
+    <div class="pf-tabs__inner" id="pfTabs">
+      <a href="portfolio.html" class="pf-tab">AI Agent</a>
+      <a href="portfolio-sonar.html" class="pf-tab">Web UI</a>
+      <a href="portfolio-erp.html" class="pf-tab">Mobile UI</a>
+      <a href="portfolio-good.html" class="pf-tab">Web</a>
+      <a href="portfolio-visual.html" class="pf-tab">Visual</a>
     </div>
+  </div>
+</div>
 
-    <section class="detail-header">
-        <div class="container">
-            <div class="detail-header__inner">
-                <div class="detail-header__title">
-                    <h1>UpGPT × UpAgent Design System</h1>
-                    <p>Design System</p>
-                </div>
-                <div class="detail-nav">
-                    <a href="works/case-upgpt.html" class="detail-nav__prev">&lt; Previous Project</a>
-                    <a href="portfolio-sonar.html" class="detail-nav__next">Next Project &gt;</a>
-                </div>
-            </div>
+<!-- ===== PRESERVED: Detail header + prev/next ===== -->
+<section class="detail-header">
+  <div class="container">
+    <div class="detail-header__inner">
+      <div class="detail-header__title">
+        <h1>UpGPT × UpAgent Design System</h1>
+        <p>Design System</p>
+      </div>
+      <div class="detail-nav">
+        <a href="works/case-upgpt.html" class="detail-nav__prev">&lt; Previous Project</a>
+        <a href="portfolio-sonar.html" class="detail-nav__next">Next Project &gt;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- ===== DS HERO ===== -->
+  <section class="ds-hero">
+    <div class="container">
+      <a href="portfolio.html" class="ds-hero__back">← Back to Portfolio</a>
+      <h1>UpGPT × UpAgent<br>Design System</h1>
+      <p class="ds-hero__desc">
+        統一規範，多線產品。依照 SGDS Token 架構，同一套 Design Token、Typography、Spacing，
+        針對三個產品線（UpGPT Portal、UpAgent Desktop、Work Agent Flow）進行差異化 Theme 配置。
+      </p>
+      <div class="theme-switcher">
+        <span class="theme-switcher__label">Preview Theme：</span>
+        <button class="theme-btn is-active" data-theme="upgpt">UpGPT Portal</button>
+        <button class="theme-btn" data-theme="upagent">UpAgent Desktop</button>
+        <button class="theme-btn" data-theme="workagent">Work Agent Flow</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DS BODY: sidenav + content ===== -->
+  <div class="ds-body container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="ds-sidenav" aria-label="Design System navigation">
+      <div class="ds-sidenav__title">Foundations</div>
+      <a href="#token-architecture" class="ds-sidenav__link is-active">Token Architecture</a>
+      <a href="#colour" class="ds-sidenav__link">Colour</a>
+      <a href="#typography" class="ds-sidenav__link">Typography</a>
+      <a href="#spacing" class="ds-sidenav__link">Spacing</a>
+      <a href="#border" class="ds-sidenav__link">Border & Radius</a>
+      <a href="#elevation" class="ds-sidenav__link">Elevation</a>
+      <a href="#motion" class="ds-sidenav__link">Motion</a>
+      <a href="#layer" class="ds-sidenav__link">Z-index / Layer</a>
+      <a href="#theme" class="ds-sidenav__link">Theme</a>
+      <a href="#token-impact" class="ds-sidenav__link">Token Change Impact</a>
+      <a href="#products" class="ds-sidenav__link">Products</a>
+    </aside>
+
+    <!-- Main DS Content -->
+    <div class="ds-content">
+      <!-- 1. TOKEN ARCHITECTURE -->
+      <section class="ds-section" id="token-architecture">
+        <span class="ds-section__label">Design Tokens</span>
+        <h2>Token Architecture</h2>
+        <p class="ds-section__desc">
+          本設計系統採用與 SGDS 相同的五層 Token 架構。每層引用下一層，
+          修改單一 Primitive 值即可透過整個系統傳遞，確保設計與程式碼的一致性。
+        </p>
+
+        <div class="layer-diagram">
+          <div class="layer-row">
+            <div class="layer-row__num">1</div>
+            <div class="layer-row__name">Raw Value</div>
+            <code class="layer-row__example">#14C6DE</code>
+            <div class="layer-row__desc">實際的原始值（顏色碼、px 值等），不直接在元件中使用。</div>
+          </div>
+          <div class="layer-row">
+            <div class="layer-row__num">2</div>
+            <div class="layer-row__name">Primitive Token</div>
+            <code class="layer-row__example">--upgpt-cyan-500</code>
+            <div class="layer-row__desc">基礎設計決策，定義色階、間距刻度、字型大小等核心值。</div>
+          </div>
+          <div class="layer-row">
+            <div class="layer-row__num">3</div>
+            <div class="layer-row__name">Simplified Semantic</div>
+            <code class="layer-row__example">--upgpt-primary-bg-default</code>
+            <div class="layer-row__desc">語意化別名，描述「用途」而非「值」，跨元件通用。</div>
+          </div>
+          <div class="layer-row">
+            <div class="layer-row__num">4</div>
+            <div class="layer-row__name">Granular Semantic</div>
+            <code class="layer-row__example">--upgpt-btn-primary-bg-default</code>
+            <div class="layer-row__desc">針對特定情境的語意 Token，如 form、action、feedback。</div>
+          </div>
+          <div class="layer-row">
+            <div class="layer-row__num">5</div>
+            <div class="layer-row__name">Component-specific</div>
+            <code class="layer-row__example">--upgpt-btn-label-padding-x</code>
+            <div class="layer-row__desc">元件專屬 Token，供個別元件微調，引用上層 Token。</div>
+          </div>
         </div>
-    </section>
 
-    <main>
-        <!-- Hero -->
-        <section class="ds-hero">
-            <div class="container">
-                <a href="portfolio.html" class="ds-hero__back">← Back to Portfolio</a>
-                <h1>UpGPT × UpAgent Design System</h1>
-                <p>統一規範，多線產品。同一套 Design Token、Typography、Spacing，針對三個產品線（UpGPT Portal、UpAgent Desktop、Work Agent Flow）進行差異化配置。</p>
-            </div>
-        </section>
-
-        <!-- 品牌色彩 -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>🎨 品牌色彩系統</h2>
-                <p>三款產品各自搭配不同的品牌色與背景色系，確保視覺一致性同時展現各自特色。</p>
-
-                <div class="color-grid">
-                    <div class="color-card">
-                        <h3>UpGPT Portal</h3>
-                        <div class="color-swatches">
-                            <div class="color-swatch" style="background: #14C6DE; border: 1px solid #ccc;" title="Primary: #14C6DE"></div>
-                            <div class="color-swatch" style="background: #FCFBF7; border: 1px solid #e8e8e8;" title="Canvas: #FCFBF7"></div>
-                            <div class="color-swatch" style="background: #F3F3EE; border: 1px solid #e8e8e8;" title="Sidebar: #F3F3EE"></div>
-                        </div>
-                        <p>Cyan-Blue 品牌色，暖奶油白背景</p>
-                    </div>
-
-                    <div class="color-card">
-                        <h3>UpAgent Desktop</h3>
-                        <div class="color-swatches">
-                            <div class="color-swatch" style="background: #4694B5; border: 1px solid #ccc;" title="Primary: #4694B5"></div>
-                            <div class="color-swatch" style="background: #FAFEFF; border: 1px solid #e8e8e8;" title="Canvas: #FAFEFF"></div>
-                            <div class="color-swatch" style="background: #EFF9FB; border: 1px solid #e8e8e8;" title="Sidebar: #EFF9FB"></div>
-                        </div>
-                        <p>Steel Blue 品牌色，極淡藍白背景</p>
-                    </div>
-
-                    <div class="color-card">
-                        <h3>Work Agent Flow</h3>
-                        <div class="color-swatches">
-                            <div class="color-swatch" style="background: #4694B5; border: 1px solid #ccc;" title="Primary: #4694B5"></div>
-                            <div class="color-swatch" style="background: #FFDA47; border: 1px solid #e8e8e8;" title="Accent: #FFDA47"></div>
-                            <div class="color-swatch" style="background: #FAFEFF; border: 1px solid #e8e8e8;" title="Canvas: #FAFEFF"></div>
-                        </div>
-                        <p>Steel Blue 主 + 黃色強調，批次流程導向</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 排版系統 -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>🔤 排版系統</h2>
-                <p>統一的字型規範與大小比例，確保各產品線的閱讀體驗一致。</p>
-
-                <table class="typo-table">
-                    <thead>
-                        <tr>
-                            <th>層級</th>
-                            <th>大小</th>
-                            <th>粗細</th>
-                            <th>用途</th>
-                            <th>示例</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>H1</td>
-                            <td>36px</td>
-                            <td>700 Bold</td>
-                            <td>頁面主標題</td>
-                            <td><span class="typo-sample" style="font-size: 36px;">標題示例</span></td>
-                        </tr>
-                        <tr>
-                            <td>H2</td>
-                            <td>28px</td>
-                            <td>700 Bold</td>
-                            <td>區塊標題</td>
-                            <td><span class="typo-sample" style="font-size: 28px;">次級標題</span></td>
-                        </tr>
-                        <tr>
-                            <td>H3</td>
-                            <td>20px</td>
-                            <td>700 Bold</td>
-                            <td>小標題</td>
-                            <td><span class="typo-sample" style="font-size: 20px;">小標題</span></td>
-                        </tr>
-                        <tr>
-                            <td>Body</td>
-                            <td>16px</td>
-                            <td>400 Regular</td>
-                            <td>標準內文</td>
-                            <td><span class="typo-sample" style="font-size: 16px;">這是標準內文</span></td>
-                        </tr>
-                        <tr>
-                            <td>Small</td>
-                            <td>14px</td>
-                            <td>400 Regular</td>
-                            <td>輔助文字</td>
-                            <td><span class="typo-sample" style="font-size: 14px;">輔助文字說明</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- 間距 Token -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>📐 間距系統</h2>
-                <p>基於 4px 基礎單位，所有間距均為 4 的倍數。</p>
-
-                <div class="token-grid">
-                    <div class="token-item">
-                        <div class="token-name">--space-xs</div>
-                        <div class="token-value">4px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--space-sm</div>
-                        <div class="token-value">8px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--space-md</div>
-                        <div class="token-value">16px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--space-lg</div>
-                        <div class="token-value">24px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--space-xl</div>
-                        <div class="token-value">36px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--space-2xl</div>
-                        <div class="token-value">48px</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 圓角 -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>🔘 圓角規範</h2>
-                <p>從細緻到圓潤，統一的圓角系統。</p>
-
-                <div class="token-grid">
-                    <div class="token-item">
-                        <div class="token-name">--radius-sm</div>
-                        <div class="token-value">4px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--radius-md</div>
-                        <div class="token-value">8px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--radius-lg</div>
-                        <div class="token-value">12px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--radius-xl</div>
-                        <div class="token-value">16px</div>
-                    </div>
-                    <div class="token-item">
-                        <div class="token-name">--radius-full</div>
-                        <div class="token-value">999px</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 產品特色 -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>🎯 三款產品的設計亮點</h2>
-                <p>同一套系統，三種詮釋方式。</p>
-
-                <div class="product-showcase">
-                    <div class="product-card">
-                        <div class="product-icon">🔷</div>
-                        <h3>UpGPT Portal</h3>
-                        <div class="subtitle">企業知識庫入口</div>
-                        <p>
-                            <strong>定位：</strong>知識庫與 AI 對話的核心平台<br />
-                            <strong>視覺：</strong>暖色系背景，卡片式佈局<br />
-                            <strong>互動：</strong>對話介面、知識卡片、Agent 管理
-                        </p>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-icon">🔶</div>
-                        <h3>UpAgent Desktop</h3>
-                        <div class="subtitle">本機文件查詢應用</div>
-                        <p>
-                            <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br />
-                            <strong>視覺：</strong>冷淡藍白，Sidebar 導航<br />
-                            <strong>互動：</strong>檔案查詢、Sidebar 列表、抽屜操作
-                        </p>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-icon">⚙️</div>
-                        <h3>Work Agent Flow</h3>
-                        <div class="subtitle">批次工作流程管理</div>
-                        <p>
-                            <strong>定位：</strong>企業自動化工作流編排與執行<br />
-                            <strong>視覺：</strong>步驟條追蹤，黃色強調<br />
-                            <strong>互動：</strong>步驟進度、狀態指示、批次提交
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 導航 -->
-        <section class="ds-section">
-            <div class="container">
-                <h2>📚 進一步了解</h2>
-                <div class="ds-nav">
-                    <a href="works/case-upgpt.html">查看 UpGPT 案例研究 →</a>
-                    <a href="portfolio.html">回到 Portfolio →</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container footer__inner">
-            <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
-            <a href="index.html#top" class="footer__top">Back to Top ↑</a>
+        <h3>Token 命名規則</h3>
+        <p class="ds-section__desc" style="margin-bottom: 16px;">
+          採用四段式命名：<strong>namespace · object · base · modifier</strong>
+        </p>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">upgpt</div>
+            <div class="token-value">Namespace — 系統識別符</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">primary / btn / form</div>
+            <div class="token-value">Object — 套用對象或情境</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">bg / color / padding</div>
+            <div class="token-value">Base — 設計屬性或角色</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">default / hover / md</div>
+            <div class="token-value">Modifier — 狀態、強調或尺寸</div>
+          </div>
         </div>
-    </footer>
+      </section>
 
-    <script src="js/script.js"></script>
+      <!-- 2. COLOUR -->
+      <section class="ds-section" id="colour">
+        <span class="ds-section__label">Colour</span>
+        <h2>色彩系統</h2>
+        <p class="ds-section__desc">
+          三款產品共用同一套 Primitive 色階，透過 Semantic Token 映射不同的 Theme，
+          實現品牌差異化同時維持設計一致性。
+        </p>
+
+        <h3>Primitive Color Ramp</h3>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Cyan Scale（UpGPT 主色）</p>
+        <div class="color-ramp">
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-100)"></span><div class="ramp-label">100</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-200)"></span><div class="ramp-label">200</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-500)"></span><div class="ramp-label">500</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-600)"></span><div class="ramp-label">600</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-700)"></span><div class="ramp-label">700</div></div>
+        </div>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Blue Scale（UpAgent / Work Agent 主色）</p>
+        <div class="color-ramp">
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-100)"></span><div class="ramp-label">100</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-200)"></span><div class="ramp-label">200</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-500)"></span><div class="ramp-label">500</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-600)"></span><div class="ramp-label">600</div></div>
+        </div>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Yellow Scale（Work Agent 強調色）</p>
+        <div class="color-ramp">
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-yellow-300)"></span><div class="ramp-label">300</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-yellow-400)"></span><div class="ramp-label">400</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-yellow-500)"></span><div class="ramp-label">500</div></div>
+        </div>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Neutral Scale（共用）</p>
+        <div class="color-ramp">
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-0); border:1px solid #eee;"></span><div class="ramp-label">0</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-50)"></span><div class="ramp-label">50</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-100)"></span><div class="ramp-label">100</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-200)"></span><div class="ramp-label">200</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-400)"></span><div class="ramp-label">400</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-600)"></span><div class="ramp-label">600</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-800)"></span><div class="ramp-label">800</div></div>
+          <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-neutral-900)"></span><div class="ramp-label">900</div></div>
+        </div>
+
+        <h3>Semantic Color Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-primary-bg-default</div>
+            <div class="token-value">var(--upgpt-cyan-500)</div>
+            <div class="token-ref">→ Theme 可覆蓋</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-primary-bg-hover</div>
+            <div class="token-value">var(--upgpt-cyan-600)</div>
+            <div class="token-ref">→ Theme 可覆蓋</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-primary-bg-subtle</div>
+            <div class="token-value">var(--upgpt-cyan-100)</div>
+            <div class="token-ref">→ Theme 可覆蓋</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-surface-canvas</div>
+            <div class="token-value">var(--upgpt-neutral-50)</div>
+            <div class="token-ref">→ 頁面底層背景</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-surface-default</div>
+            <div class="token-value">var(--upgpt-neutral-0)</div>
+            <div class="token-ref">→ 卡片/面板背景</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-color-default</div>
+            <div class="token-value">var(--upgpt-neutral-800)</div>
+            <div class="token-ref">→ 主要文字</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-color-muted</div>
+            <div class="token-value">var(--upgpt-neutral-600)</div>
+            <div class="token-ref">→ 次要文字</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-color-subtle</div>
+            <div class="token-value">var(--upgpt-neutral-400)</div>
+            <div class="token-ref">→ 輔助文字/圖示</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-border-color-default</div>
+            <div class="token-value">var(--upgpt-neutral-200)</div>
+            <div class="token-ref">→ 一般邊框</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-accent-bg-default</div>
+            <div class="token-value">transparent</div>
+            <div class="token-ref">→ Work Agent 強調色</div>
+          </div>
+        </div>
+      </section>
+      <!-- 3. TYPOGRAPHY -->
+      <section class="ds-section" id="typography">
+        <span class="ds-section__label">Typography</span>
+        <h2>字體排版系統</h2>
+        <p class="ds-section__desc">
+          統一的字型規範與大小比例，確保各產品線的閱讀體驗一致。
+          Token 名稱描述「用途」而非「大小值」，支援日後 responsive 覆蓋。
+        </p>
+        <table class="typo-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Primitive</th>
+              <th>Value</th>
+              <th>用途</th>
+              <th>示例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--upgpt-font-size-display</code></td>
+              <td><code>--upgpt-font-size-3xl</code></td>
+              <td>52px</td>
+              <td>Hero 主標題</td>
+              <td><span style="font-size:28px; font-weight:700; font-family:'Noto Sans TC',sans-serif;">Aa</span></td>
+            </tr>
+            <tr>
+              <td><code>--upgpt-font-size-heading-lg</code></td>
+              <td><code>--upgpt-font-size-2xl</code></td>
+              <td>36px</td>
+              <td>頁面 H1</td>
+              <td><span style="font-size:22px; font-weight:700; font-family:'Noto Sans TC',sans-serif;">Aa</span></td>
+            </tr>
+            <tr>
+              <td><code>--upgpt-font-size-heading-md</code></td>
+              <td><code>--upgpt-font-size-xl</code></td>
+              <td>28px</td>
+              <td>區塊 H2</td>
+              <td><span style="font-size:18px; font-weight:700;">Aa</span></td>
+            </tr>
+            <tr>
+              <td><code>--upgpt-font-size-heading-sm</code></td>
+              <td><code>--upgpt-font-size-lg</code></td>
+              <td>20px</td>
+              <td>卡片 H3</td>
+              <td><span style="font-size:16px; font-weight:600;">Aa</span></td>
+            </tr>
+            <tr>
+              <td><code>--upgpt-font-size-body-md</code></td>
+              <td><code>--upgpt-font-size-md</code></td>
+              <td>16px</td>
+              <td>標準內文</td>
+              <td><span style="font-size:14px;">這是標準內文 Body</span></td>
+            </tr>
+            <tr>
+              <td><code>--upgpt-font-size-body-sm</code></td>
+              <td><code>--upgpt-font-size-sm</code></td>
+              <td>14px</td>
+              <td>輔助文字 / Label</td>
+              <td><span style="font-size:12px;">輔助說明文字 Small</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Font Family Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-family-brand</div>
+            <div class="token-value">'Noto Sans TC', sans-serif</div>
+            <div class="token-ref">→ 標題、UI 文字</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-family-body</div>
+            <div class="token-value">'Roboto', sans-serif</div>
+            <div class="token-ref">→ 內文、數據</div>
+          </div>
+        </div>
+
+        <h3>Font Weight Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-weight-regular</div>
+            <div class="token-value">400</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-weight-medium</div>
+            <div class="token-value">500</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-weight-semibold</div>
+            <div class="token-value">600</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-font-weight-bold</div>
+            <div class="token-value">700</div>
+          </div>
+        </div>
+
+        <h3>Line Height Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-line-height-heading</div>
+            <div class="token-value">var(--upgpt-line-height-tight) = 1.3</div>
+            <div class="token-ref">→ 標題</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-line-height-body</div>
+            <div class="token-value">var(--upgpt-line-height-loose) = 1.8</div>
+            <div class="token-ref">→ 內文</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SPACING -->
+      <section class="ds-section" id="spacing">
+        <span class="ds-section__label">Spacing</span>
+        <h2>間距系統</h2>
+        <p class="ds-section__desc">
+          結合等差（AP, +4px）與等比（GP, ×2）兩種刻度，涵蓋精細到寬鬆的間距需求。
+          Primitive spacer 數字代表倍數，Semantic Token 描述用途（padding / gap / margin）。
+        </p>
+        <h3>Primitive Spacer Scale</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="token-name">--upgpt-spacer-1</div><div class="token-value">4px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-2</div><div class="token-value">8px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-3</div><div class="token-value">12px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-4</div><div class="token-value">16px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-5</div><div class="token-value">20px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-6</div><div class="token-value">24px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-8</div><div class="token-value">32px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-12</div><div class="token-value">48px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-16</div><div class="token-value">64px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-24</div><div class="token-value">96px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-spacer-32</div><div class="token-value">128px</div></div>
+        </div>
+        <h3>Semantic Spacing Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item"><div class="token-name">--upgpt-padding-xs</div><div class="token-value">var(--upgpt-spacer-1)</div><div class="token-ref">= 4px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-padding-sm</div><div class="token-value">var(--upgpt-spacer-2)</div><div class="token-ref">= 8px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-padding-md</div><div class="token-value">var(--upgpt-spacer-4)</div><div class="token-ref">= 16px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-padding-lg</div><div class="token-value">var(--upgpt-spacer-6)</div><div class="token-ref">= 24px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-padding-xl</div><div class="token-value">var(--upgpt-spacer-12)</div><div class="token-ref">= 48px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-gap-xs</div><div class="token-value">var(--upgpt-spacer-1)</div><div class="token-ref">= 4px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-gap-sm</div><div class="token-value">var(--upgpt-spacer-2)</div><div class="token-ref">= 8px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-gap-md</div><div class="token-value">var(--upgpt-spacer-4)</div><div class="token-ref">= 16px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-gap-lg</div><div class="token-value">var(--upgpt-spacer-6)</div><div class="token-ref">= 24px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-gap-xl</div><div class="token-value">var(--upgpt-spacer-8)</div><div class="token-ref">= 32px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-margin-md</div><div class="token-value">var(--upgpt-spacer-6)</div><div class="token-ref">= 24px</div></div>
+          <div class="token-item"><div class="token-name">--upgpt-margin-lg</div><div class="token-value">var(--upgpt-spacer-12)</div><div class="token-ref">= 48px</div></div>
+        </div>
+      </section>
+
+      <!-- 5. BORDER -->
+      <section class="ds-section" id="border">
+        <span class="ds-section__label">Border</span>
+        <h2>邊框與圓角</h2>
+        <p class="ds-section__desc">統一的邊框寬度與圓角 Token，由細到圓潤的完整刻度。</p>
+        <h3>Border Radius Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div style="width:100%;height:32px;border:2px solid var(--upgpt-primary-bg-default);border-radius:var(--upgpt-border-radius-sm);margin-bottom:8px;"></div>
+            <div class="token-name">--upgpt-border-radius-sm</div>
+            <div class="token-value">var(--upgpt-radius-1) = 4px</div>
+          </div>
+          <div class="token-item">
+            <div style="width:100%;height:32px;border:2px solid var(--upgpt-primary-bg-default);border-radius:var(--upgpt-border-radius-md);margin-bottom:8px;"></div>
+            <div class="token-name">--upgpt-border-radius-md</div>
+            <div class="token-value">var(--upgpt-radius-2) = 8px</div>
+          </div>
+          <div class="token-item">
+            <div style="width:100%;height:32px;border:2px solid var(--upgpt-primary-bg-default);border-radius:var(--upgpt-border-radius-lg);margin-bottom:8px;"></div>
+            <div class="token-name">--upgpt-border-radius-lg</div>
+            <div class="token-value">var(--upgpt-radius-3) = 12px</div>
+          </div>
+          <div class="token-item">
+            <div style="width:100%;height:32px;border:2px solid var(--upgpt-primary-bg-default);border-radius:var(--upgpt-border-radius-xl);margin-bottom:8px;"></div>
+            <div class="token-name">--upgpt-border-radius-xl</div>
+            <div class="token-value">var(--upgpt-radius-4) = 16px</div>
+          </div>
+          <div class="token-item">
+            <div style="width:100%;height:32px;border:2px solid var(--upgpt-primary-bg-default);border-radius:var(--upgpt-radius-full);margin-bottom:8px;"></div>
+            <div class="token-name">--upgpt-radius-full</div>
+            <div class="token-value">999px — Pill / Badge</div>
+          </div>
+        </div>
+        <h3>Border Width Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-border-width-1</div>
+            <div class="token-value">1px — 一般邊框</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-border-width-2</div>
+            <div class="token-value">2px — 強調邊框 / Focus ring</div>
+          </div>
+        </div>
+      </section>
+      <!-- 6. ELEVATION -->
+      <section class="ds-section" id="elevation">
+        <span class="ds-section__label">Elevation</span>
+        <h2>Elevation（陰影）</h2>
+        <p class="ds-section__desc">
+          四個陰影層級，從輕微浮起到明顯懸浮，對應不同的視覺深度。
+          懸停互動元件使用 surface-3，Modal 類使用 edge-top。
+        </p>
+        <div class="elevation-grid">
+          <div class="elevation-card" style="box-shadow:var(--upgpt-elevation-surface-1);">
+            <div class="elevation-label">--upgpt-elevation-surface-1</div>
+            <div class="elevation-value">預設卡片陰影</div>
+          </div>
+          <div class="elevation-card" style="box-shadow:var(--upgpt-elevation-surface-2);">
+            <div class="elevation-label">--upgpt-elevation-surface-2</div>
+            <div class="elevation-value">次要浮起面板</div>
+          </div>
+          <div class="elevation-card" style="box-shadow:var(--upgpt-elevation-surface-3);">
+            <div class="elevation-label">--upgpt-elevation-surface-3</div>
+            <div class="elevation-value">Hover 狀態 / Dropdown</div>
+          </div>
+          <div class="elevation-card" style="box-shadow:var(--upgpt-elevation-edge-top);">
+            <div class="elevation-label">--upgpt-elevation-edge-top</div>
+            <div class="elevation-value">Bottom sheet / 頂部邊緣陰影</div>
+          </div>
+        </div>
+
+        <h3>Elevation Tokens</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-elevation-surface-1</div>
+            <div class="token-value">0 1px 1px rgba(0,0,0,.20)…</div>
+            <div class="token-ref">→ 預設卡片</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-elevation-surface-2</div>
+            <div class="token-value">0 4px 8px rgba(0,0,0,.12)…</div>
+            <div class="token-ref">→ 次要浮起</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-elevation-surface-3</div>
+            <div class="token-value">0 8px 16px rgba(153,153,153,.20)</div>
+            <div class="token-ref">→ Hover / Dropdown</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-elevation-edge-top</div>
+            <div class="token-value">0 -2px 8px rgba(0,0,0,.08)</div>
+            <div class="token-ref">→ Bottom sheet</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. MOTION -->
+      <section class="ds-section" id="motion">
+        <span class="ds-section__label">Motion</span>
+        <h2>Motion（動態）</h2>
+        <p class="ds-section__desc">
+          統一的動畫時長與緩動函數 Token。
+          進入動畫使用 enter easing（減速結尾），離開使用 exit easing（加速結尾），
+          一般互動使用 standard easing。
+          <em>提示：將滑鼠移至下方色條卡片可預覽動態效果。</em>
+        </p>
+        <h3>Duration Primitives</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-duration-fast</div>
+            <div class="token-value">150ms</div>
+            <div class="token-ref">→ Hover, Ripple</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-duration-standard</div>
+            <div class="token-value">250ms</div>
+            <div class="token-ref">→ 一般互動</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-duration-slow</div>
+            <div class="token-value">400ms</div>
+            <div class="token-ref">→ Modal, Page</div>
+          </div>
+        </div>
+        <h3>Easing Primitives</h3>
+        <div class="token-grid">
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-easing-enter</div>
+            <div class="token-value">cubic-bezier(.2,.8,.2,1)</div>
+            <div class="token-ref">→ 進場減速</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-easing-exit</div>
+            <div class="token-value">cubic-bezier(.4,0,1,1)</div>
+            <div class="token-ref">→ 離場加速</div>
+          </div>
+          <div class="token-item">
+            <div class="token-name">--upgpt-motion-easing-standard</div>
+            <div class="token-value">cubic-bezier(.4,0,.2,1)</div>
+            <div class="token-ref">→ 一般互動</div>
+          </div>
+        </div>
+        <h3>Semantic Motion Tokens（Hover 預覽）</h3>
+        <div class="motion-grid">
+          <div class="motion-item">
+            <div class="token-name">--upgpt-motion-fast</div>
+            <div class="token-value">150ms standard</div>
+            <div class="motion-demo"></div>
+          </div>
+          <div class="motion-item">
+            <div class="token-name">--upgpt-motion-standard</div>
+            <div class="token-value">250ms standard</div>
+            <div class="motion-demo"></div>
+          </div>
+          <div class="motion-item">
+            <div class="token-name">--upgpt-motion-enter</div>
+            <div class="token-value">250ms enter easing</div>
+            <div class="motion-demo"></div>
+          </div>
+          <div class="motion-item">
+            <div class="token-name">--upgpt-motion-exit</div>
+            <div class="token-value">150ms exit easing</div>
+            <div class="motion-demo"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Z-INDEX / LAYER -->
+      <section class="ds-section" id="layer">
+        <span class="ds-section__label">Layer</span>
+        <h2>Z-index / 層級系統</h2>
+        <p class="ds-section__desc">
+          統一的堆疊順序 Token，避免各元件使用任意 z-index 值導致衝突。
+          從 base 到 floating 共六個層級，對應不同的 UI 元件類型。
+        </p>
+        <table class="zindex-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Value</th>
+              <th>用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--upgpt-z-index-base</code></td><td>0</td><td>一般頁面元素</td></tr>
+            <tr><td><code>--upgpt-z-index-raised</code></td><td>10</td><td>Sticky header, 略為浮起的元件</td></tr>
+            <tr><td><code>--upgpt-z-index-dropdown</code></td><td>100</td><td>下拉選單、Popover</td></tr>
+            <tr><td><code>--upgpt-z-index-overlay</code></td><td>200</td><td>背景遮罩 Overlay</td></tr>
+            <tr><td><code>--upgpt-z-index-modal</code></td><td>300</td><td>Modal 對話框</td></tr>
+            <tr><td><code>--upgpt-z-index-tooltip</code></td><td>400</td><td>Tooltip 提示文字</td></tr>
+            <tr><td><code>--upgpt-z-index-floating</code></td><td>500</td><td>最高層浮動元件（通知、Toast）</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- 9. THEME -->
+      <section class="ds-section" id="theme">
+        <span class="ds-section__label">Theme</span>
+        <h2>三產品 Theme 系統</h2>
+        <p class="ds-section__desc">
+          透過 <code>data-theme</code> 屬性切換，同一套 Semantic Token 在不同 Theme
+          下映射到不同的 Primitive 色值，元件程式碼無需修改。
+          點擊頁面頂部的 Preview Theme 按鈕即可即時切換。
+        </p>
+
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-card__title">UpGPT Portal <code style="font-size:11px;">data-theme="upgpt"</code></div>
+            <div class="color-swatches">
+              <div class="color-swatch" style="background:#14C6DE;" title="primary-bg-default: #14C6DE"></div>
+              <div class="color-swatch" style="background:#E9F8FB;" title="primary-bg-subtle: #E9F8FB"></div>
+              <div class="color-swatch" style="background:#FCFBF7;" title="surface-canvas: #FCFBF7"></div>
+              <div class="color-swatch" style="background:#F3F3EE;" title="surface-subtle: #F3F3EE"></div>
+            </div>
+            <div class="color-card__desc">Cyan-Blue 品牌色 × 暖奶油白背景</div>
+            <div style="margin-top:12px; font-size:12px; color:var(--upgpt-color-muted);">
+              primary: <code style="font-size:11px;">--upgpt-cyan-500</code><br>
+              canvas: <code style="font-size:11px;">--upgpt-neutral-50</code>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-card__title">UpAgent Desktop <code style="font-size:11px;">data-theme="upagent"</code></div>
+            <div class="color-swatches">
+              <div class="color-swatch" style="background:#4694B5;" title="primary-bg-default: #4694B5"></div>
+              <div class="color-swatch" style="background:#EFF9FB;" title="primary-bg-subtle: #EFF9FB"></div>
+              <div class="color-swatch" style="background:#FAFEFF;" title="surface-canvas: #FAFEFF"></div>
+              <div class="color-swatch" style="background:#D0EAF3;" title="surface-subtle: #D0EAF3"></div>
+            </div>
+            <div class="color-card__desc">Steel Blue 品牌色 × 極淡藍白背景</div>
+            <div style="margin-top:12px; font-size:12px; color:var(--upgpt-color-muted);">
+              primary: <code style="font-size:11px;">--upgpt-blue-500</code><br>
+              canvas: <code style="font-size:11px;">--upgpt-neutral-150</code>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-card__title">Work Agent Flow <code style="font-size:11px;">data-theme="workagent"</code></div>
+            <div class="color-swatches">
+              <div class="color-swatch" style="background:#4694B5;" title="primary-bg-default: #4694B5"></div>
+              <div class="color-swatch" style="background:#FFDA47;" title="accent-bg-default: #FFDA47"></div>
+              <div class="color-swatch" style="background:#FAFEFF;" title="surface-canvas: #FAFEFF"></div>
+              <div class="color-swatch" style="background:#EFF9FB;" title="surface-subtle: #EFF9FB"></div>
+            </div>
+            <div class="color-card__desc">Steel Blue 主 + 黃色強調 × 批次流程導向</div>
+            <div style="margin-top:12px; font-size:12px; color:var(--upgpt-color-muted);">
+              primary: <code style="font-size:11px;">--upgpt-blue-500</code><br>
+              accent: <code style="font-size:11px;">--upgpt-yellow-400</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. TOKEN CHANGE IMPACT -->
+      <section class="ds-section" id="token-impact">
+        <span class="ds-section__label">Governance</span>
+        <h2>Token Change Impact</h2>
+        <p class="ds-section__desc">
+          不同層級的 Token 修改，影響範圍與風險程度差異很大。
+          修改前務必評估下表中的層級、影響範圍與建議流程。
+        </p>
+
+        <table class="impact-table">
+          <thead>
+            <tr>
+              <th>Token 層級</th>
+              <th>影響</th>
+              <th>風險</th>
+              <th>適用情境</th>
+              <th>建議流程</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primitive Token</strong><br><code style="font-size:11px;">--upgpt-cyan-500</code></td>
+              <td><span class="badge badge--high">High</span><br>更動所有引用它的 Semantic Token，影響整個產品線</td>
+              <td>可能造成視覺 bug 或可及性問題</td>
+              <td>品牌色更新、可及性對比度修正</td>
+              <td>盤點所有引用 → Staging 測試 → 公告遷移</td>
+            </tr>
+            <tr>
+              <td><strong>Semantic Token（通用）</strong><br><code style="font-size:11px;">--upgpt-primary-bg-default</code></td>
+              <td><span class="badge badge--high">High</span><br>影響所有使用此語意角色的元件</td>
+              <td>跨元件視覺不一致</td>
+              <td>互動狀態調整、主題更新</td>
+              <td>審查元件清單 → 提案說明 → Staging 驗證</td>
+            </tr>
+            <tr>
+              <td><strong>Semantic Token（情境）</strong><br><code style="font-size:11px;">--upgpt-btn-primary-bg-default</code></td>
+              <td><span class="badge badge--med">Medium</span><br>只影響特定元件或情境</td>
+              <td>局部視覺變化，較易控制</td>
+              <td>單一元件微調、情境差異化</td>
+              <td>確認元件使用範圍 → PR Review</td>
+            </tr>
+            <tr>
+              <td><strong>Component Token</strong><br><code style="font-size:11px;">--upgpt-btn-label-padding-x</code></td>
+              <td><span class="badge badge--low">Low</span><br>只影響單一元件的特定屬性</td>
+              <td>低風險，通常為局部調整</td>
+              <td>元件版面微調、尺寸更新</td>
+              <td>元件測試 → 合併</td>
+            </tr>
+            <tr>
+              <td><strong>新增 Token</strong></td>
+              <td><span class="badge badge--low">Low</span><br>不影響現有 Token，擴充系統</td>
+              <td>Token 數量增加，需避免重複</td>
+              <td>新元件需求、情境擴充</td>
+              <td>確認無重複 → 命名審查 → 文件更新</td>
+            </tr>
+            <tr>
+              <td><strong>棄用 Token</strong></td>
+              <td><span class="badge badge--med">Medium</span><br>可能導致引用方報錯</td>
+              <td>Deprecated 若未公告，會破壞相依</td>
+              <td>清理廢棄 Token、命名統一</td>
+              <td>標記 deprecated → 公告期 → 確認無引用後移除</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- 11. PRODUCTS -->
+      <section class="ds-section" id="products">
+        <span class="ds-section__label">Products</span>
+        <h2>三款產品的設計亮點</h2>
+        <p class="ds-section__desc">同一套 Token 系統，三種 Theme 詮釋。每個產品透過 data-theme 屬性啟用對應的色彩配置。</p>
+
+        <div class="product-showcase">
+          <div class="product-card">
+            <span class="product-card__icon">🔷</span>
+            <h3>UpGPT Portal</h3>
+            <div class="product-card__subtitle">企業知識庫入口</div>
+            <p>
+              <strong>定位：</strong>知識庫與 AI 對話的核心平台<br>
+              <strong>視覺：</strong>暖色系背景，卡片式佈局<br>
+              <strong>互動：</strong>對話介面、知識卡片、Agent 管理
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="upgpt"</span>
+              <span class="theme-chip" style="background:var(--upgpt-cyan-100);border-color:var(--upgpt-cyan-500);color:var(--upgpt-cyan-700);">primary: cyan-500</span>
+            </div>
+          </div>
+          <div class="product-card">
+            <span class="product-card__icon">🔶</span>
+            <h3>UpAgent Desktop</h3>
+            <div class="product-card__subtitle">本機文件查詢應用</div>
+            <p>
+              <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br>
+              <strong>視覺：</strong>冷淡藍白，Sidebar 導航<br>
+              <strong>互動：</strong>檔案查詢、Sidebar 列表、抽屜操作
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="upagent"</span>
+              <span class="theme-chip" style="background:var(--upgpt-blue-100);border-color:var(--upgpt-blue-500);color:var(--upgpt-blue-600);">primary: blue-500</span>
+            </div>
+          </div>
+          <div class="product-card">
+            <span class="product-card__icon">⚙️</span>
+            <h3>Work Agent Flow</h3>
+            <div class="product-card__subtitle">批次工作流程管理</div>
+            <p>
+              <strong>定位：</strong>企業自動化工作流編排與執行<br>
+              <strong>視覺：</strong>步驟條追蹤，黃色強調<br>
+              <strong>互動：</strong>步驟進度、狀態指示、批次提交
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="workagent"</span>
+              <span class="theme-chip" style="background:var(--upgpt-blue-100);border-color:var(--upgpt-blue-500);color:var(--upgpt-blue-600);">primary: blue-500</span>
+              <span class="theme-chip" style="background:var(--upgpt-yellow-300);border-color:var(--upgpt-yellow-500);color:#7a5f00;">accent: yellow-400</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="ds-section" id="cta">
+        <span class="ds-section__label">More</span>
+        <h2>進一步了解</h2>
+        <div class="ds-nav">
+          <a href="works/case-upgpt.html">查看 UpGPT 案例研究 →</a>
+          <a href="portfolio.html">回到 Portfolio →</a>
+        </div>
+      </section>
+
+    </div><!-- /ds-content -->
+  </div><!-- /ds-body -->
+
+</main>
+
+<!-- ===== PRESERVED: Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
+    <a href="index.html#top" class="footer__top">Back to Top ↑</a>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+  // Theme Switcher
+  const themeBtns = document.querySelectorAll('.theme-btn');
+  const body = document.body;
+  body.setAttribute('data-theme', 'upgpt');
+
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      body.setAttribute('data-theme', theme);
+      themeBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+
+  // Sidenav active link on scroll
+  const sections = document.querySelectorAll('.ds-section[id]');
+  const navLinks = document.querySelectorAll('.ds-sidenav__link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('is-active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('is-active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
