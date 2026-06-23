@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>UpGPT × UpAgent Design System — Rachel Lee</title>
-<meta name="description" content="統一的 AI 產品設計系統，涵蓋 UpGPT Portal、UpAgent Desktop、Work Agent Flow" />
+<title>AI Agent Design System — Rachel Lee</title>
+<meta name="description" content="統一的 AI 產品設計系統，涵蓋 AI Agent、AI Agent Desktop、Work Agent FlowAI Agent、AI Agent Desktop、Work Agent Flow" />
 <link rel="icon" type="image/png" href="img/rachelLogo.png" />
 <link rel="preload" href="fonts/Orpheus-Regular.ttf" as="font" type="font/ttf" crossorigin />
 <link rel="stylesheet" href="css/style.css" />
@@ -134,7 +134,7 @@
   --upgpt-elevation-surface-3: 0 8px 16px rgba(153,153,153,0.20);
   --upgpt-elevation-edge-top:   0 -2px 8px rgba(0,0,0,0.08);
 
-  /* Primary (Brand) — default = UpGPT */
+  /* Primary (Brand) — default = AI Agent */
   --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
   --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
   --upgpt-primary-bg-active:    var(--upgpt-cyan-700);
@@ -190,7 +190,7 @@
    使用方式：<body data-theme="upgpt|upagent|workagent">
    ============================================================ */
 
-[data-theme="upgpt"] {
+[data-theme="ai-agent"] {
   --upgpt-surface-canvas:       var(--upgpt-neutral-50);
   --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
   --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
@@ -830,7 +830,7 @@ body {
   <div class="container">
     <div class="detail-header__inner">
       <div class="detail-header__title">
-        <h1>UpGPT × UpAgent Design System</h1>
+        <h1>AI Agent Design System</h1>
         <p>Design System</p>
       </div>
       <div class="detail-nav">
@@ -847,15 +847,15 @@ body {
   <section class="ds-hero">
     <div class="container">
       <a href="portfolio.html" class="ds-hero__back">← Back to Portfolio</a>
-      <h1>UpGPT × UpAgent<br>Design System</h1>
+      <h1>AI Agent<br>Design System</h1>
       <p class="ds-hero__desc">
         統一規範，多線產品。依照 SGDS Token 架構，同一套 Design Token、Typography、Spacing，
-        針對三個產品線（UpGPT Portal、UpAgent Desktop、Work Agent Flow）進行差異化 Theme 配置。
+        針對三個產品線（AI Agent、AI Agent Desktop、Work Agent FlowAI Agent、AI Agent Desktop、Work Agent Flow）進行差異化 Theme 配置。
       </p>
       <div class="theme-switcher">
         <span class="theme-switcher__label">Preview Theme：</span>
-        <button class="theme-btn is-active" data-theme="upgpt">UpGPT Portal</button>
-        <button class="theme-btn" data-theme="upagent">UpAgent Desktop</button>
+        <button class="theme-btn is-active" data-theme="ai-agent">AI Agent</button>
+        <button class="theme-btn" data-theme="upagent">AI Agent Desktop</button>
         <button class="theme-btn" data-theme="workagent">Work Agent Flow</button>
       </div>
     </div>
@@ -958,7 +958,7 @@ body {
         </p>
 
         <h3>Primitive Color Ramp</h3>
-        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Cyan Scale（UpGPT 主色）</p>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Cyan Scale（AI Agent 主色）</p>
         <div class="color-ramp">
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-100)"></span><div class="ramp-label">100</div></div>
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-200)"></span><div class="ramp-label">200</div></div>
@@ -966,7 +966,7 @@ body {
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-600)"></span><div class="ramp-label">600</div></div>
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-cyan-700)"></span><div class="ramp-label">700</div></div>
         </div>
-        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Blue Scale（UpAgent / Work Agent 主色）</p>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:16px;">Blue Scale（AI Agent Desktop / Work Agent 主色）</p>
         <div class="color-ramp">
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-100)"></span><div class="ramp-label">100</div></div>
           <div class="ramp-item"><span class="ramp-swatch" style="background:var(--upgpt-blue-200)"></span><div class="ramp-label">200</div></div>
@@ -1404,7 +1404,7 @@ body {
 
         <div class="color-grid">
           <div class="color-card">
-            <div class="color-card__title">UpGPT Portal <code style="font-size:11px;">data-theme="upgpt"</code></div>
+            <div class="color-card__title">AI Agent <code style="font-size:11px;">data-theme="ai-agent"</code></div>
             <div class="color-swatches">
               <div class="color-swatch" style="background:#14C6DE;" title="primary-bg-default: #14C6DE"></div>
               <div class="color-swatch" style="background:#E9F8FB;" title="primary-bg-subtle: #E9F8FB"></div>
@@ -1418,7 +1418,7 @@ body {
             </div>
           </div>
           <div class="color-card">
-            <div class="color-card__title">UpAgent Desktop <code style="font-size:11px;">data-theme="upagent"</code></div>
+            <div class="color-card__title">AI Agent Desktop <code style="font-size:11px;">data-theme="upagent"</code></div>
             <div class="color-swatches">
               <div class="color-swatch" style="background:#4694B5;" title="primary-bg-default: #4694B5"></div>
               <div class="color-swatch" style="background:#EFF9FB;" title="primary-bg-subtle: #EFF9FB"></div>
@@ -1522,7 +1522,7 @@ body {
         <div class="product-showcase">
           <div class="product-card">
             <span class="product-card__icon">🔷</span>
-            <h3>UpGPT Portal</h3>
+            <h3>AI Agent</h3>
             <div class="product-card__subtitle">企業知識庫入口</div>
             <p>
               <strong>定位：</strong>知識庫與 AI 對話的核心平台<br>
@@ -1530,13 +1530,13 @@ body {
               <strong>互動：</strong>對話介面、知識卡片、Agent 管理
             </p>
             <div class="product-card__theme">
-              <span class="theme-chip">data-theme="upgpt"</span>
+              <span class="theme-chip">data-theme="ai-agent"</span>
               <span class="theme-chip" style="background:var(--upgpt-cyan-100);border-color:var(--upgpt-cyan-500);color:var(--upgpt-cyan-700);">primary: cyan-500</span>
             </div>
           </div>
           <div class="product-card">
             <span class="product-card__icon">🔶</span>
-            <h3>UpAgent Desktop</h3>
+            <h3>AI Agent Desktop</h3>
             <div class="product-card__subtitle">本機文件查詢應用</div>
             <p>
               <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br>
@@ -1571,7 +1571,7 @@ body {
         <span class="ds-section__label">More</span>
         <h2>進一步了解</h2>
         <div class="ds-nav">
-          <a href="works/case-upgpt.html">查看 UpGPT 案例研究 →</a>
+          <a href="works/case-upgpt.html">查看 AI Agent 案例研究 →</a>
           <a href="portfolio.html">回到 Portfolio →</a>
         </div>
       </section>
