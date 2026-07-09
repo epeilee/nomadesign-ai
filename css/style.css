@@ -40,9 +40,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 ul { list-style: none; }
 
 /* ---- Global headings — mirrors Nomadesign common.css ---- */
-h1 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 30px; color: #333; font-weight: 400; letter-spacing: 1.4px; }
-h2 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 24px; color: #333; font-weight: 400; letter-spacing: 1.4px; padding-bottom: 40px; }
-h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 40px; color: #04CBC3; font-weight: 400; }
+h1 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 30px; color: #333; font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.5px currentColor; }
+h2 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 24px; color: #333; font-weight: 400; letter-spacing: 1.4px; padding-bottom: 24px; -webkit-text-stroke: 0.5px currentColor; }
+h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 40px; color: #04CBC3; font-weight: 400; -webkit-text-stroke: 0.5px currentColor; }
 h4 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 24px; color: #333; font-weight: 400; letter-spacing: 1.4px; }
 h5, h6 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-weight: 400; letter-spacing: 1.4px; }
 p  { font-family: 'Lato', 'Noto Sans TC', 'Open Sans', sans-serif; font-size: 16px; color: #666; font-weight: 400; line-height: 2; }
@@ -240,6 +240,7 @@ body { padding-top: var(--nav-h); }
     letter-spacing: .056em;
 }
 .hero .accent { color: var(--accent); font-weight: 400; }
+.hero__cta { display: flex; justify-content: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
 
 /* ==========================================================================
    SECTIONS — alternating black / grey / white
@@ -1341,6 +1342,7 @@ body { padding-top: var(--nav-h); }
     font-size: var(--font-h5);
     letter-spacing: 1.4px;
     line-height: 200%;
+    -webkit-text-stroke: 0.5px currentColor;
     color: var(--text-second);
     text-align: right;
 }
@@ -1418,6 +1420,8 @@ body { padding-top: var(--nav-h); }
 @media (max-width: 768px) {
     .container { padding: 0 20px; }
     .nav__brand { display: block; font-size: 26px; font-weight: 500; flex: 1; text-align: center; }
+    .nav__menu > .nav__link:first-child { display: none; }
+    .nav__menu > .nav__sep:first-of-type { display: none; }
     .nav__inner { justify-content: center; padding-left: 0; }
     .nav__menu {
         position: fixed;
@@ -1532,7 +1536,6 @@ body { padding-top: var(--nav-h); }
     .slider__btn--prev { left: 0; }
     .slider__btn--next { right: 0; }
     .detail-section { padding: 40px 0; }
-    h2 { padding-bottom: 24px; }
     .detail-section__title { font-size: 22px; margin-bottom: 0; }
     p { font-size: 14px; }
     .detail-case__label { font-size: 14px; }

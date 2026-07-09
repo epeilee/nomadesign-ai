@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
@@ -7,6 +7,9 @@
 <meta name="description" content="統一的 AI 產品設計系統，三產品線共用設計 Token 與 Theme 管理" />
 <link rel="icon" type="image/png" href="img/rachelLogo.png" />
 <link rel="preload" href="fonts/Orpheus-Regular.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 <style>
 /* ============================================================
@@ -384,7 +387,7 @@ body {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 0px;
   align-items: start;
 }
 
@@ -446,7 +449,7 @@ body {
 }
 .ds-section__label {
   display: inline-block;
-  font-size: 11px;
+  font-size: var(--upgpt-font-size-body-sm);
   font-weight: var(--upgpt-font-weight-semibold);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -456,16 +459,20 @@ body {
 .ds-section h2 {
   font-family: var(--upgpt-font-family-brand);
   font-size: var(--upgpt-font-size-heading-lg);
-  font-weight: var(--upgpt-font-weight-bold);
-  line-height: var(--upgpt-line-height-heading);
+  font-weight: var(--upgpt-font-weight-regular);
+  line-height: 160%;
+  letter-spacing: 1.4px;
+  -webkit-text-stroke: 0.5px currentColor;
   margin-bottom: var(--upgpt-padding-md);
   color: var(--upgpt-color-default);
 }
 .ds-section__desc {
-  font-size: var(--upgpt-font-size-body-md);
-  color: var(--upgpt-color-muted);
+  font-family: 'Lato', 'Noto Sans TC', 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666;
   max-width: 640px;
-  line-height: var(--upgpt-line-height-body);
+  line-height: 2;
   margin-bottom: var(--upgpt-padding-xl);
 }
 .ds-section h2:has(+ .ds-section__desc) {
@@ -473,7 +480,10 @@ body {
 }
 .ds-section h3 {
   font-size: var(--upgpt-font-size-heading-sm);
-  font-weight: var(--upgpt-font-weight-semibold);
+  font-weight: var(--upgpt-font-weight-regular);
+  line-height: 160%;
+  letter-spacing: 1.4px;
+  -webkit-text-stroke: 0.5px currentColor;
   margin: var(--upgpt-margin-md) 0 var(--upgpt-padding-md) 0;
   color: var(--upgpt-color-default);
 }
@@ -1096,7 +1106,7 @@ body {
 /* Matrix heading (blue label + grey continuation) */
 .matrix-heading {
   margin: var(--upgpt-padding-xl) 0 var(--upgpt-padding-sm);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: var(--upgpt-font-weight-semibold);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1113,6 +1123,7 @@ body {
   border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle);
 }
 .matrix-tab {
+  width: 120px;
   padding: 8px 2px;
   margin-bottom: -1px;
   border: none;
@@ -1134,6 +1145,32 @@ body {
 .btn-matrix[data-active-size="s"] [data-col-size="m"] { display: none; }
 .tabs-matrix[data-active-size="primary"] [data-col-size="secondary"] { display: none; }
 .tabs-matrix[data-active-size="secondary"] [data-col-size="primary"] { display: none; }
+.dialog-size-grid[data-active-size="s"] [data-col-size="m"],
+.dialog-size-grid[data-active-size="s"] [data-col-size="l"],
+.dialog-size-grid[data-active-size="m"] [data-col-size="s"],
+.dialog-size-grid[data-active-size="m"] [data-col-size="l"],
+.dialog-size-grid[data-active-size="l"] [data-col-size="s"],
+.dialog-size-grid[data-active-size="l"] [data-col-size="m"] { display: none; }
+.selector-tabs[data-active-size="radio"] [data-col-size="checkbox"],
+.selector-tabs[data-active-size="radio"] [data-col-size="switch"],
+.selector-tabs[data-active-size="checkbox"] [data-col-size="radio"],
+.selector-tabs[data-active-size="checkbox"] [data-col-size="switch"],
+.selector-tabs[data-active-size="switch"] [data-col-size="radio"],
+.selector-tabs[data-active-size="switch"] [data-col-size="checkbox"] { display: none; }
+.dialog-header-tabs[data-active-size="left"] [data-col-size="center"],
+.dialog-header-tabs[data-active-size="center"] [data-col-size="left"] { display: none; }
+.dialog-footer-tabs[data-active-size="save"] [data-col-size="next"],
+.dialog-footer-tabs[data-active-size="save"] [data-col-size="delete"],
+.dialog-footer-tabs[data-active-size="save"] [data-col-size="cancel"],
+.dialog-footer-tabs[data-active-size="next"] [data-col-size="save"],
+.dialog-footer-tabs[data-active-size="next"] [data-col-size="delete"],
+.dialog-footer-tabs[data-active-size="next"] [data-col-size="cancel"],
+.dialog-footer-tabs[data-active-size="delete"] [data-col-size="save"],
+.dialog-footer-tabs[data-active-size="delete"] [data-col-size="next"],
+.dialog-footer-tabs[data-active-size="delete"] [data-col-size="cancel"],
+.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="save"],
+.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="next"],
+.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="delete"] { display: none; }
 
 /* Tabs matrix (Primary segmented / Secondly underline) */
 .tabs-matrix { border-collapse: collapse; width: 100%; min-width: 760px; }
@@ -1277,9 +1314,7 @@ body {
 .mock-btn2--primary-red { background: #ED4242; color: #fff; }
 .mock-btn2--primary-red.is-hover { background: #D93636; }
 
-.dialog-parts { display: flex; gap: var(--upgpt-padding-xl); flex-wrap: wrap; padding: var(--upgpt-padding-lg) 0; }
-.dialog-part { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: var(--upgpt-padding-sm); }
-.dialog-part__label { font-size: 12px; font-weight: var(--upgpt-font-weight-semibold); color: var(--upgpt-color-muted); }
+.dialog-header-tabs, .dialog-footer-tabs { display: flex; gap: var(--upgpt-padding-xl); flex-wrap: wrap; padding: var(--upgpt-padding-lg) 0; }
 
 .mock-dialog-header, .mock-dialog-footer {
   border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
@@ -1290,7 +1325,7 @@ body {
   display: flex;
   align-items: center;
 }
-.mock-dialog-header { justify-content: space-between; font-size: 14px; font-weight: var(--upgpt-font-weight-bold); color: var(--upgpt-color-default); }
+.mock-dialog-header { justify-content: space-between; font-size: var(--upgpt-font-size-heading-sm); font-weight: var(--upgpt-font-weight-semibold); color: var(--upgpt-color-default); }
 .mock-dialog-header--center { justify-content: center; position: relative; }
 .mock-dialog-header--center .icon-svg { position: absolute; right: 16px; }
 .mock-dialog-header .icon-svg { width: 14px; height: 14px; color: var(--upgpt-color-muted); }
@@ -1305,14 +1340,17 @@ body {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
-.mock-dialog__header { display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 14px; border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle); font-size: 13px; font-weight: var(--upgpt-font-weight-bold); color: var(--upgpt-color-default); }
+.mock-dialog__header { display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 14px; border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle); font-size: var(--upgpt-font-size-heading-sm); font-weight: var(--upgpt-font-weight-semibold); color: var(--upgpt-color-default); }
 .mock-dialog__header .icon-svg { width: 12px; height: 12px; color: var(--upgpt-color-muted); flex-shrink: 0; }
+.mock-dialog__header--center { justify-content: center; position: relative; }
+.mock-dialog__header--center .icon-svg { position: absolute; right: 14px; }
 .mock-dialog__body { flex: 1; min-height: 64px; padding: 14px; font-size: 12px; color: var(--upgpt-color-muted); }
+.mock-dialog__body--center { text-align: center; }
 .mock-dialog__footer { display: flex; align-items: center; justify-content: flex-end; gap: 8px; height: 44px; padding: 0 14px; border-top: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle); }
 
-.mock-dialog--s { width: 180px; }
-.mock-dialog--m { width: 270px; }
-.mock-dialog--l { width: 360px; }
+.mock-dialog--s { width: 360px; height: 240px; }
+.mock-dialog--m { width: 560px; height: 240px; }
+.mock-dialog--l { width: 720px; height: 240px; }
 
 .dialog-size-grid { display: flex; gap: var(--upgpt-padding-xl); flex-wrap: wrap; padding: var(--upgpt-padding-lg) 0; }
 .dialog-size-col { display: flex; flex-direction: column; gap: var(--upgpt-padding-md); align-items: flex-start; }
@@ -1755,10 +1793,10 @@ body {
     <div class="detail-header__inner">
       <div class="detail-header__title">
         <h1>AI Agent Design System</h1>
-        <p>Design System</p>
+        <p>AI Agent Platform</p>
       </div>
       <div class="detail-nav">
-        <a href="works/case-upgpt.html" class="detail-nav__prev">&lt; Previous Project</a>
+        <a href="portfolio.html" class="detail-nav__prev">&lt; Previous Project</a>
         <a href="portfolio-sonar.html" class="detail-nav__next">Next Project &gt;</a>
       </div>
     </div>
@@ -1766,24 +1804,6 @@ body {
 </section>
 
 <main>
-
-  <!-- ===== DS HERO ===== -->
-  <section class="ds-hero">
-    <div class="container">
-      <a href="portfolio.html" class="ds-hero__back">← Back to Portfolio</a>
-      <h1>AI Platform<br>Design System</h1>
-      <p class="ds-hero__desc">
-        統一規範，多線產品。依照 SGDS Token 架構，同一套 Design Token、Typography、Spacing，
-        針對三個產品線進行差異化 Theme 配置，確保品牌一致性與視覺層級清晰。
-      </p>
-      <div class="theme-switcher">
-        <span class="theme-switcher__label">Preview Theme：</span>
-        <button class="theme-btn is-active" data-theme="ai-agent">AI Agent</button>
-        <button class="theme-btn" data-theme="upagent">AI Agent Desktop</button>
-        <button class="theme-btn" data-theme="workagent">Work Agent</button>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== DS BODY: sidenav + content ===== -->
   <div class="ds-body container">
@@ -1813,8 +1833,7 @@ body {
       <!-- 1. TOKEN ARCHITECTURE -->
       <!-- 0. PRODUCTS THEME -->
       <section class="ds-section" id="products-theme">
-        <span class="ds-section__label">Products Theme</span>
-        <h2>三款產品的 Theme 系統</h2>
+        <h2>Products Theme</h2>
         <p class="ds-section__desc">
           同一套 Token 系統，透過 <code>data-theme</code> 屬性切換出三種產品體驗。
           Semantic Token 映射到不同的 Primitive 色值，元件程式碼無需修改。
@@ -1871,6 +1890,13 @@ body {
               <strong>視覺：</strong>步驟條追蹤，黃色強調
             </p>
           </div>
+        </div>
+
+        <div class="spec-subheading">Applied in Product</div>
+        <div class="project-grid">
+          <div class="project-grid__item"><img src="img/aiagent/aiagent-answer-page.jpg" alt="AI Agent 以圖搜圖答案頁" loading="lazy" /><span class="project-grid__cap">AI Agent</span></div>
+          <div class="project-grid__item"><img src="img/aiagent/aiagentdesktop-reasoning.jpg" alt="AI Agent Desktop 多輪推理與工作資料夾" loading="lazy" /><span class="project-grid__cap">AI Agent Desktop</span></div>
+          <div class="project-grid__item"><img src="img/aiagent/workagent-flow-06-complete.jpg" alt="Work Agent 生成完成資料表" loading="lazy" /><span class="project-grid__cap">Work Agent</span></div>
         </div>
       </section>
 
@@ -1942,8 +1968,8 @@ body {
 
       <!-- 2. COLOUR -->
       <section class="ds-section" id="colour">
-        <span class="ds-section__label">Colour</span>
-        <h2>色彩系統</h2>
+        <span class="ds-section__label">色彩系統</span>
+        <h2>Colour</h2>
         <p class="ds-section__desc">
           三款產品共用同一套 Primitive 色階，透過 Semantic Token 映射不同的 Theme，
           實現品牌差異化同時維持設計一致性。
@@ -2326,8 +2352,8 @@ body {
       </section>
       <!-- 3. TYPOGRAPHY -->
       <section class="ds-section" id="typography">
-        <span class="ds-section__label">Typography</span>
-        <h2>字體排版系統</h2>
+        <span class="ds-section__label">字體排版系統</span>
+        <h2>Typography</h2>
         <div class="type-display">
           <div class="type-display__row type-display__row--head">
             <span></span>
@@ -2467,8 +2493,8 @@ body {
 
       <!-- 4. SPACING -->
       <section class="ds-section" id="spacing">
-        <span class="ds-section__label">Spacing</span>
-        <h2>間距系統</h2>
+        <span class="ds-section__label">間距系統</span>
+        <h2>Spacing</h2>
         <div class="spacing-specimen">
           <table class="token-table">
             <thead>
@@ -2579,8 +2605,8 @@ body {
 
       <!-- 5. BORDER -->
       <section class="ds-section" id="border">
-        <span class="ds-section__label">Border</span>
-        <h2>邊框與圓角</h2>
+        <span class="ds-section__label">邊框與圓角</span>
+        <h2>Border</h2>
         <table class="token-table">
           <thead>
             <tr><th>Token</th><th>Value · 用途</th></tr>
@@ -2651,8 +2677,8 @@ body {
       </section>
       <!-- 6. ELEVATION -->
       <section class="ds-section" id="elevation">
-        <span class="ds-section__label">Shadow</span>
-        <h2>陰影</h2>
+        <span class="ds-section__label">陰影</span>
+        <h2>Shadow</h2>
         <table class="token-table">
           <thead>
             <tr><th>Token</th><th>Value · 用途</th></tr>
@@ -2729,8 +2755,8 @@ body {
 
       <!-- 7. BREAKPOINTS -->
       <section class="ds-section" id="breakpoints">
-        <span class="ds-section__label">Breakpoint</span>
-        <h2>斷點</h2>
+        <span class="ds-section__label">斷點</span>
+        <h2>Breakpoint</h2>
 
         <table class="token-table">
           <thead>
@@ -2869,7 +2895,7 @@ body {
 
       <!-- 8. BUTTONS -->
       <section class="ds-section" id="buttons">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">按鈕</span>
         <h2>Buttons</h2>
 
         <table class="token-table">
@@ -3020,7 +3046,7 @@ body {
 
       <!-- 9. INPUTS -->
       <section class="ds-section" id="inputs">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">輸入框</span>
         <h2>Inputs</h2>
 
         <table class="token-table">
@@ -3209,7 +3235,7 @@ body {
 
       <!-- 10. SELECTORS -->
       <section class="ds-section" id="selectors">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">選擇器</span>
         <h2>Selectors</h2>
 
         <table class="token-table">
@@ -3226,6 +3252,13 @@ body {
           </tbody>
         </table>
 
+        <div class="matrix-tabs">
+          <button type="button" class="matrix-tab is-active" data-size="radio">Radio</button>
+          <button type="button" class="matrix-tab" data-size="checkbox">Checkbox</button>
+          <button type="button" class="matrix-tab" data-size="switch">Switch</button>
+        </div>
+        <div class="selector-tabs" data-active-size="radio">
+        <div data-col-size="radio">
         <div class="matrix-heading"><b>Radio</b></div>
         <div class="table-scroll">
         <table class="selector-matrix">
@@ -3270,7 +3303,9 @@ body {
           </tbody>
         </table>
         </div>
+        </div>
 
+        <div data-col-size="checkbox">
         <div class="matrix-heading"><b>Checkbox</b></div>
         <div class="table-scroll">
         <table class="selector-matrix">
@@ -3322,7 +3357,9 @@ body {
           </tbody>
         </table>
         </div>
+        </div>
 
+        <div data-col-size="switch">
         <div class="matrix-heading"><b>Switch</b></div>
         <div class="table-scroll">
         <table class="selector-matrix">
@@ -3367,11 +3404,13 @@ body {
           </tbody>
         </table>
         </div>
+        </div>
+        </div>
       </section>
 
       <!-- 10. TABS -->
       <section class="ds-section" id="tabs">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">頁籤</span>
         <h2>Tabs</h2>
 
         <table class="token-table">
@@ -3441,7 +3480,7 @@ body {
 
       <!-- PAGINATION -->
       <section class="ds-section" id="pagination">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">分頁</span>
         <h2>Pagination</h2>
 
         <table class="token-table">
@@ -3506,7 +3545,7 @@ body {
 
       <!-- SCROLL BAR -->
       <section class="ds-section" id="scrollbar">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">捲軸</span>
         <h2>Scroll Bar</h2>
 
         <table class="token-table">
@@ -3531,7 +3570,7 @@ body {
 
       <!-- DIALOG -->
       <section class="ds-section" id="dialog">
-        <span class="ds-section__label">Component</span>
+        <span class="ds-section__label">對話框</span>
         <h2>Dialog</h2>
 
         <table class="token-table">
@@ -3550,48 +3589,61 @@ body {
           </tbody>
         </table>
 
-        <div class="dialog-parts">
-          <div class="dialog-part">
-            <span class="dialog-part__label">Dialog - Header</span>
-            <div class="mock-dialog-header">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-            <div class="mock-dialog-header mock-dialog-header--center">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+        <div class="matrix-heading"><b>Dialog - Header</b></div>
+        <div class="matrix-tabs">
+          <button type="button" class="matrix-tab is-active" data-size="left">Left</button>
+          <button type="button" class="matrix-tab" data-size="center">Center</button>
+        </div>
+        <div class="dialog-header-tabs" data-active-size="left">
+          <div data-col-size="left">
+            <div class="mock-dialog-header">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
           </div>
-          <div class="dialog-part">
-            <span class="dialog-part__label">Dialog - Footer</span>
-            <div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Save</span></div>
-            <div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Next</span></div>
-            <div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div>
-            <div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span></div>
+          <div data-col-size="center">
+            <div class="mock-dialog-header mock-dialog-header--center">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
           </div>
         </div>
 
+        <div class="matrix-heading"><b>Dialog - Footer</b></div>
+        <div class="matrix-tabs">
+          <button type="button" class="matrix-tab is-active" data-size="save">Save</button>
+          <button type="button" class="matrix-tab" data-size="next">Next</button>
+          <button type="button" class="matrix-tab" data-size="delete">Delete</button>
+          <button type="button" class="matrix-tab" data-size="cancel">Cancel</button>
+        </div>
+        <div class="dialog-footer-tabs" data-active-size="save">
+          <div data-col-size="save"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Save</span></div></div>
+          <div data-col-size="next"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Next</span></div></div>
+          <div data-col-size="delete"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div></div>
+          <div data-col-size="cancel"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span></div></div>
+        </div>
+
         <div class="matrix-heading"><b>Main</b></div>
-        <div class="dialog-size-grid">
-          <div class="dialog-size-col">
+        <div class="matrix-tabs">
+          <button type="button" class="matrix-tab is-active" data-size="s">Small</button>
+          <button type="button" class="matrix-tab" data-size="m">Medium</button>
+          <button type="button" class="matrix-tab" data-size="l">Large</button>
+        </div>
+        <div class="dialog-size-grid" data-active-size="s">
+          <div class="dialog-size-col" data-col-size="s">
             <span class="dialog-size-col__label"><b>Small</b>width : 480</span>
             <div class="mock-dialog mock-dialog--s">
-              <div class="mock-dialog__header">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__header">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
               <div class="mock-dialog__body"></div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Next</span></div>
             </div>
-            <div class="mock-dialog mock-dialog--s">
-              <div class="mock-dialog__header">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-              <div class="mock-dialog__body"></div>
-              <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div>
-            </div>
           </div>
-          <div class="dialog-size-col">
+          <div class="dialog-size-col" data-col-size="m">
             <span class="dialog-size-col__label"><b>Medium</b>width : 720</span>
             <div class="mock-dialog mock-dialog--m">
-              <div class="mock-dialog__header">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__header">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
               <div class="mock-dialog__body"></div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Save</span></div>
             </div>
           </div>
-          <div class="dialog-size-col">
+          <div class="dialog-size-col" data-col-size="l">
             <span class="dialog-size-col__label"><b>Large</b>width : 960</span>
             <div class="mock-dialog mock-dialog--l">
-              <div class="mock-dialog__header">Popup Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__header">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
               <div class="mock-dialog__body"></div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Save</span></div>
             </div>
@@ -3599,28 +3651,33 @@ body {
         </div>
 
         <div class="matrix-heading"><b>Confirm</b></div>
-        <div class="dialog-size-grid">
-          <div class="dialog-size-col">
+        <div class="matrix-tabs">
+          <button type="button" class="matrix-tab is-active" data-size="s">Small</button>
+          <button type="button" class="matrix-tab" data-size="m">Medium</button>
+          <button type="button" class="matrix-tab" data-size="l">Large</button>
+        </div>
+        <div class="dialog-size-grid" data-active-size="s">
+          <div class="dialog-size-col" data-col-size="s">
             <span class="dialog-size-col__label"><b>Small</b>width : 480</span>
             <div class="mock-dialog mock-dialog--s">
-              <div class="mock-dialog__header">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-              <div class="mock-dialog__body">Are you sure you want to delete this customized setting?</div>
+              <div class="mock-dialog__header mock-dialog__header--center">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__body mock-dialog__body--center">Are you sure you want to delete this customized setting?</div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div>
             </div>
           </div>
-          <div class="dialog-size-col">
+          <div class="dialog-size-col" data-col-size="m">
             <span class="dialog-size-col__label"><b>Medium</b>width : 720</span>
             <div class="mock-dialog mock-dialog--m">
-              <div class="mock-dialog__header">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-              <div class="mock-dialog__body">Are you sure you want to delete this customized setting?</div>
+              <div class="mock-dialog__header mock-dialog__header--center">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__body mock-dialog__body--center">Are you sure you want to delete this customized setting?</div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div>
             </div>
           </div>
-          <div class="dialog-size-col">
+          <div class="dialog-size-col" data-col-size="l">
             <span class="dialog-size-col__label"><b>Large</b>width : 960</span>
             <div class="mock-dialog mock-dialog--l">
-              <div class="mock-dialog__header">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-              <div class="mock-dialog__body">Are you sure you want to delete user<br>XXXX_account name</div>
+              <div class="mock-dialog__header mock-dialog__header--center">Delete User<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
+              <div class="mock-dialog__body mock-dialog__body--center">Are you sure you want to delete user<br>XXXX_account name</div>
               <div class="mock-dialog__footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div>
             </div>
           </div>
@@ -3628,25 +3685,32 @@ body {
       </section>
 
       <!-- CTA -->
-      <section class="ds-section" id="cta">
-        <span class="ds-section__label">More</span>
-        <h2>進一步了解</h2>
-        <div class="ds-nav">
-          <a href="works/case-upgpt.html">查看 AI Agent 案例研究 →</a>
-          <a href="portfolio.html">回到 Portfolio →</a>
-        </div>
-      </section>
-
     </div><!-- /ds-content -->
   </div><!-- /ds-body -->
 
 </main>
 
-<!-- ===== PRESERVED: Footer ===== -->
+<section class="detail-bottom-nav">
+  <div class="container">
+    <div class="detail-bottom-nav__inner">
+      <a href="portfolio.html">&lt; Previous Project</a>
+      <a href="portfolio-sonar.html">Next Project &gt;</a>
+    </div>
+  </div>
+</section>
 <footer class="footer">
-  <div class="container footer__inner">
-    <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
-    <a href="index.html#top" class="footer__top">Back to Top ↑</a>
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <h3>Nomad Design</h3>
+      <div class="footer__tags">
+        <span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
+      </div>
+    </div>
+    <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
+    <div class="footer__right">
+      For any feedback regarding my website or work, please send it to my email. I will get back to you as soon as possible!<br />
+      <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a>
+    </div>
   </div>
 </footer>
 
@@ -3668,11 +3732,12 @@ body {
 
   // Matrix size tabs (Medium / Small)
   document.querySelectorAll('.matrix-tabs').forEach(tabGroup => {
-    const table = tabGroup.nextElementSibling.querySelector('table');
+    const sibling = tabGroup.nextElementSibling;
+    const target = sibling.hasAttribute('data-active-size') ? sibling : sibling.querySelector('table');
     const tabs = tabGroup.querySelectorAll('.matrix-tab');
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        table.setAttribute('data-active-size', tab.dataset.size);
+        target.setAttribute('data-active-size', tab.dataset.size);
         tabs.forEach(t => t.classList.remove('is-active'));
         tab.classList.add('is-active');
       });

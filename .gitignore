@@ -23,3 +23,9 @@ npm-debug.log*
 # Env
 .env
 .env.local
+
+# Video source files (too large for GitHub; only web-optimized copies are tracked)
+video/UpAgent.mp4
+video/UpGPT_Demo.mp4
+video/work agent.mp4
+video/How_to_use_UpGPT_Portal_1.25倍速.mp4

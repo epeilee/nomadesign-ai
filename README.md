@@ -44,8 +44,7 @@ nomad-design/
 ├── js/
 │   └── script.js           # Nav / 篩選 / Reveal 動畫 / 滑順捲動
 ├── img/                    # 作品縮圖資料夾（自行放置實際圖片）
-├── works/                  # 作品詳細頁（Case Study）
-│   └── case-upgpt.html     # UpGPT Case Study 範本
+├── works/                  # 作品詳細頁（Case Study，目前無獨立頁面，內容已併入 portfolio.html）
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml      # GitHub Pages 自動部署
@@ -108,7 +107,7 @@ git push -u origin main
 
 ### 3. 新增 / 修改作品
 
-複製 `works/case-upgpt.html` 另存成 `works/case-xxx.html`，照著區塊改文案即可。
+複製一個現有的作品頁（如 `portfolio.html`）另存成新檔名，照著區塊改文案即可。
 首頁作品卡片的 `href` 也要記得改到新的檔名。
 
 ### 4. 調整配色

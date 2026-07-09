@@ -72,6 +72,49 @@
         tabBtnNext.addEventListener('click', () => pfTabsInner.scrollBy({ left: scrollAmt, behavior: 'smooth' }));
     }
 
+    /* ---------- 4b. Stat count-up (.case-stat__num[data-count]) ---------- */
+    const statNums = document.querySelectorAll('.case-stat__num[data-count]');
+    if (statNums.length) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const showFinal = el => { el.textContent = el.dataset.count + (el.dataset.suffix || ''); };
+        const countUp = el => {
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            const dur = 1200;
+            const t0 = performance.now();
+            const tick = now => {
+                const p = Math.min((now - t0) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+            statNums.forEach(showFinal);
+        } else {
+            const statIo = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        statIo.unobserve(entry.target);
+                        countUp(entry.target);
+                    }
+                });
+            }, { threshold: 0.4 });
+            statNums.forEach(el => statIo.observe(el));
+        }
+    }
+
+    /* ---------- 4c. Pause other videos when one starts playing ---------- */
+    const pageVideos = document.querySelectorAll('video');
+    if (pageVideos.length > 1) {
+        pageVideos.forEach(v => {
+            v.addEventListener('play', () => {
+                pageVideos.forEach(other => { if (other !== v) other.pause(); });
+            });
+        });
+    }
+
     /* ---------- 5. Portfolio Detail Sliders ---------- */
     document.querySelectorAll('.slider').forEach(slider => {
         const track = slider.querySelector('.slider__track');

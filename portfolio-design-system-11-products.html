@@ -1,0 +1,988 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Agent Design System — Rachel Lee</title>
+<meta name="description" content="統一的 AI 產品設計系統，三產品線共用設計 Token 與 Theme 管理" />
+<link rel="icon" type="image/png" href="img/rachelLogo.png" />
+<link rel="preload" href="fonts/Orpheus-Regular.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+/* ============================================================
+   PRIMITIVE LAYER — 原始值，不直接在元件中使用
+   命名規則：--upgpt-[category]-[scale]
+   ============================================================ */
+:root {
+  /* Color Primitives - UpGPT (Cyan) */
+  --upgpt-cyan-100: #E9F3F8;
+  --upgpt-cyan-200: #D6F7FF;
+  --upgpt-cyan-300: #D6F7FF;
+  --upgpt-cyan-400: #32DBF7;
+  --upgpt-cyan-500: #14C6DE;
+  --upgpt-cyan-600: #07B2D3;
+  --upgpt-cyan-700: #1095AF;
+  --upgpt-cyan-800: #096E82;
+  --upgpt-cyan-900: #04608B;
+
+  /* Color Primitives - UpAgent (Steel Blue) */
+  --upgpt-blue-100: #E5F4F9;
+  --upgpt-blue-200: #C3E3F1;
+  --upgpt-blue-300: #96CCDE;
+  --upgpt-blue-400: #68AECA;
+  --upgpt-blue-500: #4694B5;
+  --upgpt-blue-600: #357EA0;
+  --upgpt-blue-700: #266689;
+  --upgpt-blue-800: #1A4E6B;
+  --upgpt-blue-900: #0F3550;
+
+  /* Color Primitives - Yellow (Accent) */
+  --upgpt-yellow-100: #FFFDE0;
+  --upgpt-yellow-200: #FFF0A0;
+  --upgpt-yellow-300: #FFE566;
+  --upgpt-yellow-400: #FFDA47;
+  --upgpt-yellow-500: #F0C000;
+  --upgpt-yellow-600: #C49900;
+  --upgpt-yellow-700: #977500;
+  --upgpt-neutral-0:   #FFFFFF;
+  --upgpt-neutral-100: #F4F4F4;
+  --upgpt-neutral-200: #E8E8E8;
+  --upgpt-neutral-300: #CCCCCC;
+  --upgpt-neutral-400: #999999;
+  --upgpt-neutral-500: #888888;
+  --upgpt-neutral-600: #666666;
+  --upgpt-neutral-700: #555555;
+  --upgpt-neutral-800: #444444;
+  --upgpt-neutral-900: #222222;
+
+  /* Background Tokens - UpGPT (Cyan theme) */
+  --upgpt-bg-upgpt-content: #FCFBF7;
+  --upgpt-bg-upgpt-sidebar: #F3F3EE;
+  --upgpt-bg-upgpt-drawer: #FFFFFF;
+
+  /* Background Tokens - UpAgent (Steel Blue theme) */
+  --upgpt-bg-upagent-content: #FAFEFF;
+  --upgpt-bg-upagent-sidebar: #EFF9FB;
+  --upgpt-bg-upagent-drawer: #F2FCFF;
+
+  /* Spacer Primitives (AP: +4 / GP: x2) */
+  --upgpt-spacer-1:  4px;
+  --upgpt-spacer-2:  8px;
+  --upgpt-spacer-3:  12px;
+  --upgpt-spacer-4:  16px;
+  --upgpt-spacer-5:  20px;
+  --upgpt-spacer-6:  24px;
+  --upgpt-spacer-8:  32px;
+  --upgpt-spacer-12: 48px;
+  --upgpt-spacer-16: 64px;
+  --upgpt-spacer-24: 96px;
+  --upgpt-spacer-32: 128px;
+
+  /* Border Radius Primitives */
+  --upgpt-radius-0:    0px;
+  --upgpt-radius-1:    4px;
+  --upgpt-radius-2:    8px;
+  --upgpt-radius-3:    12px;
+  --upgpt-radius-4:    16px;
+  --upgpt-radius-full: 999px;
+
+  /* Border Width Primitives */
+  --upgpt-border-width-1: 1px;
+  --upgpt-border-width-2: 2px;
+
+  /* Font Size Primitives */
+  --upgpt-font-size-xs:   12px;
+  --upgpt-font-size-sm:   14px;
+  --upgpt-font-size-md:   16px;
+  --upgpt-font-size-lg:   20px;
+  --upgpt-font-size-xl:   28px;
+  --upgpt-font-size-2xl:  36px;
+  --upgpt-font-size-3xl:  52px;
+
+  /* Font Weight Primitives */
+  --upgpt-font-weight-regular: 400;
+  --upgpt-font-weight-medium:  500;
+  --upgpt-font-weight-semibold:600;
+  --upgpt-font-weight-bold:    700;
+
+  /* Line Height Primitives */
+  --upgpt-line-height-tight:  1.3;
+  --upgpt-line-height-normal: 1.6;
+  --upgpt-line-height-loose:  1.8;
+
+  /* Motion Primitives */
+  --upgpt-motion-duration-fast:     150ms;
+  --upgpt-motion-duration-standard: 250ms;
+  --upgpt-motion-duration-slow:     400ms;
+  --upgpt-motion-easing-enter:      cubic-bezier(.2,.8,.2,1);
+  --upgpt-motion-easing-exit:       cubic-bezier(.4,0,1,1);
+  --upgpt-motion-easing-standard:   cubic-bezier(.4,0,.2,1);
+
+  /* Opacity Primitives */
+  --upgpt-opacity-0:   0;
+  --upgpt-opacity-10:  0.10;
+  --upgpt-opacity-50:  0.50;
+  --upgpt-opacity-100: 1;
+
+  /* Z-index Primitives */
+  --upgpt-z-index-base:     0;
+  --upgpt-z-index-raised:   10;
+  --upgpt-z-index-dropdown: 100;
+  --upgpt-z-index-overlay:  200;
+  --upgpt-z-index-modal:    300;
+  --upgpt-z-index-tooltip:  400;
+  --upgpt-z-index-floating: 500;
+}
+/* ============================================================
+   SEMANTIC LAYER — 語意 Token，元件直接引用此層
+   命名規則：--upgpt-[object]-[base]-[modifier]
+   ============================================================ */
+
+/* === Default Theme (共用基礎) === */
+:root {
+  /* Surface */
+  --upgpt-surface-canvas:       var(--upgpt-neutral-50);
+  --upgpt-surface-default:      var(--upgpt-neutral-0);
+  --upgpt-surface-raised:       var(--upgpt-neutral-0);
+  --upgpt-surface-subtle:       var(--upgpt-neutral-100);
+
+  /* Color (Text) */
+  --upgpt-color-default:        var(--upgpt-neutral-800);
+  --upgpt-color-muted:          var(--upgpt-neutral-600);
+  --upgpt-color-subtle:         var(--upgpt-neutral-400);
+  --upgpt-color-fixed-light:    var(--upgpt-neutral-0);
+
+  /* Border */
+  --upgpt-border-color-default: var(--upgpt-neutral-200);
+  --upgpt-border-color-subtle:  var(--upgpt-neutral-100);
+
+  /* Elevation (Shadow) */
+  --upgpt-elevation-surface-1: 0 1px 1px rgba(0,0,0,0.20), 0 2px 2px rgba(0,0,0,0.14), 0 1px 5px rgba(0,0,0,0.12);
+  --upgpt-elevation-surface-2: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+  --upgpt-elevation-surface-3: 0 8px 16px rgba(153,153,153,0.20);
+  --upgpt-elevation-edge-top:   0 -2px 8px rgba(0,0,0,0.08);
+
+  /* Primary (Brand) — default = AI Agent */
+  --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
+  --upgpt-primary-bg-active:    var(--upgpt-cyan-700);
+  --upgpt-primary-bg-subtle:    var(--upgpt-cyan-100);
+  --upgpt-primary-border-color: var(--upgpt-cyan-500);
+  --upgpt-primary-color-default:var(--upgpt-color-fixed-light);
+
+  /* Typography */
+  --upgpt-font-family-brand: "Orpheus Pro", serif;
+  --upgpt-font-family-body:  Lato, "Noto Sans TC", "PingFang TC", sans-serif;
+  --upgpt-font-size-body-sm: var(--upgpt-font-size-sm);
+  --upgpt-font-size-body-md: var(--upgpt-font-size-md);
+  --upgpt-font-size-heading-sm: var(--upgpt-font-size-lg);
+  --upgpt-font-size-heading-md: var(--upgpt-font-size-xl);
+  --upgpt-font-size-heading-lg: var(--upgpt-font-size-2xl);
+  --upgpt-font-size-display:    var(--upgpt-font-size-3xl);
+  --upgpt-line-height-body:     var(--upgpt-line-height-loose);
+  --upgpt-line-height-heading:  var(--upgpt-line-height-tight);
+
+  /* Spacing (Semantic) */
+  --upgpt-padding-xs:  var(--upgpt-spacer-1);
+  --upgpt-padding-sm:  var(--upgpt-spacer-2);
+  --upgpt-padding-md:  var(--upgpt-spacer-4);
+  --upgpt-padding-lg:  var(--upgpt-spacer-6);
+  --upgpt-padding-xl:  var(--upgpt-spacer-12);
+  --upgpt-gap-xs:      var(--upgpt-spacer-1);
+  --upgpt-gap-sm:      var(--upgpt-spacer-2);
+  --upgpt-gap-md:      var(--upgpt-spacer-4);
+  --upgpt-gap-lg:      var(--upgpt-spacer-6);
+  --upgpt-gap-xl:      var(--upgpt-spacer-8);
+  --upgpt-margin-md:   var(--upgpt-spacer-6);
+  --upgpt-margin-lg:   var(--upgpt-spacer-12);
+
+  /* Border Radius (Semantic) */
+  --upgpt-border-radius-sm: var(--upgpt-radius-1);
+  --upgpt-border-radius-md: var(--upgpt-radius-2);
+  --upgpt-border-radius-lg: var(--upgpt-radius-3);
+  --upgpt-border-radius-xl: var(--upgpt-radius-4);
+
+  /* Motion (Semantic) */
+  --upgpt-motion-fast:     var(--upgpt-motion-duration-fast) var(--upgpt-motion-easing-standard);
+  --upgpt-motion-standard: var(--upgpt-motion-duration-standard) var(--upgpt-motion-easing-standard);
+  --upgpt-motion-enter:    var(--upgpt-motion-duration-standard) var(--upgpt-motion-easing-enter);
+  --upgpt-motion-exit:     var(--upgpt-motion-duration-fast) var(--upgpt-motion-easing-exit);
+
+  /* Accent */
+  --upgpt-accent-bg-default:    transparent;
+  --upgpt-accent-color-default: var(--upgpt-color-default);
+}
+
+/* ============================================================
+   THEME LAYER — 三個產品各自的 Theme 覆蓋
+   使用方式：<body data-theme="upgpt|upagent|workagent">
+   ============================================================ */
+
+[data-theme="ai-agent"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-50);
+  --upgpt-primary-bg-default:   var(--upgpt-cyan-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-cyan-600);
+  --upgpt-primary-bg-active:    var(--upgpt-cyan-700);
+  --upgpt-primary-bg-subtle:    var(--upgpt-cyan-100);
+  --upgpt-primary-border-color: var(--upgpt-cyan-500);
+  --upgpt-accent-bg-default:    transparent;
+}
+
+[data-theme="upagent"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-150);
+  --upgpt-surface-subtle:       var(--upgpt-blue-100);
+  --upgpt-primary-bg-default:   var(--upgpt-blue-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-blue-600);
+  --upgpt-primary-bg-active:    var(--upgpt-blue-600);
+  --upgpt-primary-bg-subtle:    var(--upgpt-blue-100);
+  --upgpt-primary-border-color: var(--upgpt-blue-500);
+  --upgpt-accent-bg-default:    transparent;
+}
+
+[data-theme="workagent"] {
+  --upgpt-surface-canvas:       var(--upgpt-neutral-150);
+  --upgpt-surface-subtle:       var(--upgpt-blue-100);
+  --upgpt-primary-bg-default:   var(--upgpt-blue-500);
+  --upgpt-primary-bg-hover:     var(--upgpt-blue-600);
+  --upgpt-primary-bg-active:    var(--upgpt-blue-600);
+  --upgpt-primary-bg-subtle:    var(--upgpt-blue-100);
+  --upgpt-primary-border-color: var(--upgpt-blue-500);
+  --upgpt-accent-bg-default:    var(--upgpt-yellow-400);
+  --upgpt-accent-color-default: var(--upgpt-neutral-900);
+}
+/* ============================================================
+   COMPONENT-SPECIFIC TOKENS
+   命名規則：--upgpt-[component]-[role]-[property]-[modifier]
+   ============================================================ */
+:root {
+  /* Button */
+  --upgpt-btn-primary-bg-default:   var(--upgpt-primary-bg-default);
+  --upgpt-btn-primary-bg-hover:     var(--upgpt-primary-bg-hover);
+  --upgpt-btn-primary-color-default:var(--upgpt-primary-color-default);
+  --upgpt-btn-primary-border-radius:var(--upgpt-border-radius-md);
+  --upgpt-btn-label-padding-x:      var(--upgpt-padding-lg);
+  --upgpt-btn-label-padding-y:      var(--upgpt-padding-sm);
+
+  /* Card */
+  --upgpt-card-bg-default:          var(--upgpt-surface-default);
+  --upgpt-card-border-color:        var(--upgpt-border-color-default);
+  --upgpt-card-border-radius:       var(--upgpt-border-radius-lg);
+  --upgpt-card-padding-x:           var(--upgpt-padding-lg);
+  --upgpt-card-padding-y:           var(--upgpt-padding-lg);
+  --upgpt-card-elevation-default:   var(--upgpt-elevation-surface-1);
+  --upgpt-card-elevation-hover:     var(--upgpt-elevation-surface-3);
+
+  /* Badge / Chip */
+  --upgpt-badge-bg-default:         var(--upgpt-primary-bg-subtle);
+  --upgpt-badge-color-default:      var(--upgpt-primary-bg-active);
+  --upgpt-badge-border-radius:      var(--upgpt-radius-full);
+  --upgpt-badge-padding-x:          var(--upgpt-spacer-2);
+  --upgpt-badge-padding-y:          var(--upgpt-spacer-1);
+
+  /* Token swatch item */
+  --upgpt-token-item-bg:            var(--upgpt-surface-canvas);
+  --upgpt-token-item-border-color:  var(--upgpt-border-color-default);
+  --upgpt-token-item-border-radius: var(--upgpt-border-radius-sm);
+}
+
+/* ============================================================
+   LAYOUT & PAGE STYLES
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--upgpt-surface-canvas);
+  color: var(--upgpt-color-default);
+  font-family: var(--upgpt-font-family-body);
+  font-size: var(--upgpt-font-size-body-md);
+  line-height: var(--upgpt-line-height-body);
+  transition: background var(--upgpt-motion-standard), color var(--upgpt-motion-standard);
+}
+
+/* DS Page Layout: Hero + Two-column (sidenav + content) */
+.ds-hero {
+  padding: 80px 0 60px;
+  background: var(--upgpt-surface-default);
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.ds-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--upgpt-gap-sm);
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-subtle);
+  margin-bottom: var(--upgpt-margin-md);
+  font-weight: var(--upgpt-font-weight-medium);
+  transition: color var(--upgpt-motion-fast);
+  cursor: pointer;
+  text-decoration: none;
+}
+.ds-hero__back:hover { color: var(--upgpt-primary-bg-active); }
+
+.ds-hero h1 {
+  font-family: var(--upgpt-font-family-brand);
+  font-size: var(--upgpt-font-size-display);
+  font-weight: var(--upgpt-font-weight-bold);
+  line-height: var(--upgpt-line-height-heading);
+  margin-bottom: var(--upgpt-padding-md);
+  color: var(--upgpt-color-default);
+}
+.ds-hero__desc {
+  font-size: var(--upgpt-font-size-body-md);
+  color: var(--upgpt-color-muted);
+  max-width: 640px;
+  line-height: var(--upgpt-line-height-body);
+}
+
+/* Theme Switcher */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--upgpt-gap-sm);
+  margin-top: var(--upgpt-padding-lg);
+  flex-wrap: wrap;
+}
+.theme-switcher__label {
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-muted);
+  margin-right: var(--upgpt-gap-xs);
+}
+.theme-btn {
+  padding: 6px 16px;
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  border-radius: var(--upgpt-border-radius-md);
+  background: var(--upgpt-surface-default);
+  color: var(--upgpt-color-muted);
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--upgpt-motion-fast);
+}
+.theme-btn:hover { border-color: var(--upgpt-primary-bg-default); color: var(--upgpt-primary-bg-default); }
+.theme-btn.is-active {
+  background: var(--upgpt-primary-bg-default);
+  border-color: var(--upgpt-primary-bg-default);
+  color: var(--upgpt-color-fixed-light);
+}
+
+/* Two-column DS layout */
+.ds-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  align-items: start;
+}
+
+/* Sidebar nav */
+.ds-sidenav {
+  position: sticky;
+  top: 80px;
+  padding: 48px 0 48px 0;
+  border-right: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  min-height: calc(100vh - 80px);
+}
+.ds-sidenav__title {
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--upgpt-color-subtle);
+  padding: 0 24px var(--upgpt-padding-sm);
+  margin-bottom: var(--upgpt-padding-xs);
+}
+.ds-sidenav__link {
+  display: block;
+  padding: 8px 24px;
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all var(--upgpt-motion-fast);
+}
+.ds-sidenav__link:hover {
+  color: var(--upgpt-color-default);
+  background: var(--upgpt-surface-subtle);
+}
+.ds-sidenav__link.is-active {
+  color: var(--upgpt-primary-bg-default);
+  border-left-color: var(--upgpt-primary-bg-default);
+  font-weight: var(--upgpt-font-weight-semibold);
+  background: var(--upgpt-primary-bg-subtle);
+}
+
+/* Main content */
+.ds-content {
+  padding: 48px 0 80px 48px;
+}
+
+.ds-section {
+  padding: 0 0 72px 0;
+  scroll-margin-top: 100px;
+}
+.ds-section + .ds-section {
+  border-top: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle);
+  padding-top: 56px;
+}
+.ds-section__label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--upgpt-primary-bg-default);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.ds-section h2 {
+  font-family: var(--upgpt-font-family-brand);
+  font-size: var(--upgpt-font-size-heading-lg);
+  font-weight: var(--upgpt-font-weight-bold);
+  line-height: var(--upgpt-line-height-heading);
+  margin-bottom: var(--upgpt-padding-sm);
+  color: var(--upgpt-color-default);
+}
+.ds-section__desc {
+  font-size: var(--upgpt-font-size-body-md);
+  color: var(--upgpt-color-muted);
+  max-width: 640px;
+  line-height: var(--upgpt-line-height-body);
+  margin-bottom: var(--upgpt-padding-xl);
+}
+.ds-section h3 {
+  font-size: var(--upgpt-font-size-heading-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  margin: var(--upgpt-margin-md) 0 var(--upgpt-padding-md) 0;
+  color: var(--upgpt-color-default);
+}
+
+/* Token Grid */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+}
+.token-item {
+  padding: var(--upgpt-padding-md);
+  background: var(--upgpt-token-item-bg);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-token-item-border-color);
+  border-radius: var(--upgpt-token-item-border-radius);
+}
+.token-name {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+.token-value {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+}
+.token-ref {
+  font-size: 11px;
+  color: var(--upgpt-primary-bg-default);
+  margin-top: 2px;
+}
+
+/* Color Swatch */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-lg);
+  margin-top: var(--upgpt-padding-md);
+}
+.color-card {
+  background: var(--upgpt-card-bg-default);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-card-border-color);
+  border-radius: var(--upgpt-card-border-radius);
+  padding: var(--upgpt-card-padding-x);
+  box-shadow: var(--upgpt-card-elevation-default);
+  transition: box-shadow var(--upgpt-motion-fast);
+}
+.color-card:hover { box-shadow: var(--upgpt-card-elevation-hover); }
+.color-card__title {
+  font-size: var(--upgpt-font-size-body-sm);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.color-swatches { display: flex; gap: var(--upgpt-gap-sm); flex-wrap: wrap; margin-bottom: var(--upgpt-padding-sm); }
+.color-swatch {
+  width: 40px; height: 40px;
+  border-radius: var(--upgpt-border-radius-sm);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.color-card__desc {
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+}
+
+/* Ramp Row */
+.color-ramp {
+  display: flex;
+  gap: var(--upgpt-gap-xs);
+  margin-bottom: var(--upgpt-gap-md);
+  flex-wrap: wrap;
+}
+.ramp-item { text-align: center; }
+.ramp-swatch {
+  width: 48px; height: 48px;
+  border-radius: var(--upgpt-border-radius-sm);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  display: block;
+  margin-bottom: 4px;
+}
+.ramp-label { font-size: 11px; color: var(--upgpt-color-subtle); }
+
+/* Typography Table */
+.typo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--upgpt-padding-xl);
+}
+.typo-table th, .typo-table td {
+  padding: var(--upgpt-padding-md);
+  text-align: left;
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+}
+.typo-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.typo-table td { font-size: var(--upgpt-font-size-body-sm); color: var(--upgpt-color-muted); }
+.typo-table code {
+  font-size: 12px;
+  background: var(--upgpt-surface-canvas);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  border-radius: var(--upgpt-border-radius-sm);
+  padding: 2px 6px;
+  color: var(--upgpt-primary-bg-active);
+  font-family: monospace;
+}
+
+/* Impact Table */
+.impact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--upgpt-padding-md);
+}
+.impact-table th, .impact-table td {
+  padding: var(--upgpt-padding-md);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  font-size: var(--upgpt-font-size-body-sm);
+  vertical-align: top;
+}
+.impact-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  text-align: left;
+}
+.impact-table td { color: var(--upgpt-color-muted); }
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--upgpt-badge-border-radius);
+  font-size: 11px;
+  font-weight: var(--upgpt-font-weight-semibold);
+}
+.badge--low  { background: #e6f9ef; color: #1a7a3a; }
+.badge--med  { background: #fff4e0; color: #a85e00; }
+.badge--high { background: #fdecea; color: #c0392b; }
+
+/* Elevation showcase */
+.elevation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--upgpt-gap-xl);
+  margin-top: var(--upgpt-padding-md);
+  padding: var(--upgpt-padding-xl) 0;
+}
+.elevation-card {
+  background: var(--upgpt-surface-default);
+  border-radius: var(--upgpt-card-border-radius);
+  padding: var(--upgpt-padding-lg);
+  text-align: center;
+}
+.elevation-label {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+  margin-bottom: 4px;
+}
+.elevation-value { font-size: 11px; color: var(--upgpt-color-subtle); }
+
+/* Motion showcase */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+}
+.motion-item {
+  padding: var(--upgpt-padding-md);
+  background: var(--upgpt-token-item-bg);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-token-item-border-color);
+  border-radius: var(--upgpt-token-item-border-radius);
+}
+.motion-demo {
+  width: 100%;
+  height: 4px;
+  background: var(--upgpt-border-color-default);
+  border-radius: 2px;
+  margin-top: var(--upgpt-gap-sm);
+  position: relative;
+  overflow: hidden;
+}
+.motion-demo::after {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--upgpt-primary-bg-default);
+  border-radius: 2px;
+}
+.motion-item:hover .motion-demo::after {
+  left: 0;
+  transition: left var(--upgpt-motion-standard);
+}
+
+/* Z-index table */
+.zindex-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--upgpt-padding-md);
+}
+.zindex-table th, .zindex-table td {
+  padding: var(--upgpt-padding-md);
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  font-size: var(--upgpt-font-size-body-sm);
+  text-align: left;
+}
+.zindex-table th {
+  background: var(--upgpt-surface-canvas);
+  font-weight: var(--upgpt-font-weight-semibold);
+  color: var(--upgpt-color-default);
+}
+.zindex-table td { color: var(--upgpt-color-muted); }
+
+/* Token layer diagram */
+.layer-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--upgpt-gap-sm);
+  margin: var(--upgpt-padding-md) 0;
+}
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: var(--upgpt-gap-md);
+  padding: var(--upgpt-padding-sm) var(--upgpt-padding-md);
+  border-radius: var(--upgpt-border-radius-md);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  background: var(--upgpt-surface-default);
+}
+.layer-row__num {
+  width: 24px; height: 24px;
+  border-radius: var(--upgpt-radius-full);
+  background: var(--upgpt-primary-bg-default);
+  color: var(--upgpt-color-fixed-light);
+  font-size: 12px;
+  font-weight: var(--upgpt-font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.layer-row__name {
+  font-weight: var(--upgpt-font-weight-semibold);
+  font-size: var(--upgpt-font-size-body-sm);
+  color: var(--upgpt-color-default);
+  min-width: 160px;
+}
+.layer-row__example {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--upgpt-primary-bg-active);
+  background: var(--upgpt-primary-bg-subtle);
+  padding: 2px 8px;
+  border-radius: var(--upgpt-border-radius-sm);
+}
+.layer-row__desc { font-size: 12px; color: var(--upgpt-color-subtle); }
+
+/* Product cards */
+.product-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--upgpt-gap-xl);
+  margin-top: var(--upgpt-padding-md);
+}
+.product-card {
+  padding: var(--upgpt-card-padding-x);
+  background: var(--upgpt-card-bg-default);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-card-border-color);
+  border-radius: var(--upgpt-card-border-radius);
+  box-shadow: var(--upgpt-card-elevation-default);
+  transition: all var(--upgpt-motion-standard);
+}
+.product-card:hover {
+  border-color: var(--upgpt-primary-bg-default);
+  box-shadow: var(--upgpt-card-elevation-hover);
+}
+.product-card__icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.product-card h3 {
+  font-size: var(--upgpt-font-size-heading-sm);
+  font-weight: var(--upgpt-font-weight-bold);
+  margin-bottom: 4px;
+  color: var(--upgpt-color-default);
+}
+.product-card__subtitle {
+  font-size: 12px;
+  color: var(--upgpt-color-subtle);
+  font-weight: var(--upgpt-font-weight-semibold);
+  margin-bottom: var(--upgpt-padding-sm);
+}
+.product-card p { font-size: var(--upgpt-font-size-body-sm); color: var(--upgpt-color-muted); line-height: 1.8; }
+.product-card__theme {
+  margin-top: var(--upgpt-padding-md);
+  padding-top: var(--upgpt-padding-md);
+  border-top: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  display: flex;
+  gap: var(--upgpt-gap-sm);
+  flex-wrap: wrap;
+}
+.theme-chip {
+  font-size: 11px;
+  font-family: monospace;
+  padding: 2px 8px;
+  border-radius: var(--upgpt-badge-border-radius);
+  background: var(--upgpt-surface-canvas);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  color: var(--upgpt-color-muted);
+}
+
+/* DS Nav CTA */
+.ds-nav {
+  display: flex;
+  gap: var(--upgpt-gap-md);
+  margin-top: var(--upgpt-padding-md);
+  flex-wrap: wrap;
+}
+.ds-nav a {
+  padding: 12px 24px;
+  background: var(--upgpt-btn-primary-bg-default);
+  color: var(--upgpt-btn-primary-color-default);
+  border-radius: var(--upgpt-btn-primary-border-radius);
+  font-weight: var(--upgpt-font-weight-semibold);
+  text-decoration: none;
+  font-size: var(--upgpt-font-size-body-sm);
+  transition: all var(--upgpt-motion-fast);
+}
+.ds-nav a:hover {
+  background: var(--upgpt-btn-primary-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--upgpt-elevation-surface-3);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ds-body { grid-template-columns: 1fr; }
+  .ds-sidenav { display: none; }
+  .ds-content { padding: 32px 0; }
+  .ds-hero h1 { font-size: var(--upgpt-font-size-2xl); }
+  .product-showcase { grid-template-columns: 1fr; }
+  .color-grid { grid-template-columns: repeat(2, 1fr); }
+  .token-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .ds-hero h1 { font-size: 28px; }
+  .color-ramp .ramp-swatch { width: 36px; height: 36px; }
+}
+</style>
+</head>
+<body>
+<!-- ===== PRESERVED: Header ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__brand">Nomad Design</a>
+    <nav class="nav__menu" id="navMenu">
+      <a href="index.html" class="nav__link">Nomad Design</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="me.html" class="nav__link">Me</a>
+      <span class="nav__sep" aria-hidden="true">×</span>
+      <a href="portfolio.html" class="nav__link is-active">Portfolio</a>
+      <div class="nav__sub">
+        <a href="portfolio.html" class="nav__sub-link">AI Agent</a>
+        <a href="portfolio-sonar.html" class="nav__sub-link">Web UI</a>
+        <a href="portfolio-erp.html" class="nav__sub-link">Mobile UI</a>
+        <a href="portfolio-good.html" class="nav__sub-link">Web</a>
+        <a href="portfolio-visual.html" class="nav__sub-link">Visual</a>
+      </div>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== PRESERVED: Sub-menu tabs ===== -->
+<div class="pf-tabs">
+  <button class="pf-tabs__btn pf-tabs__btn--prev" aria-label="Scroll tabs left">&lsaquo;</button>
+  <button class="pf-tabs__btn pf-tabs__btn--next" aria-label="Scroll tabs right">&rsaquo;</button>
+  <div class="container">
+    <div class="pf-tabs__inner" id="pfTabs">
+      <a href="portfolio.html" class="pf-tab">AI Agent</a>
+      <a href="portfolio-sonar.html" class="pf-tab">Web UI</a>
+      <a href="portfolio-erp.html" class="pf-tab">Mobile UI</a>
+      <a href="portfolio-good.html" class="pf-tab">Web</a>
+      <a href="portfolio-visual.html" class="pf-tab">Visual</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRESERVED: Detail header + prev/next ===== -->
+<section class="detail-header">
+  <div class="container">
+    <div class="detail-header__inner">
+      <div class="detail-header__title">
+        <h1>AI Agent Design System</h1>
+        <p>Design System</p>
+      </div>
+      <div class="detail-nav">
+        <a href="portfolio.html" class="detail-nav__prev">&lt; Previous Project</a>
+        <a href="portfolio-sonar.html" class="detail-nav__next">Next Project &gt;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+      <section class="ds-section" id="products">
+        <span class="ds-section__label">Products</span>
+        <h2>三款產品的設計亮點</h2>
+        <p class="ds-section__desc">同一套 Token 系統，三種 Theme 詮釋。每個產品透過 data-theme 屬性啟用對應的色彩配置。</p>
+
+        <div class="product-showcase">
+          <div class="product-card">
+            <span class="product-card__icon">🔷</span>
+            <h3>AI Agent</h3>
+            <div class="product-card__subtitle">企業知識庫入口</div>
+            <p>
+              <strong>定位：</strong>知識庫與 AI 對話的核心平台<br>
+              <strong>視覺：</strong>暖色系背景，卡片式佈局<br>
+              <strong>互動：</strong>對話介面、知識卡片、Agent 管理
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="ai-agent"</span>
+              <span class="theme-chip" style="background:var(--upgpt-cyan-100);border-color:var(--upgpt-cyan-500);color:var(--upgpt-cyan-700);">primary: cyan-500</span>
+            </div>
+          </div>
+          <div class="product-card">
+            <span class="product-card__icon">🔶</span>
+            <h3>AI Agent Desktop</h3>
+            <div class="product-card__subtitle">本機文件查詢應用</div>
+            <p>
+              <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br>
+              <strong>視覺：</strong>冷淡藍白，Sidebar 導航<br>
+              <strong>互動：</strong>檔案查詢、Sidebar 列表、抽屜操作
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="upagent"</span>
+              <span class="theme-chip" style="background:var(--upgpt-blue-100);border-color:var(--upgpt-blue-500);color:var(--upgpt-blue-600);">primary: blue-500</span>
+            </div>
+          </div>
+          <div class="product-card">
+            <span class="product-card__icon">⚙️</span>
+            <h3>Work Agent</h3>
+            <div class="product-card__subtitle">批次工作流程管理</div>
+            <p>
+              <strong>定位：</strong>企業自動化工作流編排與執行<br>
+              <strong>視覺：</strong>步驟條追蹤，黃色強調<br>
+              <strong>互動：</strong>步驟進度、狀態指示、批次提交
+            </p>
+            <div class="product-card__theme">
+              <span class="theme-chip">data-theme="workagent"</span>
+              <span class="theme-chip" style="background:var(--upgpt-blue-100);border-color:var(--upgpt-blue-500);color:var(--upgpt-blue-600);">primary: blue-500</span>
+              <span class="theme-chip" style="background:var(--upgpt-yellow-300);border-color:var(--upgpt-yellow-500);color:#7a5f00;">accent: yellow-400</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="ds-section" id="cta">
+        <span class="ds-section__label">More</span>
+        <h2>進一步了解</h2>
+        <div class="ds-nav">
+          <a href="portfolio.html">查看 AI Agent 案例研究 →</a>
+          <a href="portfolio.html">回到 Portfolio →</a>
+        </div>
+      </section>
+
+    </div><!-- /ds-content -->
+  </div><!-- /ds-body -->
+
+</main>
+
+<!-- ===== PRESERVED: Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>© 2026 Rachel Lee · Designed & Coded in Taiwan 🇹🇼</p>
+    <a href="index.html#top" class="footer__top">Back to Top ↑</a>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+  // Theme Switcher
+  const themeBtns = document.querySelectorAll('.theme-btn');
+  const body = document.body;
+  body.setAttribute('data-theme', 'upgpt');
+
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      body.setAttribute('data-theme', theme);
+      themeBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+
+  // Sidenav active link on scroll
+  const sections = document.querySelectorAll('.ds-section[id]');
+  const navLinks = document.querySelectorAll('.ds-sidenav__link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('is-active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('is-active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
