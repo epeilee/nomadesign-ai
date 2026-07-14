@@ -16,6 +16,25 @@
         window.addEventListener('scroll', onScroll, { passive: true });
     }
 
+    /* ---------- 1b. Pages with a sub-menu (.pf-tabs): scrolling down
+       slides the main nav up and pins the tabs to the top;
+       scrolling up brings the nav back ---------- */
+    const pfTabsBar = document.querySelector('.pf-tabs');
+    if (nav && pfTabsBar) {
+        let lastY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (y > 80 && y > lastY) {
+                nav.classList.add('is-up');
+                pfTabsBar.classList.add('is-top');
+            } else if (y < lastY || y <= 80) {
+                nav.classList.remove('is-up');
+                pfTabsBar.classList.remove('is-top');
+            }
+            lastY = y;
+        }, { passive: true });
+    }
+
     /* ---------- 2. Mobile menu toggle ---------- */
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
@@ -57,9 +76,27 @@
 
     /* ---------- 4a. pf-tab active state from current URL ---------- */
     const currentFile = location.pathname.split('/').pop() || 'index.html';
+    /* Case-study pages highlight their category tab (keyed by tab href).
+       Pages whose filename equals a tab href (portfolio.html, -sonar,
+       -erp, -good, -visual) match automatically and are not listed. */
+    const tabCategory = {
+        'portfolio-vmware.html': 'portfolio-sonar.html',  /* Web UI */
+        'portfolio-cmq.html':    'portfolio-sonar.html',  /* Web UI */
+        'portfolio-system.html': 'portfolio-sonar.html',  /* Web UI */
+        'portfolio-mutok.html':  'portfolio-erp.html',    /* Mobile UI */
+        'portfolio-flu.html':    'portfolio-erp.html',    /* Mobile UI */
+        'portfolio-ww.html':     'portfolio-good.html',   /* Web */
+        'portfolio-aft.html':    'portfolio-good.html',   /* Web */
+        'portfolio-taish.html':  'portfolio-good.html',   /* Web */
+        'portfolio-game.html':   'portfolio-good.html',   /* Web */
+        'portfolio-logo.html':   'portfolio-visual.html'  /* Visual */
+    };
+    const activeFile = currentFile.startsWith('portfolio-design-system')
+        ? 'portfolio.html' /* AI Agent Design System pages → AI Agent tab */
+        : (tabCategory[currentFile] || currentFile);
     document.querySelectorAll('.pf-tab').forEach(tab => {
         const tabFile = tab.getAttribute('href').split('/').pop();
-        if (tabFile === currentFile) tab.classList.add('is-active');
+        if (tabFile === activeFile) tab.classList.add('is-active');
     });
 
     /* ---------- 4. pf-tabs scroll arrows ---------- */

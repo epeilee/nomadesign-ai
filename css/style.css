@@ -7,14 +7,16 @@
 /* ---------- Self-hosted Orpheus Pro ---------- */
 @font-face {
     font-family: 'Orpheus Pro';
-    src: url('../fonts/Orpheus-Regular.ttf') format('truetype');
+    src: url('../fonts/Orpheus-Regular.woff2') format('woff2'),
+         url('../fonts/Orpheus-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: 'Orpheus Pro';
-    src: url('../fonts/OrpheusPro-Bold.ttf') format('truetype');
+    src: url('../fonts/OrpheusPro-Bold.woff2') format('woff2'),
+         url('../fonts/OrpheusPro-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -25,6 +27,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
     font-family: 'Orpheus Pro', 'Lato', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', serif;
+    /* no text-stroke here — it inherits into Noto/Lato body text; only Orpheus elements set 0.2px */
     font-weight: 400;
     font-size: 16px;
     line-height: 1.7;
@@ -39,13 +42,16 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 ul { list-style: none; }
 
-/* ---- Global headings — mirrors Nomadesign common.css ---- */
-h1 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 30px; color: #333; font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.5px currentColor; }
-h2 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 24px; color: #333; font-weight: 400; letter-spacing: 1.4px; padding-bottom: 24px; -webkit-text-stroke: 0.5px currentColor; }
-h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 40px; color: #04CBC3; font-weight: 400; -webkit-text-stroke: 0.5px currentColor; }
-h4 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: 24px; color: #333; font-weight: 400; letter-spacing: 1.4px; }
-h5, h6 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-weight: 400; letter-spacing: 1.4px; }
-p  { font-family: 'Lato', 'Noto Sans TC', 'Open Sans', sans-serif; font-size: 16px; color: #666; font-weight: 400; line-height: 2; }
+/* ---- Global headings — content scale.
+   Display sizes (--font-h1/--font-h2) are reserved for hero/section
+   components; bare content headings deliberately sit one step down.
+   h3 is the site's accent display heading (teal, --font-h3). ---- */
+h1 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h4); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
+h2 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h5); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; padding-bottom: 24px; -webkit-text-stroke: 0.2px currentColor; }
+h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h3); color: var(--accent); font-weight: 400; -webkit-text-stroke: 0.2px currentColor; }
+h4 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h5); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
+h5, h6 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
+p  { font-family: var(--font-sans); font-size: var(--font-p); color: var(--text-second); font-weight: 400; line-height: 2; }
 b, strong { font-weight: bolder; }
 
 :root {
@@ -56,27 +62,26 @@ b, strong { font-weight: bolder; }
     --bg-odd: #ecf1f4;
     --bg-bk: #000000;
     --bg-grey: #2c2c2c;
-    --accent: #04cbc3;
+    --accent: #04cbc3;          /* brand teal — decorative & text accent */
     --accent-dark: #03a8a1;
     --line: #e6e6e6;
 
     --font-sans: 'Lato', 'Noto Sans TC', 'PingFang TC', sans-serif;
 
-    /* Aliases for case-study pages */
+    /* Legacy aliases kept for case-study pages — same values as the
+       canonical tokens above (--text-main/--text-second/--bg-odd);
+       use the canonical names in new code */
     --ink:          #333333;
     --ink-soft:     #666666;
     --ink-mute:     #999999;
     --bg-soft:      #ecf1f4;
     --bg-muted:     #f5f7f8;
     --accent-soft:  #e6faf9;
-    --radius-xl:    28px;
 
     --sp-1: 4px;
     --sp-2: 8px;
     --sp-3: 16px;
     --sp-4: 24px;
-    --spacing--spacing-3: 16px;
-    --spacing--spacing-4: 24px;
     --sp-5: 36px;
     --sp-6: 48px;
     --sp-8: 64px;
@@ -91,9 +96,9 @@ b, strong { font-weight: bolder; }
     --font-h1: 60px;
 
     --container: 1200px;
-    --radius-sm: 0px;
-    --radius-md: 0px;
-    --radius-lg: 0px;
+    /* Site chrome is intentionally sharp-cornered (no radius tokens).
+       Case-study pages that showcase a product define their own
+       radius scale locally (see portfolio.html / design-system.html). */
     --ease: cubic-bezier(.2,.8,.2,1);
     --nav-h: 100px;
 }
@@ -118,9 +123,11 @@ b, strong { font-weight: bolder; }
     background: #fff;
     border-bottom: 1px solid var(--line);
     z-index: 50;
-    transition: box-shadow .3s var(--ease);
+    transition: box-shadow .3s var(--ease), transform .35s var(--ease);
 }
 .nav.is-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+/* Scrolling down on sub-menu pages slides the nav out of view (JS toggles) */
+.nav.is-up { transform: translateY(-100%); }
 .nav__inner {
     height: 100%;
     display: flex;
@@ -133,7 +140,8 @@ b, strong { font-weight: bolder; }
     align-items: center;
     gap: 40px;
     font-family: 'Orpheus Pro', serif;
-    font-size: 32px;
+    -webkit-text-stroke: 0.2px currentColor;
+    font-size: 40px;
     letter-spacing: 1.4px;
     line-height: 160%;
 }
@@ -151,9 +159,21 @@ b, strong { font-weight: bolder; }
     content: '';
     position: absolute;
     left: 0; bottom: 0;
-    width: 0; height: 1.5px;
+    width: 0; height: 1px;
     background: var(--accent);
     transition: width .25s var(--ease);
+}
+
+/* Top-right dot — shown on hover / focus / active */
+.nav__link::before {
+    content: '';
+    position: absolute;
+    top: 0; right: -10px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity .25s var(--ease);
 }
 
 /* Hover state */
@@ -163,6 +183,9 @@ b, strong { font-weight: bolder; }
 .nav__link:hover::after {
     width: 100%;
 }
+.nav__link:hover::before {
+    opacity: 1;
+}
 
 /* Active state */
 .nav__link.is-active {
@@ -170,6 +193,9 @@ b, strong { font-weight: bolder; }
 }
 .nav__link.is-active::after {
     width: 100%;
+}
+.nav__link.is-active::before {
+    opacity: 1;
 }
 
 /* Focus state — keyboard / a11y */
@@ -179,8 +205,15 @@ b, strong { font-weight: bolder; }
     outline-offset: 4px;
     border-radius: 0;
 }
+.nav__link:focus-visible::after {
+    width: 100%;
+}
+.nav__link:focus-visible::before {
+    opacity: 1;
+}
 
 .nav__sep {
+    /* decorative separator (aria-hidden) — bright accent OK */
     color: var(--accent);
     font-size: 48px;
     user-select: none;
@@ -189,6 +222,7 @@ b, strong { font-weight: bolder; }
 .nav__brand {
     display: none;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 18px;
     letter-spacing: 1.4px;
     color: #1a1a1a;
@@ -218,29 +252,30 @@ body { padding-top: var(--nav-h); }
 /* ==========================================================================
    HERO — signature logo + bilingual intro
    ========================================================================== */
-.hero { padding: 64px 0 48px; background: #fff; text-align: center; }
-.hero__logo-wrap { display: flex; justify-content: center; margin-bottom: 24px; }
-.hero__logo { width: 300px; height: auto; opacity: .9; }
-.hero__texts { max-width: 1100px; margin: 0 auto; }
-.hero__ch {
+.hero { padding: 80px 0 96px; background: #fff; text-align: center; }
+.hero__logo-wrap { display: flex; justify-content: center; margin-bottom: 48px; }
+.hero__logo { width: 330px; height: auto; opacity: .9; }
+.hero__title {
+    font-family: 'Orpheus Pro', 'Noto Sans TC', serif;
+    font-size: var(--font-h1);
     color: var(--text-main);
-    font-size: var(--font-h6);
-    line-height: 180%;
-    letter-spacing: .056em;
+    font-weight: 400;
+    letter-spacing: 1.4px;
+    line-height: 1.2;
     margin-bottom: 24px;
-    font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
-    font-weight: 300;
+    -webkit-text-stroke: 0.2px currentColor;
 }
-.hero__en {
+.hero__texts { margin: 0 auto; }
+.hero__tagline {
+    font-family: 'Orpheus Pro', 'Noto Sans TC', serif;
+    -webkit-text-stroke: 0.2px currentColor;
+    font-size: var(--font-h2);
     color: var(--text-main);
-    font-family: 'Orpheus Pro', serif;
-    font-size: var(--font-h5);
-    line-height: 180%;
-    font-weight: 300;
-    letter-spacing: .056em;
+    font-weight: 400;
+    letter-spacing: 1.4px;
+    line-height: 170%;
 }
 .hero .accent { color: var(--accent); font-weight: 400; }
-.hero__cta { display: flex; justify-content: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
 
 /* ==========================================================================
    SECTIONS — alternating black / grey / white
@@ -253,7 +288,7 @@ body { padding-top: var(--nav-h); }
 .section__h2 {
     text-align: center;
     font-size: var(--font-h2);
-    letter-spacing: 1.4px;
+    letter-spacing: 3.4px;
     line-height: 160%;
     margin-bottom: 12px;
     font-weight: 400;
@@ -261,8 +296,9 @@ body { padding-top: var(--nav-h); }
 .section__cat {
     text-align: center;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h3);
-    letter-spacing: normal;
+    letter-spacing: 2px;
     line-height: 160%;
     margin-bottom: 48px;
     font-weight: 400;
@@ -317,7 +353,18 @@ body { padding-top: var(--nav-h); }
     padding: 40px;
     border-radius: 0;
     box-shadow: 0 24px 64px rgba(0,0,0,.22);
+    position: relative;
 }
+/* Hover: 2px accent bottom line sweeps in, matching the nav underline */
+.project__card::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width .35s var(--ease);
+}
+.project__card:hover::after { width: 100%; }
 .project__title {
     font-size: var(--font-h4);
     letter-spacing: 1.4px;
@@ -348,6 +395,7 @@ body { padding-top: var(--nav-h); }
     display: inline-block;
     padding: 12px 28px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h6);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -355,14 +403,21 @@ body { padding-top: var(--nav-h); }
     transition: background .25s var(--ease), color .25s var(--ease), transform .2s var(--ease);
     cursor: pointer;
 }
+/* Hover: black sweeps in from the left over the teal, matching the menu sweep */
 .btn--dark {
-    background: var(--accent);
+    background-color: var(--accent);
+    /* 210% width leaves a buffer so no black sliver shows at the edge */
+    background-image: linear-gradient(to right, #000 50%, var(--accent) 50%);
+    background-size: 210% 100%;
+    background-position: 100% 0;
+    background-repeat: no-repeat;
     color: #fff;
+    transition: background-position .4s var(--ease), transform .2s var(--ease);
 }
 .btn--dark:hover,
 .btn--dark:focus,
 .btn--dark:active {
-    background: #000;
+    background-position: 0 0;
     color: #fff;
     transform: translateY(-1px);
 }
@@ -395,6 +450,17 @@ body { padding-top: var(--nav-h); }
     transition: transform .6s var(--ease), opacity .3s var(--ease);
 }
 .project-grid__item:hover img { transform: scale(1.04); opacity: .85; }
+/* Hover: 1px accent bottom line sweeps in, matching the nav underline */
+.project-grid__item::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width .35s var(--ease);
+    z-index: 2;
+}
+.project-grid__item:hover::after { width: 100%; }
 .project-grid__cap {
     position: absolute;
     left: 0; bottom: 0;
@@ -403,6 +469,7 @@ body { padding-top: var(--nav-h); }
     color: #fff;
     width: 100%;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 16px;
 }
 
@@ -426,6 +493,7 @@ body { padding-top: var(--nav-h); }
     max-width: 1000px;
     margin: 0 auto 20px;
     font-family: 'Orpheus Pro', sans-serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h5);
     line-height: 180%;
     letter-spacing: .056em;
@@ -451,7 +519,7 @@ body { padding-top: var(--nav-h); }
 .experience { background: var(--bg-odd); padding: 64px 0; }
 .experience__title {
     text-align: center;
-    font-size: var(--font-h3);
+    font-size: var(--font-h2);
     letter-spacing: 1.4px;
     line-height: 160%;
     margin-bottom: 40px;
@@ -468,6 +536,7 @@ body { padding-top: var(--nav-h); }
 .exp-item:first-of-type { border-top: 0; }
 .exp-item__date {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     color: var(--text-main);
     font-size: var(--font-h6);
     letter-spacing: 1.4px;
@@ -478,12 +547,14 @@ body { padding-top: var(--nav-h); }
     color: var(--text-second);
     margin-top: 4px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 20px;
     letter-spacing: .056em;
     line-height: 180%;
 }
 .exp-item__body h5 {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -499,13 +570,14 @@ body { padding-top: var(--nav-h); }
     line-height: 180%;
     letter-spacing: .056em;
     color: #444;
-    font-weight: 300;
+    font-weight: 400;
     margin-bottom: 8px;
 }
 .exp-item__row strong {
     color: var(--text-main);
     font-weight: 400;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     letter-spacing: 1.4px;
 }
@@ -515,7 +587,7 @@ body { padding-top: var(--nav-h); }
 .toolbox { background: #fff; padding: 48px 0 64px; }
 .toolbox__title {
     text-align: center;
-    font-size: var(--font-h4);
+    font-size: var(--font-h2);
     letter-spacing: 1.4px;
     line-height: 160%;
     margin-bottom: 32px;
@@ -540,6 +612,7 @@ body { padding-top: var(--nav-h); }
     background: #fff;
     border-radius: 0;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 22px;
     color: var(--text-main);
 }
@@ -551,6 +624,7 @@ body { padding-top: var(--nav-h); }
 }
 .toolbox__name {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     color: var(--text-second);
     letter-spacing: 1.4px;
@@ -560,7 +634,7 @@ body { padding-top: var(--nav-h); }
 .skills-section { background: var(--bg-odd); padding: 32px 0 64px; }
 .skills-section__title {
     text-align: center;
-    font-size: var(--font-h4);
+    font-size: var(--font-h2);
     letter-spacing: 1.4px;
     line-height: 160%;
     margin-bottom: 24px;
@@ -572,17 +646,28 @@ body { padding-top: var(--nav-h); }
     grid-template-columns: 1fr 1fr;
     gap: 12px 32px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     letter-spacing: 1.4px;
     line-height: 160%;
     color: var(--text-second);
-    text-align: center;
+    text-align: left;
+}
+.skills-grid > div {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+}
+.skills-grid > div::before {
+    content: '\2022';
+    font-size: 12px;
+    flex-shrink: 0;
 }
 
 .education-section { background: #fff; padding: 32px 0 80px; }
 .education-section__title {
     text-align: center;
-    font-size: var(--font-h4);
+    font-size: var(--font-h2);
     letter-spacing: 1.4px;
     line-height: 160%;
     margin-bottom: 28px;
@@ -590,16 +675,18 @@ body { padding-top: var(--nav-h); }
 }
 .edu-item {
     display: grid;
-    grid-template-columns: 200px 1fr 80px;
+    /* date col fixed so both schools start flush; 畢業 hugs the school name */
+    grid-template-columns: 170px auto 1fr;
     gap: 24px;
     max-width: 600px;
     margin: 0 auto 10px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     letter-spacing: 1.4px;
     line-height: 160%;
     color: var(--text-second);
-    text-align: center;
+    text-align: left;
 }
 
 /* ==========================================================================
@@ -612,12 +699,16 @@ body { padding-top: var(--nav-h); }
     position: sticky;
     top: var(--nav-h);
     z-index: 40;
+    transition: top .35s var(--ease);
 }
+/* When the nav slides away, the tabs take over the top edge (JS toggles) */
+.pf-tabs.is-top { top: 0; }
 .pf-tabs__inner {
     display: flex;
     justify-content: center;
     gap: 60px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 30px;
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -648,6 +739,7 @@ body { padding-top: var(--nav-h); }
     height: 100%;
     cursor: pointer;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 24px;
     color: var(--accent);
     padding: 0;
@@ -662,6 +754,50 @@ body { padding-top: var(--nav-h); }
 .pf-tab:active,
 .pf-tab.is-active {
     color: var(--accent);
+}
+
+/* ==========================================================================
+   MENU TEXT SWEEP — teal fills the label left→right, synced with the
+   underline animation (nav links + portfolio sub-menu tabs)
+   ========================================================================== */
+.nav__link,
+.pf-tab,
+.nav__sub-link {
+    background-image: linear-gradient(to right, var(--accent) 50%, currentColor 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background-position .4s var(--ease), color .25s var(--ease), border-color .2s var(--ease);
+}
+.nav__link:hover,
+.nav__link:focus-visible,
+.nav__link.is-active,
+.pf-tab:hover,
+.pf-tab:focus,
+.pf-tab:active,
+.pf-tab.is-active,
+.nav__sub-link:hover,
+.nav__sub-link.is-active {
+    background-position: 0 0;
+}
+
+/* pf-tab: growing 1px underline to match the nav links */
+.pf-tab { position: relative; }
+.pf-tab::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width .25s var(--ease);
+}
+.pf-tab:hover::after,
+.pf-tab:focus::after,
+.pf-tab.is-active::after {
+    width: 100%;
 }
 .pf-grid-wrap {
     background: var(--bg-odd);
@@ -695,6 +831,7 @@ body { padding-top: var(--nav-h); }
 .pf-card__body { padding: 18px 22px 22px; }
 .pf-card__title {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h6);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -704,6 +841,7 @@ body { padding-top: var(--nav-h); }
 }
 .pf-card__cat {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p2);
     color: var(--accent);
     letter-spacing: 1.4px;
@@ -714,6 +852,7 @@ body { padding-top: var(--nav-h); }
     padding: 80px 20px;
     color: var(--text-second);
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h6);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -735,6 +874,7 @@ body { padding-top: var(--nav-h); }
 }
 .detail-header__title h1 {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h4);
     color: var(--text-main);
     font-weight: 400;
@@ -743,6 +883,7 @@ body { padding-top: var(--nav-h); }
 }
 .detail-header__title p {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     color: var(--text-second);
     font-size: 24px;
     letter-spacing: 1.4px;
@@ -753,6 +894,7 @@ body { padding-top: var(--nav-h); }
     display: flex;
     gap: 32px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 24px;
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -789,6 +931,7 @@ body { padding-top: var(--nav-h); }
     line-height: 160%;
     margin-bottom: 36px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-weight: 400;
 }
 .detail-about {
@@ -814,7 +957,8 @@ body { padding-top: var(--nav-h); }
 .detail-about__media img { border-radius: 0; width: 100%; }
 .video-embed {
     position: relative;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     aspect-ratio: 9 / 16;
 }
 .video-embed iframe {
@@ -854,6 +998,7 @@ body { padding-top: var(--nav-h); }
 }
 .detail-case__label {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-weight: 400;
     color: var(--text-main);
     letter-spacing: 1.4px;
@@ -864,6 +1009,7 @@ body { padding-top: var(--nav-h); }
 .detail-section__subtitle {
     text-align: center;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 24px;
     font-weight: 400;
     color: var(--text-second);
@@ -984,6 +1130,7 @@ body { padding-top: var(--nav-h); }
 }
 .mq-row__label {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p);
     color: var(--text-second);
     line-height: 160%;
@@ -995,6 +1142,7 @@ body { padding-top: var(--nav-h); }
     font-size: 14px;
     color: var(--text-second);
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
 }
 .mq-row__img img {
     width: 100%;
@@ -1128,7 +1276,7 @@ body { padding-top: var(--nav-h); }
     bottom: 0;
     right: 0;
     background-color: rgb(242, 242, 242);
-    box-shadow: -4px -4px 12px 6px hsla(0, 0%, 100%, 1), 0 8px var(--spacing--spacing-4) -1px rgba(0, 0, 0, 0.2);
+    box-shadow: -4px -4px 12px 6px hsla(0, 0%, 100%, 1), 0 8px var(--sp-4) -1px rgba(0, 0, 0, 0.2);
     padding: 20px 28px;
     max-width: 260px;
 }
@@ -1186,8 +1334,8 @@ body { padding-top: var(--nav-h); }
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.10);
 }
 .slicecontent {
-    padding: var(--spacing--spacing-3) var(--spacing--spacing-4);
-    box-shadow: -4px -4px 12px 6px #fff, 0 8px var(--spacing--spacing-4) -1px #0003;
+    padding: var(--sp-3) var(--sp-4);
+    box-shadow: -4px -4px 12px 6px #fff, 0 8px var(--sp-4) -1px #0003;
     background-color: #f2f2f2;
     width: 400px;
     height: auto;
@@ -1211,6 +1359,7 @@ body { padding-top: var(--nav-h); }
 }
 .dropdownslicelisttitle {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     color: var(--text-main);
     font-size: var(--font-p);
     text-align: left;
@@ -1237,6 +1386,7 @@ body { padding-top: var(--nav-h); }
     color: var(--accent);
     font-size: 80px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     z-index: 2;
     opacity: .8;
     transition: opacity .2s var(--ease);
@@ -1267,6 +1417,7 @@ body { padding-top: var(--nav-h); }
     display: flex;
     justify-content: space-between;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: 24px;
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -1292,6 +1443,7 @@ body { padding-top: var(--nav-h); }
 .logo-card__title {
     text-align: center;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h5);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -1319,6 +1471,7 @@ body { padding-top: var(--nav-h); }
 }
 .footer__brand h3 {
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-h5);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -1330,6 +1483,7 @@ body { padding-top: var(--nav-h); }
     display: flex;
     gap: 14px;
     font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
     color: var(--accent);
     font-size: var(--font-h3);
     letter-spacing: normal;
@@ -1342,7 +1496,7 @@ body { padding-top: var(--nav-h); }
     font-size: var(--font-h5);
     letter-spacing: 1.4px;
     line-height: 200%;
-    -webkit-text-stroke: 0.5px currentColor;
+    -webkit-text-stroke: 0.2px currentColor;
     color: var(--text-second);
     text-align: right;
 }
@@ -1457,10 +1611,11 @@ body { padding-top: var(--nav-h); }
         font-size: 18px;
         color: var(--ink-soft);
         font-family: 'Orpheus Pro', serif;
+        -webkit-text-stroke: 0.2px currentColor;
         letter-spacing: .06em;
         padding-bottom: 4px;
         border-bottom: 1px solid transparent;
-        transition: color .2s var(--ease), border-color .2s var(--ease);
+        transition: background-position .4s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
     }
     .nav__sub-link:hover,
     .nav__sub-link.is-active {
@@ -1494,9 +1649,11 @@ body { padding-top: var(--nav-h); }
     .project__title { font-size: 22px; }
     .project-grid { grid-template-columns: 1fr; gap: 16px; }
 
-    .hero { padding: 36px 0; }
-    .hero__ch { font-size: 14px; }
-    .hero__en { font-size: 15px; }
+    .hero { padding: 48px 0 56px; }
+    .hero__logo-wrap { margin-bottom: 32px; }
+    .hero__logo { width: 180px; }
+    .hero__title { font-size: 34px; margin-bottom: 16px; }
+    .hero__tagline { font-size: 22px; }
 
     .pf-grid { grid-template-columns: 1fr; }
     .pf-tabs__inner { gap: 32px; font-size: 18px; justify-content: flex-start; padding: 0 32px; }
@@ -1580,13 +1737,54 @@ body { padding-top: var(--nav-h); }
 }
 @media (max-width: 480px) {
     .section__h2 { font-size: 26px; }
-    .hero__logo { width: 240px; }
+    .hero__logo { width: 150px; }
+    .hero__title { font-size: 28px; }
+    .hero__tagline { font-size: 18px; }
     .toolbox__grid { grid-template-columns: 1fr 1fr; }
     .btn { padding: 10px 22px; font-size: 13px; }
 }
+/* ==========================================================================
+   PAGE TRANSITIONS — cross-fade + subtle rise between pages
+   (View Transitions API, MPA mode — Chromium / Safari 18+;
+   other browsers get a simple fade-in fallback below)
+   ========================================================================== */
+@view-transition { navigation: auto; }
+
+/* Nav is chrome shared by every page — keep it static during the swap */
+.nav { view-transition-name: site-nav; }
+
+::view-transition-old(root) {
+    animation: page-leave .25s var(--ease) both;
+}
+::view-transition-new(root) {
+    animation: page-enter .45s var(--ease) both;
+}
+@keyframes page-leave {
+    to { opacity: 0; }
+}
+@keyframes page-enter {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Fallback: browsers without View Transitions still get a soft fade-in */
+@supports not (view-transition-name: root) {
+    body { animation: page-fade-in .45s var(--ease) both; }
+}
+@keyframes page-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         transition: none !important;
+        animation: none !important;
+    }
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    ::view-transition-group(*),
+    ::view-transition-image-pair(*) {
         animation: none !important;
     }
     html { scroll-behavior: auto; }

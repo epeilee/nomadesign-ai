@@ -10,7 +10,9 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(r)",
-      "Bash(powershell -Command ' *)"
+      "Bash(powershell -Command ' *)",
+      "Bash(git commit -m ' *)",
+      "Edit(~/.claude/skills/design-language/**)"
     ]
   }
 }

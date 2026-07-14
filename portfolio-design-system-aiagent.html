@@ -6,10 +6,10 @@
 <title>AI Agent Design System — Rachel Lee</title>
 <meta name="description" content="統一的 AI 產品設計系統，三產品線共用設計 Token 與 Theme 管理" />
 <link rel="icon" type="image/png" href="img/rachelLogo.png" />
-<link rel="preload" href="fonts/Orpheus-Regular.ttf" as="font" type="font/ttf" crossorigin />
+<link rel="preload" href="fonts/Orpheus-Regular.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 <style>
 /* ============================================================
@@ -112,6 +112,9 @@
   --upgpt-line-height-tight:  1.3;
   --upgpt-line-height-normal: 1.6;
   --upgpt-line-height-loose:  1.8;
+
+  /* Page-chrome accent tint — site brand teal (頁面裝飾用，非產品 token) */
+  --accent-subtle: rgba(4, 203, 195, 0.10);
 
   /* Motion Primitives */
   --upgpt-motion-duration-fast:     150ms;
@@ -299,6 +302,9 @@ body {
   font-family: var(--upgpt-font-family-body);
   font-size: var(--upgpt-font-size-body-md);
   line-height: var(--upgpt-line-height-body);
+  /* Baseline tracking — inherits to every element (tr/td included) that
+     doesn't declare its own letter-spacing; explicit values still win */
+  letter-spacing: 0.5px;
   transition: background var(--upgpt-motion-standard), color var(--upgpt-motion-standard);
 }
 
@@ -330,10 +336,11 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
-.ds-hero__back:hover { color: var(--upgpt-primary-bg-active); }
+.ds-hero__back:hover { color: var(--accent); }
 
 .ds-hero h1 {
   font-family: var(--upgpt-font-family-brand);
+  -webkit-text-stroke: 0.2px currentColor;
   font-size: var(--upgpt-font-size-display);
   font-weight: var(--upgpt-font-weight-bold);
   line-height: var(--upgpt-line-height-heading);
@@ -372,10 +379,10 @@ body {
   cursor: pointer;
   transition: all var(--upgpt-motion-fast);
 }
-.theme-btn:hover { border-color: var(--upgpt-primary-bg-default); color: var(--upgpt-primary-bg-default); }
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
 .theme-btn.is-active {
-  background: var(--upgpt-primary-bg-default);
-  border-color: var(--upgpt-primary-bg-default);
+  background: var(--accent);
+  border-color: var(--accent);
   color: var(--upgpt-color-fixed-light);
 }
 
@@ -412,6 +419,7 @@ body {
   display: block;
   padding: 8px 24px;
   font-size: var(--upgpt-font-size-body-sm);
+  letter-spacing: 1.2px;
   color: var(--upgpt-color-muted);
   text-decoration: none;
   border-left: 2px solid transparent;
@@ -422,10 +430,10 @@ body {
   background: var(--upgpt-surface-subtle);
 }
 .ds-sidenav__link.is-active {
-  color: var(--upgpt-primary-bg-default);
-  border-left-color: var(--upgpt-primary-bg-default);
+  color: var(--accent);
+  border-left-color: var(--accent);
   font-weight: var(--upgpt-font-weight-semibold);
-  background: var(--upgpt-primary-bg-subtle);
+  background: var(--accent-subtle);
 }
 
 /* Main content */
@@ -449,22 +457,42 @@ body {
 }
 .ds-section__label {
   display: inline-block;
-  font-size: var(--upgpt-font-size-body-sm);
-  font-weight: var(--upgpt-font-weight-semibold);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--upgpt-primary-bg-default);
+  font-family: var(--upgpt-font-family-brand);
+  -webkit-text-stroke: 0.2px currentColor;
+  font-size: 15px;
+  font-weight: var(--upgpt-font-weight-regular);
+  letter-spacing: 2px;
+  color: var(--accent);
   margin-bottom: var(--upgpt-padding-sm);
 }
+.ds-section__label::before { content: '/ '; }
+.ds-section__label::after { content: ' /'; }
+/* Editorial chapter numbers — same treatment as portfolio.html case page */
+.ds-content { counter-reset: ds; }
 .ds-section h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
   font-family: var(--upgpt-font-family-brand);
   font-size: var(--upgpt-font-size-heading-lg);
   font-weight: var(--upgpt-font-weight-regular);
   line-height: 160%;
   letter-spacing: 1.4px;
-  -webkit-text-stroke: 0.5px currentColor;
+  -webkit-text-stroke: 0.2px currentColor;
   margin-bottom: var(--upgpt-padding-md);
   color: var(--upgpt-color-default);
+}
+.ds-section h2::before {
+  counter-increment: ds;
+  content: counter(ds, decimal-leading-zero);
+  flex: none;
+  font-family: var(--upgpt-font-family-brand);
+  -webkit-text-stroke: 0.2px currentColor;
+  font-size: 1.3em;
+  font-weight: var(--upgpt-font-weight-regular);
+  line-height: 1;
+  letter-spacing: 2px;
+  color: var(--accent);
 }
 .ds-section__desc {
   font-family: 'Lato', 'Noto Sans TC', 'Open Sans', sans-serif;
@@ -483,9 +511,14 @@ body {
   font-weight: var(--upgpt-font-weight-regular);
   line-height: 160%;
   letter-spacing: 1.4px;
-  -webkit-text-stroke: 0.5px currentColor;
+  -webkit-text-stroke: 0.2px currentColor;
   margin: var(--upgpt-margin-md) 0 var(--upgpt-padding-md) 0;
   color: var(--upgpt-color-default);
+}
+/* Accent bar on section-level h3 only (not h3 inside cards) */
+.ds-section > h3 {
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
 }
 
 /* Token Grid */
@@ -516,7 +549,7 @@ body {
 }
 .token-ref {
   font-size: 11px;
-  color: var(--upgpt-primary-bg-default);
+  color: var(--accent);
   margin-top: 2px;
 }
 
@@ -596,7 +629,7 @@ body {
   border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
   border-radius: var(--upgpt-border-radius-sm);
   padding: 2px 6px;
-  color: var(--upgpt-primary-bg-active);
+  color: var(--accent);
   font-family: monospace;
 }
 
@@ -673,9 +706,15 @@ body {
   font-size: 12px;
   color: var(--upgpt-color-subtle);
 }
+/* Token spec lists sit inside a light card so they read apart from the demo stages below */
 .token-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--upgpt-surface-default);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  border-radius: var(--upgpt-border-radius-lg);
+  padding: 16px 28px;
   margin-bottom: var(--upgpt-padding-lg);
 }
 .token-table th {
@@ -698,6 +737,9 @@ body {
   font-weight: var(--upgpt-font-weight-semibold);
   color: var(--upgpt-color-default);
   white-space: nowrap;
+}
+.token-table tr:last-child td {
+  border-bottom: none;
 }
 .token-table tr.is-base td {
   font-weight: var(--upgpt-font-weight-bold);
@@ -777,8 +819,8 @@ body {
 .radius-swatch__box {
   width: 110px;
   height: 68px;
-  background: var(--upgpt-cyan-100);
-  border: 2px solid var(--upgpt-cyan-400);
+  background: var(--accent-subtle);
+  border: 2px solid var(--accent);
 }
 .radius-swatch__label {
   font-size: 13px;
@@ -1112,34 +1154,33 @@ body {
   text-transform: uppercase;
   color: var(--upgpt-color-subtle);
 }
-.matrix-heading b { color: var(--upgpt-cyan-600); font-weight: var(--upgpt-font-weight-bold); }
+.matrix-heading b { color: var(--accent); font-weight: var(--upgpt-font-weight-bold); }
 
-/* Matrix size tabs (Medium / Small) */
+/* Matrix size tabs — flush-left underline tabs */
 .matrix-tabs {
   display: flex;
-  justify-content: center;
-  gap: 24px;
+  justify-content: flex-start;
+  gap: 32px;
   margin-top: var(--upgpt-padding-sm);
-  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle);
+  border-bottom: var(--upgpt-border-width-1) solid #d8d8d8;
 }
 .matrix-tab {
-  width: 120px;
-  padding: 8px 2px;
+  padding: 10px 2px;
   margin-bottom: -1px;
   border: none;
   border-bottom: 2px solid transparent;
   background: none;
-  color: var(--upgpt-color-muted);
-  font-size: 13px;
+  color: var(--upgpt-color-default);
+  font-size: 14px;
   font-weight: var(--upgpt-font-weight-medium);
   cursor: pointer;
   transition: all var(--upgpt-motion-fast);
 }
-.matrix-tab:hover { color: var(--upgpt-primary-bg-default); }
+.matrix-tab:hover { color: var(--accent); }
 .matrix-tab.is-active {
-  color: var(--upgpt-color-default);
-  font-weight: var(--upgpt-font-weight-bold);
-  border-bottom-color: var(--upgpt-primary-bg-default);
+  color: var(--accent);
+  font-weight: var(--upgpt-font-weight-semibold);
+  border-bottom-color: var(--accent);
 }
 .btn-matrix[data-active-size="m"] [data-col-size="s"] { display: none; }
 .btn-matrix[data-active-size="s"] [data-col-size="m"] { display: none; }
@@ -1157,20 +1198,6 @@ body {
 .selector-tabs[data-active-size="checkbox"] [data-col-size="switch"],
 .selector-tabs[data-active-size="switch"] [data-col-size="radio"],
 .selector-tabs[data-active-size="switch"] [data-col-size="checkbox"] { display: none; }
-.dialog-header-tabs[data-active-size="left"] [data-col-size="center"],
-.dialog-header-tabs[data-active-size="center"] [data-col-size="left"] { display: none; }
-.dialog-footer-tabs[data-active-size="save"] [data-col-size="next"],
-.dialog-footer-tabs[data-active-size="save"] [data-col-size="delete"],
-.dialog-footer-tabs[data-active-size="save"] [data-col-size="cancel"],
-.dialog-footer-tabs[data-active-size="next"] [data-col-size="save"],
-.dialog-footer-tabs[data-active-size="next"] [data-col-size="delete"],
-.dialog-footer-tabs[data-active-size="next"] [data-col-size="cancel"],
-.dialog-footer-tabs[data-active-size="delete"] [data-col-size="save"],
-.dialog-footer-tabs[data-active-size="delete"] [data-col-size="next"],
-.dialog-footer-tabs[data-active-size="delete"] [data-col-size="cancel"],
-.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="save"],
-.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="next"],
-.dialog-footer-tabs[data-active-size="cancel"] [data-col-size="delete"] { display: none; }
 
 /* Tabs matrix (Primary segmented / Secondly underline) */
 .tabs-matrix { border-collapse: collapse; width: 100%; min-width: 760px; }
@@ -1313,23 +1340,6 @@ body {
 /* Dialog */
 .mock-btn2--primary-red { background: #ED4242; color: #fff; }
 .mock-btn2--primary-red.is-hover { background: #D93636; }
-
-.dialog-header-tabs, .dialog-footer-tabs { display: flex; gap: var(--upgpt-padding-xl); flex-wrap: wrap; padding: var(--upgpt-padding-lg) 0; }
-
-.mock-dialog-header, .mock-dialog-footer {
-  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
-  border-radius: var(--upgpt-border-radius-md);
-  background: var(--upgpt-neutral-0);
-  height: 48px;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-}
-.mock-dialog-header { justify-content: space-between; font-size: var(--upgpt-font-size-heading-sm); font-weight: var(--upgpt-font-weight-semibold); color: var(--upgpt-color-default); }
-.mock-dialog-header--center { justify-content: center; position: relative; }
-.mock-dialog-header--center .icon-svg { position: absolute; right: 16px; }
-.mock-dialog-header .icon-svg { width: 14px; height: 14px; color: var(--upgpt-color-muted); }
-.mock-dialog-footer { justify-content: flex-end; gap: 8px; }
 
 .mock-dialog {
   display: flex;
@@ -1578,7 +1588,7 @@ body {
 .layer-row__num {
   width: 24px; height: 24px;
   border-radius: var(--upgpt-radius-full);
-  background: var(--upgpt-primary-bg-default);
+  background: var(--accent);
   color: var(--upgpt-color-fixed-light);
   font-size: 12px;
   font-weight: var(--upgpt-font-weight-bold);
@@ -1596,8 +1606,8 @@ body {
 .layer-row__example {
   font-family: monospace;
   font-size: 12px;
-  color: var(--upgpt-primary-bg-active);
-  background: var(--upgpt-primary-bg-subtle);
+  color: var(--accent);
+  background: var(--accent-subtle);
   padding: 2px 8px;
   border-radius: var(--upgpt-border-radius-sm);
 }
@@ -1619,7 +1629,7 @@ body {
   transition: all var(--upgpt-motion-standard);
 }
 .product-card:hover {
-  border-color: var(--upgpt-primary-bg-default);
+  border-color: var(--accent);
   box-shadow: var(--upgpt-card-elevation-hover);
 }
 .product-card__icon { width: 28px; height: 28px; margin-bottom: 12px; display: block; }
@@ -1892,12 +1902,6 @@ body {
           </div>
         </div>
 
-        <div class="spec-subheading">Applied in Product</div>
-        <div class="project-grid">
-          <div class="project-grid__item"><img src="img/aiagent/aiagent-answer-page.jpg" alt="AI Agent 以圖搜圖答案頁" loading="lazy" /><span class="project-grid__cap">AI Agent</span></div>
-          <div class="project-grid__item"><img src="img/aiagent/aiagentdesktop-reasoning.jpg" alt="AI Agent Desktop 多輪推理與工作資料夾" loading="lazy" /><span class="project-grid__cap">AI Agent Desktop</span></div>
-          <div class="project-grid__item"><img src="img/aiagent/workagent-flow-06-complete.jpg" alt="Work Agent 生成完成資料表" loading="lazy" /><span class="project-grid__cap">Work Agent</span></div>
-        </div>
       </section>
 
       <!-- 1. TOKEN ARCHITECTURE -->
@@ -3588,34 +3592,6 @@ body {
             <tr class="is-base"><td>Position</td><td><span class="token-table__desc">Action 固定右側 · Cancel 次順位 · Back 靠左</span></td></tr>
           </tbody>
         </table>
-
-        <div class="matrix-heading"><b>Dialog - Header</b></div>
-        <div class="matrix-tabs">
-          <button type="button" class="matrix-tab is-active" data-size="left">Left</button>
-          <button type="button" class="matrix-tab" data-size="center">Center</button>
-        </div>
-        <div class="dialog-header-tabs" data-active-size="left">
-          <div data-col-size="left">
-            <div class="mock-dialog-header">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-          </div>
-          <div data-col-size="center">
-            <div class="mock-dialog-header mock-dialog-header--center">Dialog Title<svg class="icon-svg"><use href="#icon-close"></use></svg></div>
-          </div>
-        </div>
-
-        <div class="matrix-heading"><b>Dialog - Footer</b></div>
-        <div class="matrix-tabs">
-          <button type="button" class="matrix-tab is-active" data-size="save">Save</button>
-          <button type="button" class="matrix-tab" data-size="next">Next</button>
-          <button type="button" class="matrix-tab" data-size="delete">Delete</button>
-          <button type="button" class="matrix-tab" data-size="cancel">Cancel</button>
-        </div>
-        <div class="dialog-footer-tabs" data-active-size="save">
-          <div data-col-size="save"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Save</span></div></div>
-          <div data-col-size="next"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary">Next</span></div></div>
-          <div data-col-size="delete"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span><span class="mock-btn2 mock-btn2--s mock-btn2--primary-red">Delete</span></div></div>
-          <div data-col-size="cancel"><div class="mock-dialog-footer"><span class="mock-btn2 mock-btn2--s mock-btn2--outline-grey">Cancel</span></div></div>
-        </div>
 
         <div class="matrix-heading"><b>Main</b></div>
         <div class="matrix-tabs">
