@@ -289,6 +289,15 @@
   --upgpt-token-item-bg:            var(--upgpt-surface-canvas);
   --upgpt-token-item-border-color:  var(--upgpt-border-color-default);
   --upgpt-token-item-border-radius: var(--upgpt-border-radius-sm);
+
+  /* Icon */
+  --upgpt-icon-size-xs:      16px;
+  --upgpt-icon-size-sm:      20px;
+  --upgpt-icon-size-md:      24px;
+  --upgpt-icon-size-lg:      36px;
+  --upgpt-icon-color-default:  #666;
+  --upgpt-icon-color-active:   #444;
+  --upgpt-icon-color-inactive: #ccc;
 }
 
 /* ============================================================
@@ -404,7 +413,8 @@ body {
   top: 80px;
   padding: 48px 0 48px 0;
   border-right: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
-  min-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 .ds-sidenav__title {
   font-size: 11px;
@@ -438,7 +448,7 @@ body {
 
 /* Main content */
 .ds-content {
-  padding: 48px 0 80px 0;
+  padding: 48px 0 0 0;
   min-width: 0;
 }
 
@@ -452,8 +462,59 @@ body {
 .ds-section:nth-of-type(even) {
   background: var(--upgpt-surface-subtle);
 }
-.ds-section + .ds-section {
+.ds-section:not(:first-of-type) {
   margin-top: 16px;
+}
+
+/* Mobile accordion toggle — hidden on desktop, each one sits directly
+   before its .ds-section and reveals it on tap */
+.ds-accordion-toggle {
+  display: none;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--upgpt-padding-sm);
+  padding: 18px 20px;
+  background: var(--upgpt-surface-canvas);
+  border: none;
+  border-bottom: var(--upgpt-border-width-1) solid var(--upgpt-border-color-default);
+  text-align: left;
+  cursor: pointer;
+}
+.ds-accordion-toggle__label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--upgpt-font-family-brand);
+  font-size: var(--upgpt-font-size-heading-sm);
+  font-weight: var(--upgpt-font-weight-regular);
+  letter-spacing: 1.4px;
+  -webkit-text-stroke: 0.2px currentColor;
+  color: var(--upgpt-color-default);
+}
+.ds-accordion-toggle__num {
+  font-family: var(--upgpt-font-family-brand);
+  -webkit-text-stroke: 0.2px currentColor;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+.ds-accordion-toggle__icon {
+  width: 14px;
+  height: 14px;
+  color: var(--upgpt-color-muted);
+  flex-shrink: 0;
+  transition: transform var(--upgpt-motion-fast);
+}
+.ds-accordion-toggle.is-active {
+  background: var(--accent-subtle);
+}
+.ds-accordion-toggle.is-active .ds-accordion-toggle__label {
+  color: var(--accent);
+}
+.ds-accordion-toggle.is-active .ds-accordion-toggle__icon {
+  color: var(--accent);
+  transform: rotate(180deg);
 }
 .ds-section__label {
   display: inline-block;
@@ -1367,6 +1428,39 @@ body {
 .dialog-size-col__label { display: block; font-size: 12px; color: var(--upgpt-color-muted); }
 .dialog-size-col__label b { display: block; font-size: 14px; color: var(--upgpt-color-default); font-weight: var(--upgpt-font-weight-bold); }
 
+/* Icons */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--upgpt-padding-sm);
+  padding: var(--upgpt-padding-lg) 0;
+}
+.icon-grid__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: var(--upgpt-padding-md) var(--upgpt-padding-sm);
+  border: var(--upgpt-border-width-1) solid var(--upgpt-border-color-subtle);
+  border-radius: var(--upgpt-border-radius-sm);
+  transition: border-color .15s ease, background .15s ease;
+}
+.icon-grid__item:hover {
+  border-color: var(--upgpt-border-color-default);
+  background: var(--upgpt-neutral-100);
+}
+.icon-grid__item img { width: var(--upgpt-icon-size-md); height: var(--upgpt-icon-size-md); object-fit: contain; }
+.icon-grid__item figcaption {
+  width: 100%;
+  font-size: 11px;
+  color: var(--upgpt-icon-color-default);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Button state matrix (Buttons / Text Buttons) */
 .btn-matrix { border-collapse: collapse; width: 100%; min-width: 1400px; }
 .btn-matrix th, .btn-matrix td {
@@ -1691,15 +1785,113 @@ body {
 @media (max-width: 900px) {
   .ds-body { grid-template-columns: 1fr; }
   .ds-sidenav { display: none; }
-  .ds-content { padding: 32px 0; }
+  .ds-content { padding: 0; }
   .ds-hero h1 { font-size: var(--upgpt-font-size-2xl); }
   .product-showcase { grid-template-columns: 1fr; }
   .color-grid { grid-template-columns: repeat(2, 1fr); }
   .token-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Sidebar becomes a collapsible menu: each item is a tap target that
+     reveals its own section's content directly beneath it. The toggle's
+     own numbered label replaces the in-section heading, since the CSS
+     counter on .ds-section h2 only counts visible (non-display:none)
+     elements and would otherwise show "01" for every expanded section. */
+  .ds-accordion-toggle { display: flex; }
+  .ds-section { display: none; }
+  .ds-section:not(:first-of-type) { margin-top: 0; }
+  .ds-section.is-expanded { display: block; }
+  .ds-section h2 { display: none; }
 }
 @media (max-width: 600px) {
   .ds-hero h1 { font-size: 28px; }
   .color-ramp .ramp-swatch { width: 36px; height: 36px; }
+}
+
+/* ============================================================
+   MOBILE OVERRIDES (site convention: 768px / 480px)
+   Added to fix dense/overflowing layouts on iPhone-class viewports.
+   Desktop (>1024px) appearance is untouched by these rules.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Section rhythm — the fixed 48px side padding plus the global
+     .container 20px padding was squeezing content width badly */
+  .ds-section { padding: 24px 20px 40px 20px; }
+  .ds-content { padding: 0; }
+  .ds-accordion-toggle { padding: 16px 20px; }
+
+  /* Headings/description shrink to the site's mobile type scale */
+  .ds-section h2 {
+    font-size: 22px;
+    gap: 10px;
+    margin-bottom: var(--upgpt-padding-sm);
+  }
+  .ds-section h3 { font-size: 16px; }
+  .ds-section__desc { font-size: 14px; line-height: 1.7; }
+  .ds-hero { padding: 56px 0 40px; }
+  .ds-hero__desc { font-size: 14px; }
+
+  /* Section intro block (label / heading / description) centers on mobile;
+     label itself is hidden on mobile */
+  .ds-section__label { display: none; }
+  .ds-section h2 { justify-content: center; text-align: center; }
+  .ds-section__desc { text-align: center; margin-left: auto; margin-right: auto; }
+
+  /* Component-state tabs (Primary/Secondly, Small/Medium/Large, etc.):
+     center and split evenly into halves/thirds instead of left-aligned auto-width */
+  .matrix-tabs { justify-content: center; gap: 8px; }
+  .matrix-tab { flex: 1 1 0; text-align: center; }
+
+  /* Colour section: 10 inline-styled swatch grids (5-up / 3-up)
+     collapse to 2 columns instead of squeezing onto one row */
+  .ds-swatch-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; margin-bottom: 28px !important; }
+
+  /* Token / product grids: keep readable column widths */
+  .token-grid { grid-template-columns: repeat(2, 1fr); }
+  .token-table { padding: 16px 16px; }
+
+  /* Token architecture layer rows: fixed min-width columns don't
+     fit a narrow viewport — stack them instead */
+  .layer-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .layer-row__name { min-width: 0; }
+
+  /* Spacing ramp: 10 flex:1 items compress illegibly — wrap them */
+  .spacing-ramp {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 16px 12px;
+    padding: 24px 16px 16px;
+  }
+  .spacing-ramp__item { flex: 0 1 56px; }
+
+  /* Radius / shadow swatch rows: tighten gaps so items wrap cleanly */
+  .radius-swatch-row { gap: 16px; }
+  .shadow-swatch-grid { gap: 20px 12px; padding: 24px 16px; }
+
+  /* Breakpoint summary table: scroll instead of crushing 7 columns */
+  .bp-summary-table { min-width: 640px; }
+
+  /* Dialog size preview: mock dialogs are fixed 360/560/720px —
+     let the row scroll horizontally rather than overflow the page */
+  .dialog-size-grid { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+  .dialog-size-col { flex: none; }
+
+  .scrollbar-showcase { gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .ds-section { padding: 24px 16px 40px 16px; }
+  .ds-section h2 { font-size: 20px; }
+  .ds-hero h1 { font-size: 24px; }
+
+  /* Colour swatch grids: single column at the narrowest widths */
+  .ds-swatch-grid { grid-template-columns: 1fr !important; }
+
+  .token-grid { grid-template-columns: 1fr; }
+  .shadow-swatch-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -1806,8 +1998,8 @@ body {
         <p>AI Agent Platform</p>
       </div>
       <div class="detail-nav">
-        <a href="portfolio.html" class="detail-nav__prev">&lt; Previous Project</a>
-        <a href="portfolio-sonar.html" class="detail-nav__next">Next Project &gt;</a>
+        <a href="portfolio.html" class="detail-nav__prev"><span class="nav-arrow nav-arrow--prev" aria-hidden="true">←</span> Previous Project</a>
+        <a href="portfolio-sonar.html" class="detail-nav__next">Next Project <span class="nav-arrow nav-arrow--next" aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -1836,12 +2028,17 @@ body {
       <a href="#pagination" class="ds-sidenav__link">Pagination</a>
       <a href="#scrollbar" class="ds-sidenav__link">Scroll Bar</a>
       <a href="#dialog" class="ds-sidenav__link">Dialog</a>
+      <a href="#icons" class="ds-sidenav__link">Icons</a>
     </aside>
 
     <!-- Main DS Content -->
     <div class="ds-content">
       <!-- 1. TOKEN ARCHITECTURE -->
       <!-- 0. PRODUCTS THEME -->
+      <button type="button" class="ds-accordion-toggle" data-target="products-theme" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">01</span>Products Theme</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="products-theme">
         <h2>Products Theme</h2>
         <p class="ds-section__desc">
@@ -1905,6 +2102,10 @@ body {
       </section>
 
       <!-- 1. TOKEN ARCHITECTURE -->
+      <button type="button" class="ds-accordion-toggle" data-target="token-architecture" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">02</span>Token Architecture</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="token-architecture">
         <span class="ds-section__label">Design Tokens</span>
         <h2>Token Architecture</h2>
@@ -1971,6 +2172,10 @@ body {
       </section>
 
       <!-- 2. COLOUR -->
+      <button type="button" class="ds-accordion-toggle" data-target="colour" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">03</span>Colour</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="colour">
         <span class="ds-section__label">色彩系統</span>
         <h2>Colour</h2>
@@ -1979,8 +2184,8 @@ body {
           實現品牌差異化同時維持設計一致性。
         </p>
 
-        <h3>Steel Blue — Primary (UpAgent)</h3>
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <h3>Steel Blue — Primary (AI Agent Desktop)</h3>
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#E5F4F9; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#000; position:absolute; top:8px; left:12px;">100</div>
@@ -2028,7 +2233,7 @@ body {
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#357EA0; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#fff; position:absolute; top:8px; left:12px;">600</div>
@@ -2067,8 +2272,8 @@ body {
           </div>
         </div>
 
-        <h3>Cyan Blue — Primary (UpGPT)</h3>
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <h3>Cyan Blue — Primary (AI Agent)</h3>
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#E9F3F8; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#000; position:absolute; top:8px; left:12px;">100</div>
@@ -2116,7 +2321,7 @@ body {
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#07B2D3; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#fff; position:absolute; top:8px; left:12px;">600</div>
@@ -2156,7 +2361,7 @@ body {
         </div>
 
         <h3>Yellow — Accent</h3>
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#FFFDE0; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#000; position:absolute; top:8px; left:12px;">100</div>
@@ -2204,7 +2409,7 @@ body {
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="position:relative; width:100%; height:80px; background:#C49900; padding:12px;">
               <div style="font-size:12px; font-weight:600; color:#fff; position:absolute; top:8px; left:12px;">600</div>
@@ -2225,9 +2430,9 @@ body {
           </div>
         </div>
 
-        <h3>Backgrounds — Surface backgrounds for UpAgent and UpGPT</h3>
-        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:24px; font-weight:500;">UpAgent</p>
-        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:48px;">
+        <h3>Backgrounds — Surface backgrounds for AI Agent Desktop and AI Agent</h3>
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:24px; font-weight:500;">AI Agent Desktop</p>
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="width:100%; height:80px; background:#FAFEFF;"></div>
             <div style="padding:12px; border-top:1px solid var(--upgpt-border-color-default); display:flex; justify-content:space-between; align-items:center;">
@@ -2251,8 +2456,8 @@ body {
           </div>
         </div>
 
-        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:24px; font-weight:500;">UpGPT</p>
-        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:48px;">
+        <p style="font-size:13px; color:var(--upgpt-color-muted); margin-bottom:24px; font-weight:500;">AI Agent</p>
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="width:100%; height:80px; background:#FCFBF7;"></div>
             <div style="padding:12px; border-top:1px solid var(--upgpt-border-color-default); display:flex; justify-content:space-between; align-items:center;">
@@ -2277,7 +2482,7 @@ body {
         </div>
 
         <h3>Neutral Colors — Grey ramp from white to near-black</h3>
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="width:100%; height:80px; background:#FFFFFF; border:1px solid #eee;"></div>
             <div style="padding:12px; border-top:1px solid var(--upgpt-border-color-default); display:flex; justify-content:space-between; align-items:center;">
@@ -2315,7 +2520,7 @@ body {
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
+        <div class="ds-swatch-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; margin-bottom:48px;">
           <div style="height:120px; border-radius:8px; overflow:hidden; background:white; border:1px solid var(--upgpt-border-color-default);">
             <div style="width:100%; height:80px; background:#888888;"></div>
             <div style="padding:12px; border-top:1px solid var(--upgpt-border-color-default); display:flex; justify-content:space-between; align-items:center;">
@@ -2355,6 +2560,10 @@ body {
 
       </section>
       <!-- 3. TYPOGRAPHY -->
+      <button type="button" class="ds-accordion-toggle" data-target="typography" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">04</span>Typography</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="typography">
         <span class="ds-section__label">字體排版系統</span>
         <h2>Typography</h2>
@@ -2496,6 +2705,10 @@ body {
       </section>
 
       <!-- 4. SPACING -->
+      <button type="button" class="ds-accordion-toggle" data-target="spacing" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">05</span>Spacing</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="spacing">
         <span class="ds-section__label">間距系統</span>
         <h2>Spacing</h2>
@@ -2608,9 +2821,13 @@ body {
       </section>
 
       <!-- 5. BORDER -->
+      <button type="button" class="ds-accordion-toggle" data-target="border" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">06</span>Border &amp; Radius</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="border">
         <span class="ds-section__label">邊框與圓角</span>
-        <h2>Border</h2>
+        <h2>Border Radius</h2>
         <table class="token-table">
           <thead>
             <tr><th>Token</th><th>Value · 用途</th></tr>
@@ -2680,6 +2897,10 @@ body {
         </div>
       </section>
       <!-- 6. ELEVATION -->
+      <button type="button" class="ds-accordion-toggle" data-target="elevation" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">07</span>Shadow</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="elevation">
         <span class="ds-section__label">陰影</span>
         <h2>Shadow</h2>
@@ -2758,6 +2979,10 @@ body {
       </section>
 
       <!-- 7. BREAKPOINTS -->
+      <button type="button" class="ds-accordion-toggle" data-target="breakpoints" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">08</span>Breakpoints</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="breakpoints">
         <span class="ds-section__label">斷點</span>
         <h2>Breakpoint</h2>
@@ -2870,6 +3095,7 @@ body {
           </div>
         </div>
 
+        <div class="table-scroll">
         <table class="bp-summary-table">
           <thead>
             <tr>
@@ -2895,9 +3121,14 @@ body {
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <!-- 8. BUTTONS -->
+      <button type="button" class="ds-accordion-toggle" data-target="buttons" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">09</span>Buttons</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="buttons">
         <span class="ds-section__label">按鈕</span>
         <h2>Buttons</h2>
@@ -3049,6 +3280,10 @@ body {
       </section>
 
       <!-- 9. INPUTS -->
+      <button type="button" class="ds-accordion-toggle" data-target="inputs" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">10</span>Inputs</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="inputs">
         <span class="ds-section__label">輸入框</span>
         <h2>Inputs</h2>
@@ -3064,7 +3299,7 @@ body {
             <tr><td>State — Focus</td><td><span class="token-table__desc">border</span> <span class="token-table__badge">#14C6DE</span><span class="token-table__desc">· bg</span> <span class="token-table__badge">#FAFFFF</span><span class="token-table__desc">· shadow</span> <span class="token-table__badge">0 0 0 2px rgba(20,198,222,0.12)</span></td></tr>
             <tr><td>State — Error</td><td><span class="token-table__desc">border</span> <span class="token-table__badge">#ED4242</span><span class="token-table__desc">· error text below field</span></td></tr>
             <tr><td>State — Disabled</td><td><span class="token-table__desc">bg</span> <span class="token-table__badge">#F4F4F4</span><span class="token-table__desc">· border</span> <span class="token-table__badge">#E8E8E8</span><span class="token-table__desc">· text</span> <span class="token-table__badge">#CCC</span></td></tr>
-            <tr class="is-base"><td>Types</td><td><span class="token-table__desc">Text · Password · Search · Number · Textarea · Select · Prefix / Suffix</span></td></tr>
+            <tr class="is-base"><td>Types</td><td><span class="token-table__desc">Text · Password · Search · Number · Textarea · Date Picker</span></td></tr>
           </tbody>
         </table>
 
@@ -3072,7 +3307,7 @@ body {
         <table class="input-matrix">
           <thead>
             <tr>
-              <th></th><th>Text</th><th>Password</th><th>Search</th><th>Number</th><th>Textarea</th><th>Select</th><th>Prefix/Suffix</th>
+              <th></th><th>Text</th><th>Password</th><th>Search</th><th>Number</th><th>Textarea</th><th>Date Picker</th>
             </tr>
           </thead>
           <tbody>
@@ -3096,11 +3331,10 @@ body {
               </td>
               <td><input class="mock-field" value="42"></td>
               <td><textarea class="mock-field mock-textarea" placeholder="Enter description..."></textarea></td>
-              <td><select class="mock-field mock-select"><option>Option A</option></select></td>
               <td>
-                <div class="mock-affix-wrap">
-                  <span class="mock-affix">https://</span>
-                  <input class="mock-affix-field" placeholder="domain.com">
+                <div class="mock-field-wrap">
+                  <input class="mock-field mock-field--pad-right" placeholder="Select date">
+                  <span class="mock-field-icon mock-field-icon--right">📅</span>
                 </div>
               </td>
             </tr>
@@ -3124,11 +3358,10 @@ body {
               </td>
               <td><input class="mock-field mock-field--focus" value="99"></td>
               <td><textarea class="mock-field mock-field--focus mock-textarea">Writing a description here...</textarea></td>
-              <td><select class="mock-field mock-field--focus mock-select"><option>Option B</option></select></td>
               <td>
-                <div class="mock-affix-wrap mock-affix-wrap--focus">
-                  <span class="mock-affix">https://</span>
-                  <input class="mock-affix-field" value="upgpt.io">
+                <div class="mock-field-wrap">
+                  <input class="mock-field mock-field--focus mock-field--pad-right" value="2026-07-15">
+                  <span class="mock-field-icon mock-field-icon--right" style="color:var(--upgpt-cyan-500);">📅</span>
                 </div>
               </td>
             </tr>
@@ -3142,16 +3375,16 @@ body {
               </td>
               <td>
                 <div class="mock-field-wrap">
-                  <input class="mock-field mock-field--pad-left mock-field--pad-right" value="you@example.com">
-                  <span class="mock-field-icon mock-field-icon--left">✉</span>
-                  <span class="mock-field-icon mock-field-icon--right" style="color:#1a7a3a;">✓</span>
+                  <input class="mock-field mock-field--pad-left mock-field--pad-right" placeholder="••••••••">
+                  <span class="mock-field-icon mock-field-icon--left">🔒</span>
+                  <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
               </td>
               <td>
-                <div class="mock-affix-wrap">
-                  <span class="mock-affix">$</span>
-                  <input class="mock-affix-field" value="1,200.00">
-                  <span class="mock-affix">USD</span>
+                <div class="mock-field-wrap">
+                  <input class="mock-field mock-field--pad-left mock-field--pad-right" value="invoice #1024">
+                  <span class="mock-field-icon mock-field-icon--left"><svg class="icon-svg"><use href="#icon-search"></use></svg></span>
+                  <span class="mock-field-icon mock-field-icon--right" style="cursor:pointer;">✕</span>
                 </div>
               </td>
               <td>
@@ -3163,12 +3396,6 @@ body {
               <td>
                 <textarea class="mock-field mock-textarea" placeholder="Notes..."></textarea>
                 <div class="mock-counter">0 / 200</div>
-              </td>
-              <td>
-                <div class="mock-field-wrap">
-                  <select class="mock-field mock-select mock-field--pad-left"><option>Category A</option></select>
-                  <span class="mock-field-icon mock-field-icon--left">📁</span>
-                </div>
               </td>
               <td>
                 <div class="mock-field-wrap">
@@ -3203,15 +3430,8 @@ body {
                 <div class="mock-helper mock-helper--error">Exceeds 200 characters</div>
               </td>
               <td>
-                <select class="mock-field mock-field--error mock-select"><option>— Select —</option></select>
-                <div class="mock-helper mock-helper--error">Selection required</div>
-              </td>
-              <td>
-                <div class="mock-affix-wrap mock-affix-wrap--error">
-                  <span class="mock-affix">https://</span>
-                  <input class="mock-affix-field" value="not a url">
-                </div>
-                <div class="mock-helper mock-helper--error">Invalid URL</div>
+                <input class="mock-field mock-field--error" value="2026-13-45">
+                <div class="mock-helper mock-helper--error">Invalid date</div>
               </td>
             </tr>
             <tr>
@@ -3224,13 +3444,7 @@ body {
               <td><input class="mock-field mock-field--disabled" placeholder="Search..." disabled></td>
               <td><input class="mock-field mock-field--disabled" value="0" disabled></td>
               <td><textarea class="mock-field mock-field--disabled mock-textarea" disabled>Cannot edit this field.</textarea></td>
-              <td><select class="mock-field mock-field--disabled mock-select" disabled><option>Option A</option></select></td>
-              <td>
-                <div class="mock-affix-wrap mock-affix-wrap--disabled">
-                  <span class="mock-affix">https://</span>
-                  <input class="mock-affix-field" value="locked.io" disabled>
-                </div>
-              </td>
+              <td><input class="mock-field mock-field--disabled" value="2026-01-01" disabled></td>
             </tr>
           </tbody>
         </table>
@@ -3238,6 +3452,10 @@ body {
       </section>
 
       <!-- 10. SELECTORS -->
+      <button type="button" class="ds-accordion-toggle" data-target="selectors" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">11</span>Selectors</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="selectors">
         <span class="ds-section__label">選擇器</span>
         <h2>Selectors</h2>
@@ -3413,6 +3631,10 @@ body {
       </section>
 
       <!-- 10. TABS -->
+      <button type="button" class="ds-accordion-toggle" data-target="tabs" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">12</span>Tabs</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="tabs">
         <span class="ds-section__label">頁籤</span>
         <h2>Tabs</h2>
@@ -3483,6 +3705,10 @@ body {
       </section>
 
       <!-- PAGINATION -->
+      <button type="button" class="ds-accordion-toggle" data-target="pagination" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">13</span>Pagination</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="pagination">
         <span class="ds-section__label">分頁</span>
         <h2>Pagination</h2>
@@ -3548,6 +3774,10 @@ body {
       </section>
 
       <!-- SCROLL BAR -->
+      <button type="button" class="ds-accordion-toggle" data-target="scrollbar" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">14</span>Scroll Bar</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="scrollbar">
         <span class="ds-section__label">捲軸</span>
         <h2>Scroll Bar</h2>
@@ -3573,6 +3803,10 @@ body {
       </section>
 
       <!-- DIALOG -->
+      <button type="button" class="ds-accordion-toggle" data-target="dialog" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">15</span>Dialog</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
       <section class="ds-section" id="dialog">
         <span class="ds-section__label">對話框</span>
         <h2>Dialog</h2>
@@ -3660,6 +3894,278 @@ body {
         </div>
       </section>
 
+      <!-- ICONS -->
+      <button type="button" class="ds-accordion-toggle" data-target="icons" aria-expanded="false">
+        <span class="ds-accordion-toggle__label"><span class="ds-accordion-toggle__num">16</span>Icons</span>
+        <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
+      </button>
+      <section class="ds-section" id="icons">
+        <span class="ds-section__label">圖示</span>
+        <h2>Icons</h2>
+
+        <table class="token-table">
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Format</td><td><span class="token-table__desc">SVG · single color, inherits currentColor where supported</span></td></tr>
+            <tr><td>Size</td><td><span class="token-table__desc">XS</span> <span class="token-table__badge">16px</span><span class="token-table__desc">· S</span> <span class="token-table__badge">20px</span><span class="token-table__desc">· M</span> <span class="token-table__badge">24px</span><span class="token-table__desc">· L</span> <span class="token-table__badge">36px</span></td></tr>
+            <tr><td>Color</td><td><span class="token-table__desc">Default</span> <span class="token-table__badge">#666</span><span class="token-table__desc">· Active</span> <span class="token-table__badge">#444</span><span class="token-table__desc">· Inactive</span> <span class="token-table__badge">#ccc</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="icon-grid">
+          <figure class="icon-grid__item"><img src="img/icons/AI agent.svg" alt="AI agent" loading="lazy"><figcaption>AI agent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/AI analysis.svg" alt="AI analysis" loading="lazy"><figcaption>AI analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/AI bot.svg" alt="AI bot" loading="lazy"><figcaption>AI bot</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/AI note.svg" alt="AI note" loading="lazy"><figcaption>AI note</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/AI send.svg" alt="AI send" loading="lazy"><figcaption>AI send</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Accuracy.svg" alt="Accuracy" loading="lazy"><figcaption>Accuracy</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Add _ Round.svg" alt="Add _ Round" loading="lazy"><figcaption>Add _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Add folder.svg" alt="Add folder" loading="lazy"><figcaption>Add folder</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Add group.svg" alt="Add group" loading="lazy"><figcaption>Add group</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Add user.svg" alt="Add user" loading="lazy"><figcaption>Add user</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Add.svg" alt="Add" loading="lazy"><figcaption>Add</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Agents.svg" alt="Agents" loading="lazy"><figcaption>Agents</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Ai write.svg" alt="Ai write" loading="lazy"><figcaption>Ai write</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Answer total.svg" alt="Answer total" loading="lazy"><figcaption>Answer total</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Answer.svg" alt="Answer" loading="lazy"><figcaption>Answer</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Apply.svg" alt="Apply" loading="lazy"><figcaption>Apply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ Down.svg" alt="Arrow Line _ Down" loading="lazy"><figcaption>Arrow Line _ Down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ Up.svg" alt="Arrow Line _ Up" loading="lazy"><figcaption>Arrow Line _ Up</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ left.svg" alt="Arrow Line _ left" loading="lazy"><figcaption>Arrow Line _ left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ right.svg" alt="Arrow Line _ right" loading="lazy"><figcaption>Arrow Line _ right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Bookmark.svg" alt="Bookmark" loading="lazy"><figcaption>Bookmark</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Bookmarl-flat.svg" alt="Bookmarl-flat" loading="lazy"><figcaption>Bookmarl-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Calendar.svg" alt="Calendar" loading="lazy"><figcaption>Calendar</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Chart.svg" alt="Chart" loading="lazy"><figcaption>Chart</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Chat record.svg" alt="Chat record" loading="lazy"><figcaption>Chat record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Check.svg" alt="Check" loading="lazy"><figcaption>Check</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Chevron _ Left.svg" alt="Chevron _ Left" loading="lazy"><figcaption>Chevron _ Left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Chevron _ Right.svg" alt="Chevron _ Right" loading="lazy"><figcaption>Chevron _ Right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Click.svg" alt="Click" loading="lazy"><figcaption>Click</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Close _ Round.svg" alt="Close _ Round" loading="lazy"><figcaption>Close _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Close.svg" alt="Close" loading="lazy"><figcaption>Close</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Command.svg" alt="Command" loading="lazy"><figcaption>Command</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Connect tool.svg" alt="Connect tool" loading="lazy"><figcaption>Connect tool</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Construction.svg" alt="Construction" loading="lazy"><figcaption>Construction</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Copy.svg" alt="Copy" loading="lazy"><figcaption>Copy</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Custom.svg" alt="Custom" loading="lazy"><figcaption>Custom</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Custom2.svg" alt="Custom2" loading="lazy"><figcaption>Custom2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Custom3.svg" alt="Custom3" loading="lazy"><figcaption>Custom3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Data analysis.svg" alt="Data analysis" loading="lazy"><figcaption>Data analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Deactivate.svg" alt="Deactivate" loading="lazy"><figcaption>Deactivate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Delete.svg" alt="Delete" loading="lazy"><figcaption>Delete</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Department.svg" alt="Department" loading="lazy"><figcaption>Department</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Design.svg" alt="Design" loading="lazy"><figcaption>Design</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Dislike-flat.svg" alt="Dislike-flat" loading="lazy"><figcaption>Dislike-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Done.svg" alt="Done" loading="lazy"><figcaption>Done</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Download.svg" alt="Download" loading="lazy"><figcaption>Download</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Duplicate-flat.svg" alt="Duplicate-flat" loading="lazy"><figcaption>Duplicate-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Edit.svg" alt="Edit" loading="lazy"><figcaption>Edit</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Expire date.svg" alt="Expire date" loading="lazy"><figcaption>Expire date</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Export CSV.svg" alt="Export CSV" loading="lazy"><figcaption>Export CSV</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Export DOC.svg" alt="Export DOC" loading="lazy"><figcaption>Export DOC</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Export HTML.svg" alt="Export HTML" loading="lazy"><figcaption>Export HTML</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Export JSON.svg" alt="Export JSON" loading="lazy"><figcaption>Export JSON</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Export PDF.svg" alt="Export PDF" loading="lazy"><figcaption>Export PDF</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/External - Link.svg" alt="External - Link" loading="lazy"><figcaption>External - Link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Failed.svg" alt="Failed" loading="lazy"><figcaption>Failed</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-HTML.svg" alt="File-HTML" loading="lazy"><figcaption>File-HTML</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-csv.svg" alt="File-csv" loading="lazy"><figcaption>File-csv</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-doc.svg" alt="File-doc" loading="lazy"><figcaption>File-doc</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-excel.svg" alt="File-excel" loading="lazy"><figcaption>File-excel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-jpg.svg" alt="File-jpg" loading="lazy"><figcaption>File-jpg</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-md.svg" alt="File-md" loading="lazy"><figcaption>File-md</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-pdf.svg" alt="File-pdf" loading="lazy"><figcaption>File-pdf</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-png.svg" alt="File-png" loading="lazy"><figcaption>File-png</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-ppt.svg" alt="File-ppt" loading="lazy"><figcaption>File-ppt</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/File-txt.svg" alt="File-txt" loading="lazy"><figcaption>File-txt</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Filter.svg" alt="Filter" loading="lazy"><figcaption>Filter</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Folder.svg" alt="Folder" loading="lazy"><figcaption>Folder</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/GPT.svg" alt="GPT" loading="lazy"><figcaption>GPT</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Gear.svg" alt="Gear" loading="lazy"><figcaption>Gear</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Back.svg" alt="Go Back" loading="lazy"><figcaption>Go Back</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Down.svg" alt="Go Down" loading="lazy"><figcaption>Go Down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Left.svg" alt="Go Left" loading="lazy"><figcaption>Go Left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Next.svg" alt="Go Next" loading="lazy"><figcaption>Go Next</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Right.svg" alt="Go Right" loading="lazy"><figcaption>Go Right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Go Up.svg" alt="Go Up" loading="lazy"><figcaption>Go Up</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Goal.svg" alt="Goal" loading="lazy"><figcaption>Goal</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Grab.svg" alt="Grab" loading="lazy"><figcaption>Grab</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/HR.svg" alt="HR" loading="lazy"><figcaption>HR</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Hamburger.svg" alt="Hamburger" loading="lazy"><figcaption>Hamburger</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Hide PW.svg" alt="Hide PW" loading="lazy"><figcaption>Hide PW</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Hover.svg" alt="Hover" loading="lazy"><figcaption>Hover</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Icon.svg" alt="Icon" loading="lazy"><figcaption>Icon</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Idea.svg" alt="Idea" loading="lazy"><figcaption>Idea</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Import CSV.svg" alt="Import CSV" loading="lazy"><figcaption>Import CSV</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Info - s.svg" alt="Info - s" loading="lazy"><figcaption>Info - s</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Information.svg" alt="Information" loading="lazy"><figcaption>Information</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Instructions.svg" alt="Instructions" loading="lazy"><figcaption>Instructions</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Intelligen file2.svg" alt="Intelligen file2" loading="lazy"><figcaption>Intelligen file2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Intelligen file3.svg" alt="Intelligen file3" loading="lazy"><figcaption>Intelligen file3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Jira.svg" alt="Jira" loading="lazy"><figcaption>Jira</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Library.svg" alt="Library" loading="lazy"><figcaption>Library</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Like-flat.svg" alt="Like-flat" loading="lazy"><figcaption>Like-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Line.svg" alt="Line" loading="lazy"><figcaption>Line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Link.svg" alt="Link" loading="lazy"><figcaption>Link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/List.svg" alt="List" loading="lazy"><figcaption>List</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Loading.svg" alt="Loading" loading="lazy"><figcaption>Loading</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Lock-path.svg" alt="Lock-path" loading="lazy"><figcaption>Lock-path</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Lock.svg" alt="Lock" loading="lazy"><figcaption>Lock</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Logout.svg" alt="Logout" loading="lazy"><figcaption>Logout</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Meeting record.svg" alt="Meeting record" loading="lazy"><figcaption>Meeting record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Meeting.svg" alt="Meeting" loading="lazy"><figcaption>Meeting</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Minus _ Round.svg" alt="Minus _ Round" loading="lazy"><figcaption>Minus _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Minus.svg" alt="Minus" loading="lazy"><figcaption>Minus</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/More image.svg" alt="More image" loading="lazy"><figcaption>More image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/More.svg" alt="More" loading="lazy"><figcaption>More</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Move to.svg" alt="Move to" loading="lazy"><figcaption>Move to</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Move.svg" alt="Move" loading="lazy"><figcaption>Move</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/New upside chat.svg" alt="New upside chat" loading="lazy"><figcaption>New upside chat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/No image.svg" alt="No image" loading="lazy"><figcaption>No image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Not Activated.svg" alt="Not Activated" loading="lazy"><figcaption>Not Activated</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Notification _ OFF.svg" alt="Notification _ OFF" loading="lazy"><figcaption>Notification _ OFF</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Notification _ ON.svg" alt="Notification _ ON" loading="lazy"><figcaption>Notification _ ON</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/PDF view.svg" alt="PDF view" loading="lazy"><figcaption>PDF view</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Pause.svg" alt="Pause" loading="lazy"><figcaption>Pause</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Public.svg" alt="Public" loading="lazy"><figcaption>Public</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Python Execution.svg" alt="Python Execution" loading="lazy"><figcaption>Python Execution</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Reduce.svg" alt="Reduce" loading="lazy"><figcaption>Reduce</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Reference.svg" alt="Reference" loading="lazy"><figcaption>Reference</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Refresh.svg" alt="Refresh" loading="lazy"><figcaption>Refresh</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Related.svg" alt="Related" loading="lazy"><figcaption>Related</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Relevance.svg" alt="Relevance" loading="lazy"><figcaption>Relevance</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Reply.svg" alt="Reply" loading="lazy"><figcaption>Reply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Reset.svg" alt="Reset" loading="lazy"><figcaption>Reset</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Run all.svg" alt="Run all" loading="lazy"><figcaption>Run all</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Run.svg" alt="Run" loading="lazy"><figcaption>Run</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Save as.svg" alt="Save as" loading="lazy"><figcaption>Save as</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Save.svg" alt="Save" loading="lazy"><figcaption>Save</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Schedule.svg" alt="Schedule" loading="lazy"><figcaption>Schedule</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Screenshot.svg" alt="Screenshot" loading="lazy"><figcaption>Screenshot</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Search by image.svg" alt="Search by image" loading="lazy"><figcaption>Search by image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Search by image2.svg" alt="Search by image2" loading="lazy"><figcaption>Search by image2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Search by image3.svg" alt="Search by image3" loading="lazy"><figcaption>Search by image3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Search.svg" alt="Search" loading="lazy"><figcaption>Search</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/SearchByImage.svg" alt="SearchByImage" loading="lazy"><figcaption>SearchByImage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/SearchImage.svg" alt="SearchImage" loading="lazy"><figcaption>SearchImage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Setting.svg" alt="Setting" loading="lazy"><figcaption>Setting</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Shop.svg" alt="Shop" loading="lazy"><figcaption>Shop</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Single image.svg" alt="Single image" loading="lazy"><figcaption>Single image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Software.svg" alt="Software" loading="lazy"><figcaption>Software</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sort Ascending.svg" alt="Sort Ascending" loading="lazy"><figcaption>Sort Ascending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sort Deafult.svg" alt="Sort Deafult" loading="lazy"><figcaption>Sort Deafult</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sort Descending.svg" alt="Sort Descending" loading="lazy"><figcaption>Sort Descending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sort.svg" alt="Sort" loading="lazy"><figcaption>Sort</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Star.svg" alt="Star" loading="lazy"><figcaption>Star</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Status Failed.svg" alt="Status Failed" loading="lazy"><figcaption>Status Failed</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Status Success.svg" alt="Status Success" loading="lazy"><figcaption>Status Success</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Status Warning.svg" alt="Status Warning" loading="lazy"><figcaption>Status Warning</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Step-line.svg" alt="Step-line" loading="lazy"><figcaption>Step-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Step-pending.svg" alt="Step-pending" loading="lazy"><figcaption>Step-pending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Steps.svg" alt="Steps" loading="lazy"><figcaption>Steps</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Stop.svg" alt="Stop" loading="lazy"><figcaption>Stop</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sub - duplicate.svg" alt="Sub - duplicate" loading="lazy"><figcaption>Sub - duplicate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sub - pin.svg" alt="Sub - pin" loading="lazy"><figcaption>Sub - pin</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sublayer.svg" alt="Sublayer" loading="lazy"><figcaption>Sublayer</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Subtable.svg" alt="Subtable" loading="lazy"><figcaption>Subtable</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Success.svg" alt="Success" loading="lazy"><figcaption>Success</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Sync.svg" alt="Sync" loading="lazy"><figcaption>Sync</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/TXT view.svg" alt="TXT view" loading="lazy"><figcaption>TXT view</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Table.svg" alt="Table" loading="lazy"><figcaption>Table</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Teams.svg" alt="Teams" loading="lazy"><figcaption>Teams</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Thinking content.svg" alt="Thinking content" loading="lazy"><figcaption>Thinking content</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Thread-flat.svg" alt="Thread-flat" loading="lazy"><figcaption>Thread-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Thread.svg" alt="Thread" loading="lazy"><figcaption>Thread</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Tiles.svg" alt="Tiles" loading="lazy"><figcaption>Tiles</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Translate.svg" alt="Translate" loading="lazy"><figcaption>Translate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Travel.svg" alt="Travel" loading="lazy"><figcaption>Travel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Triangle-down.svg" alt="Triangle-down" loading="lazy"><figcaption>Triangle-down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Triangle-right.svg" alt="Triangle-right" loading="lazy"><figcaption>Triangle-right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/UpAgent.svg" alt="UpAgent" loading="lazy"><figcaption>UpAgent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/UpChat.svg" alt="UpChat" loading="lazy"><figcaption>UpChat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/UpGPT-color.svg" alt="UpGPT-color" loading="lazy"><figcaption>UpGPT-color</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/UpGPT.svg" alt="UpGPT" loading="lazy"><figcaption>UpGPT</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Update todo list.svg" alt="Update todo list" loading="lazy"><figcaption>Update todo list</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Upload record.svg" alt="Upload record" loading="lazy"><figcaption>Upload record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Upload.svg" alt="Upload" loading="lazy"><figcaption>Upload</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/User management.svg" alt="User management" loading="lazy"><figcaption>User management</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/User.svg" alt="User" loading="lazy"><figcaption>User</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Video.svg" alt="Video" loading="lazy"><figcaption>Video</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/View PW.svg" alt="View PW" loading="lazy"><figcaption>View PW</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/View details.svg" alt="View details" loading="lazy"><figcaption>View details</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/View schedule.svg" alt="View schedule" loading="lazy"><figcaption>View schedule</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/Warning.svg" alt="Warning" loading="lazy"><figcaption>Warning</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/account.svg" alt="account" loading="lazy"><figcaption>account</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/add cloud file.svg" alt="add cloud file" loading="lazy"><figcaption>add cloud file</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/attach.svg" alt="attach" loading="lazy"><figcaption>attach</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/broom.svg" alt="broom" loading="lazy"><figcaption>broom</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/camera-flat.svg" alt="camera-flat" loading="lazy"><figcaption>camera-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/camera.svg" alt="camera" loading="lazy"><figcaption>camera</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/chat.svg" alt="chat" loading="lazy"><figcaption>chat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/cloud.svg" alt="cloud" loading="lazy"><figcaption>cloud</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/company.svg" alt="company" loading="lazy"><figcaption>company</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/cosmetic.svg" alt="cosmetic" loading="lazy"><figcaption>cosmetic</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/details.svg" alt="details" loading="lazy"><figcaption>details</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/dislike-line.svg" alt="dislike-line" loading="lazy"><figcaption>dislike-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/done-border.svg" alt="done-border" loading="lazy"><figcaption>done-border</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/earth.svg" alt="earth" loading="lazy"><figcaption>earth</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/edit form.svg" alt="edit form" loading="lazy"><figcaption>edit form</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/email reply.svg" alt="email reply" loading="lazy"><figcaption>email reply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/email.svg" alt="email" loading="lazy"><figcaption>email</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/enlarge.svg" alt="enlarge" loading="lazy"><figcaption>enlarge</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/export excel.svg" alt="export excel" loading="lazy"><figcaption>export excel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/folder-line.svg" alt="folder-line" loading="lazy"><figcaption>folder-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/folder-yellow.svg" alt="folder-yellow" loading="lazy"><figcaption>folder-yellow</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/generate steps.svg" alt="generate steps" loading="lazy"><figcaption>generate steps</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/group.svg" alt="group" loading="lazy"><figcaption>group</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/history.svg" alt="history" loading="lazy"><figcaption>history</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/image understanding-500.svg" alt="image understanding-500" loading="lazy"><figcaption>image understanding-500</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/image understanding.svg" alt="image understanding" loading="lazy"><figcaption>image understanding</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/image understanding2.svg" alt="image understanding2" loading="lazy"><figcaption>image understanding2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/image understanding3.svg" alt="image understanding3" loading="lazy"><figcaption>image understanding3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/intelligent file.svg" alt="intelligent file" loading="lazy"><figcaption>intelligent file</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/keypoint.svg" alt="keypoint" loading="lazy"><figcaption>keypoint</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/knowledge.svg" alt="knowledge" loading="lazy"><figcaption>knowledge</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/lang.svg" alt="lang" loading="lazy"><figcaption>lang</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/left drawer-collapse.svg" alt="left drawer-collapse" loading="lazy"><figcaption>left drawer-collapse</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/left drawer-open.svg" alt="left drawer-open" loading="lazy"><figcaption>left drawer-open</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/license active.svg" alt="license active" loading="lazy"><figcaption>license active</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/license inactive.svg" alt="license inactive" loading="lazy"><figcaption>license inactive</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/like-line.svg" alt="like-line" loading="lazy"><figcaption>like-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/mobile.svg" alt="mobile" loading="lazy"><figcaption>mobile</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/new thread.svg" alt="new thread" loading="lazy"><figcaption>new thread</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/no reference.svg" alt="no reference" loading="lazy"><figcaption>no reference</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/open link.svg" alt="open link" loading="lazy"><figcaption>open link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/password.svg" alt="password" loading="lazy"><figcaption>password</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/pending.svg" alt="pending" loading="lazy"><figcaption>pending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/private.svg" alt="private" loading="lazy"><figcaption>private</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/progress.svg" alt="progress" loading="lazy"><figcaption>progress</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/python.svg" alt="python" loading="lazy"><figcaption>python</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/question analysis.svg" alt="question analysis" loading="lazy"><figcaption>question analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/question.svg" alt="question" loading="lazy"><figcaption>question</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/read.svg" alt="read" loading="lazy"><figcaption>read</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/record review.svg" alt="record review" loading="lazy"><figcaption>record review</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/rename.svg" alt="rename" loading="lazy"><figcaption>rename</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/rewrite.svg" alt="rewrite" loading="lazy"><figcaption>rewrite</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/right drawer-collapse.svg" alt="right drawer-collapse" loading="lazy"><figcaption>right drawer-collapse</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/right drawer-open.svg" alt="right drawer-open" loading="lazy"><figcaption>right drawer-open</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/save n run.svg" alt="save n run" loading="lazy"><figcaption>save n run</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/security.svg" alt="security" loading="lazy"><figcaption>security</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/share.svg" alt="share" loading="lazy"><figcaption>share</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/skill.svg" alt="skill" loading="lazy"><figcaption>skill</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/step-process.svg" alt="step-process" loading="lazy"><figcaption>step-process</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/storage.svg" alt="storage" loading="lazy"><figcaption>storage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/web.svg" alt="web" loading="lazy"><figcaption>web</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/webpage.svg" alt="webpage" loading="lazy"><figcaption>webpage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/website.svg" alt="website" loading="lazy"><figcaption>website</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/width.svg" alt="width" loading="lazy"><figcaption>width</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/windows.svg" alt="windows" loading="lazy"><figcaption>windows</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/work agent.svg" alt="work agent" loading="lazy"><figcaption>work agent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="img/icons/write.svg" alt="write" loading="lazy"><figcaption>write</figcaption></figure>
+        </div>
+      </section>
+
       <!-- CTA -->
     </div><!-- /ds-content -->
   </div><!-- /ds-body -->
@@ -3669,8 +4175,8 @@ body {
 <section class="detail-bottom-nav">
   <div class="container">
     <div class="detail-bottom-nav__inner">
-      <a href="portfolio.html">&lt; Previous Project</a>
-      <a href="portfolio-sonar.html">Next Project &gt;</a>
+      <a href="portfolio.html"><span class="nav-arrow nav-arrow--prev" aria-hidden="true">←</span> Previous Project</a>
+      <a href="portfolio-sonar.html">Next Project <span class="nav-arrow nav-arrow--next" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -3679,7 +4185,7 @@ body {
     <div class="footer__brand">
       <h3>Nomad Design</h3>
       <div class="footer__tags">
-        <span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
+        <span>AI</span><span class="sep">×</span><span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
       </div>
     </div>
     <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
@@ -3738,6 +4244,41 @@ body {
   }, { rootMargin: '-20% 0px -70% 0px' });
 
   sections.forEach(s => observer.observe(s));
+
+  // Mobile accordion menu (single-open: opening one collapses the rest)
+  const accordionToggles = document.querySelectorAll('.ds-accordion-toggle');
+
+  function collapseAccordion(toggle) {
+    const section = document.getElementById(toggle.dataset.target);
+    toggle.classList.remove('is-active');
+    toggle.setAttribute('aria-expanded', 'false');
+    if (section) section.classList.remove('is-expanded');
+  }
+
+  function expandAccordion(toggle) {
+    const section = document.getElementById(toggle.dataset.target);
+    toggle.classList.add('is-active');
+    toggle.setAttribute('aria-expanded', 'true');
+    if (section) section.classList.add('is-expanded');
+  }
+
+  accordionToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.classList.contains('is-active');
+      accordionToggles.forEach(t => { if (t !== toggle) collapseAccordion(t); });
+      if (isOpen) {
+        collapseAccordion(toggle);
+      } else {
+        expandAccordion(toggle);
+        toggle.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  if (location.hash) {
+    const initialToggle = document.querySelector('.ds-accordion-toggle[data-target="' + location.hash.slice(1) + '"]');
+    if (initialToggle) expandAccordion(initialToggle);
+  }
 </script>
 </body>
 </html>

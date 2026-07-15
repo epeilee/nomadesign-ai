@@ -123,7 +123,7 @@ b, strong { font-weight: bolder; }
     background: #fff;
     border-bottom: 1px solid var(--line);
     z-index: 50;
-    transition: box-shadow .3s var(--ease), transform .35s var(--ease);
+    transition: all 0.2s;
 }
 .nav.is-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 /* Scrolling down on sub-menu pages slides the nav out of view (JS toggles) */
@@ -151,7 +151,7 @@ b, strong { font-weight: bolder; }
     position: relative;
     padding: 6px 2px;
     text-decoration: none;
-    transition: color .25s var(--ease);
+    transition: all 0.5s;
 }
 
 /* Default underline bar — hidden by default */
@@ -161,7 +161,7 @@ b, strong { font-weight: bolder; }
     left: 0; bottom: 0;
     width: 0; height: 1px;
     background: var(--accent);
-    transition: width .25s var(--ease);
+    transition: all 0.5s;
 }
 
 /* Top-right dot — shown on hover / focus / active */
@@ -173,7 +173,7 @@ b, strong { font-weight: bolder; }
     border-radius: 50%;
     background: currentColor;
     opacity: 0;
-    transition: opacity .25s var(--ease);
+    transition: all 0.5s;
 }
 
 /* Hover state */
@@ -269,11 +269,14 @@ body { padding-top: var(--nav-h); }
 .hero__tagline {
     font-family: 'Orpheus Pro', 'Noto Sans TC', serif;
     -webkit-text-stroke: 0.2px currentColor;
-    font-size: var(--font-h2);
+    /* fluid size: caps at --font-h2, shrinks on narrow viewports so the
+       nowrap line never overflows before the 768px wrap point */
+    font-size: min(var(--font-h2), 3.7vw);
     color: var(--text-main);
     font-weight: 400;
     letter-spacing: 1.4px;
     line-height: 170%;
+    white-space: nowrap;
 }
 .hero .accent { color: var(--accent); font-weight: 400; }
 
@@ -341,6 +344,14 @@ body { padding-top: var(--nav-h); }
     z-index: 2;
 }
 
+/* AI Agent Platform card: widen the image so it reads taller than the
+   description card, giving the overlap a clearer layered depth */
+@media (min-width: 769px) {
+    #projects .project--left .project__media {
+        grid-column: 1 / 10;
+    }
+}
+
 .project__media img {
     width: 100%;
     height: auto;
@@ -362,7 +373,7 @@ body { padding-top: var(--nav-h); }
     left: 0; bottom: 0;
     width: 0; height: 2px;
     background: var(--accent);
-    transition: width .35s var(--ease);
+    transition: all 0.5s;
 }
 .project__card:hover::after { width: 100%; }
 .project__title {
@@ -400,24 +411,17 @@ body { padding-top: var(--nav-h); }
     letter-spacing: 1.4px;
     line-height: 160%;
     border-radius: 0;
-    transition: background .25s var(--ease), color .25s var(--ease), transform .2s var(--ease);
+    transition: all 0.5s;
     cursor: pointer;
 }
-/* Hover: black sweeps in from the left over the teal, matching the menu sweep */
 .btn--dark {
-    background-color: var(--accent);
-    /* 210% width leaves a buffer so no black sliver shows at the edge */
-    background-image: linear-gradient(to right, #000 50%, var(--accent) 50%);
-    background-size: 210% 100%;
-    background-position: 100% 0;
-    background-repeat: no-repeat;
+    background: var(--accent);
     color: #fff;
-    transition: background-position .4s var(--ease), transform .2s var(--ease);
 }
 .btn--dark:hover,
 .btn--dark:focus,
 .btn--dark:active {
-    background-position: 0 0;
+    background: #000;
     color: #fff;
     transform: translateY(-1px);
 }
@@ -457,7 +461,7 @@ body { padding-top: var(--nav-h); }
     left: 0; bottom: 0;
     width: 0; height: 1px;
     background: var(--accent);
-    transition: width .35s var(--ease);
+    transition: all 0.5s;
     z-index: 2;
 }
 .project-grid__item:hover::after { width: 100%; }
@@ -694,12 +698,12 @@ body { padding-top: var(--nav-h); }
    ========================================================================== */
 .pf-tabs {
     background: #fff;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 0px solid var(--line);
     padding: 16px 0;
     position: sticky;
     top: var(--nav-h);
     z-index: 40;
-    transition: top .35s var(--ease);
+    transition: all 0.2s;
 }
 /* When the nav slides away, the tabs take over the top edge (JS toggles) */
 .pf-tabs.is-top { top: 0; }
@@ -724,7 +728,7 @@ body { padding-top: var(--nav-h); }
     font-size: 30px;
     color: var(--text-main);
     text-decoration: none;
-    transition: color .2s var(--ease);
+    transition: all 0.5s;
     white-space: nowrap;
 }
 .pf-tabs__btn {
@@ -756,34 +760,6 @@ body { padding-top: var(--nav-h); }
     color: var(--accent);
 }
 
-/* ==========================================================================
-   MENU TEXT SWEEP — teal fills the label left→right, synced with the
-   underline animation (nav links + portfolio sub-menu tabs)
-   ========================================================================== */
-.nav__link,
-.pf-tab,
-.nav__sub-link {
-    background-image: linear-gradient(to right, var(--accent) 50%, currentColor 50%);
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    background-repeat: no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: background-position .4s var(--ease), color .25s var(--ease), border-color .2s var(--ease);
-}
-.nav__link:hover,
-.nav__link:focus-visible,
-.nav__link.is-active,
-.pf-tab:hover,
-.pf-tab:focus,
-.pf-tab:active,
-.pf-tab.is-active,
-.nav__sub-link:hover,
-.nav__sub-link.is-active {
-    background-position: 0 0;
-}
-
 /* pf-tab: growing 1px underline to match the nav links */
 .pf-tab { position: relative; }
 .pf-tab::after {
@@ -792,7 +768,7 @@ body { padding-top: var(--nav-h); }
     left: 0; bottom: 0;
     width: 0; height: 1px;
     background: var(--accent);
-    transition: width .25s var(--ease);
+    transition: all 0.5s;
 }
 .pf-tab:hover::after,
 .pf-tab:focus::after,
@@ -907,6 +883,17 @@ body { padding-top: var(--nav-h); }
 }
 .detail-nav a:hover { color: var(--accent); }
 .detail-nav a.is-disabled { opacity: .3; pointer-events: none; text-decoration: none; }
+/* Prev/Next arrow glyph — same style as the Design System button's .btn__arrow
+   (thin arrow, slides on hover) instead of the plain </> characters */
+.nav-arrow {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform .2s var(--ease);
+}
+.detail-nav a:hover .nav-arrow--prev,
+.detail-bottom-nav a:hover .nav-arrow--prev { transform: translateX(-4px); }
+.detail-nav a:hover .nav-arrow--next,
+.detail-bottom-nav a:hover .nav-arrow--next { transform: translateX(4px); }
 
 .detail-hero {
     background: var(--bg-odd);
@@ -1392,6 +1379,10 @@ body { padding-top: var(--nav-h); }
     transition: opacity .2s var(--ease);
 }
 .slider__btn:hover { opacity: 1; }
+/* explicit focus style so keyboard focus doesn't fall back to the browser's
+   default outline box (which only shows on whichever arrow was last tabbed/clicked,
+   making the two sides of the slider look asymmetric) */
+.slider__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; opacity: 1; }
 .slider__btn--prev { left: -40px; }
 .slider__btn--next { right: -40px; }
 .slider__dots {
@@ -1574,8 +1565,6 @@ body { padding-top: var(--nav-h); }
 @media (max-width: 768px) {
     .container { padding: 0 20px; }
     .nav__brand { display: block; font-size: 26px; font-weight: 500; flex: 1; text-align: center; }
-    .nav__menu > .nav__link:first-child { display: none; }
-    .nav__menu > .nav__sep:first-of-type { display: none; }
     .nav__inner { justify-content: center; padding-left: 0; }
     .nav__menu {
         position: fixed;
@@ -1615,7 +1604,7 @@ body { padding-top: var(--nav-h); }
         letter-spacing: .06em;
         padding-bottom: 4px;
         border-bottom: 1px solid transparent;
-        transition: background-position .4s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+        transition: all 0.5s;
     }
     .nav__sub-link:hover,
     .nav__sub-link.is-active {
@@ -1653,7 +1642,7 @@ body { padding-top: var(--nav-h); }
     .hero__logo-wrap { margin-bottom: 32px; }
     .hero__logo { width: 180px; }
     .hero__title { font-size: 34px; margin-bottom: 16px; }
-    .hero__tagline { font-size: 22px; }
+    .hero__tagline { font-size: 22px; white-space: normal; }
 
     .pf-grid { grid-template-columns: 1fr; }
     .pf-tabs__inner { gap: 32px; font-size: 18px; justify-content: flex-start; padding: 0 32px; }
@@ -1670,7 +1659,7 @@ body { padding-top: var(--nav-h); }
     .exp-item { grid-template-columns: 1fr; gap: 6px; }
     .exp-item__row { grid-template-columns: 80px 1fr; }
     .toolbox__grid { grid-template-columns: repeat(2, 1fr); }
-    .edu-item { grid-template-columns: 1fr; gap: 4px; }
+    .edu-item { grid-template-columns: 1fr; gap: 4px; text-align: center; }
     .exp-item__date { font-size: 16px; }
     .exp-item__date small { font-size: 16px; }
     .exp-item__body h5,
@@ -1706,7 +1695,11 @@ body { padding-top: var(--nav-h); }
     .hero-caption,
     .hero-caption--mid { position: static; width: 100%; max-width: 100%; transform: none; top: auto; }
 
-    .hero-caption { padding: 16px; }
+    /* Desktop shadow (-4px -4px white glow) is tuned to blend the card's
+       top-left corner into the overlapping image; once the card is static
+       and stacked below the image on mobile there's nothing to blend into,
+       so it just shows as a mismatched white smudge — swap for a plain shadow */
+    .hero-caption { padding: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, .10); }
     .hero-caption__body { font-size: 14px; }
     .video-embed { width: 70%; margin: 0 auto; }
     .detail-about { grid-template-columns: 1fr; gap: 24px; }
@@ -1788,4 +1781,161 @@ body { padding-top: var(--nav-h); }
         animation: none !important;
     }
     html { scroll-behavior: auto; }
+}
+
+/* ==========================================================================
+   Shot strip: scrollable captioned thumbnails + Lightbox (click to enlarge)
+   ========================================================================== */
+.shot-strip {
+    grid-column: 1 / -1;
+    order: 3; /* after __body (0) and __video (max order 2) in the item grid */
+    position: relative;
+    margin-top: 24px;
+    /* full-bleed: stretch to the viewport edges (body clips overflow-x) */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+}
+.shot-thumbs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 16px 72px;
+    background: var(--bg-odd);
+    scrollbar-width: none;
+}
+.shot-thumbs::-webkit-scrollbar { display: none; }
+/* edge fades match the section's --bg-odd background: lift the arrows off the thumbnails */
+.shot-strip::before,
+.shot-strip::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 96px;
+    z-index: 1; /* above thumbs, below the arrow buttons (z-index 2) */
+    pointer-events: none;
+}
+.shot-strip::before { left: 0; background: linear-gradient(to right, var(--bg-odd) 10%, rgba(236, 241, 244, 0)); }
+.shot-strip::after { right: 0; background: linear-gradient(to left, var(--bg-odd) 10%, rgba(236, 241, 244, 0)); }
+.shot-item {
+    flex: 0 0 calc((100% - 24px) / 4);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+.shot-item__caption {
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+}
+.shot-thumb {
+    width: 100%;
+    padding: 0;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.shot-thumb:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .14);
+    transform: translateY(-2px);
+}
+.shot-thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 7 / 5;
+    object-fit: cover;
+    object-position: top;
+}
+.shot-strip__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--accent);
+    font-size: 64px;
+    font-family: 'Orpheus Pro', serif;
+    -webkit-text-stroke: 0.2px currentColor;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    opacity: .8;
+    transition: opacity .2s var(--ease);
+}
+.shot-strip__btn:hover { opacity: 1; }
+.shot-strip__btn--prev { left: 8px; }
+.shot-strip__btn--next { right: 8px; }
+/* page dots (built by JS, one per scroll page) */
+.shot-strip__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+.shot-strip__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    background: #bbb;
+    cursor: pointer;
+    transition: background .2s var(--ease);
+}
+.shot-strip__dot.is-active { background: #333; }
+@media (max-width: 768px) {
+    .shot-thumbs { padding: 12px 44px; gap: 8px; }
+    .shot-item { flex-basis: calc((100% - 8px) / 2); }
+    .shot-strip__btn { width: 36px; height: 56px; font-size: 40px; }
+    .shot-strip__btn--prev { left: 2px; }
+    .shot-strip__btn--next { right: 2px; }
+    .shot-strip::before,
+    .shot-strip::after { width: 48px; }
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .85);
+    padding: 48px;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+    max-width: min(1400px, 92vw);
+    max-height: 86vh;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+    background: #fff;
+    transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+.lightbox__close,
+.lightbox__btn {
+    position: absolute;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+    opacity: .8;
+    transition: opacity .2s;
+}
+.lightbox__close:hover,
+.lightbox__btn:hover { opacity: 1; }
+.lightbox__close { top: 16px; right: 24px; font-size: 40px; }
+.lightbox__btn { top: 50%; transform: translateY(-50%); font-size: 56px; padding: 16px; }
+.lightbox__btn--prev { left: 8px; }
+.lightbox__btn--next { right: 8px; }
+@media (max-width: 768px) {
+    .lightbox { padding: 16px; }
+    .lightbox img { max-width: 100%; }
+    .lightbox__btn { font-size: 40px; padding: 8px; }
 }

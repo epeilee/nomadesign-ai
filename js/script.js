@@ -196,4 +196,125 @@
             }, 80);
         }, { passive: true });
     });
+
+    /* ---------- 5b. Shot strip arrows (scroll one thumbnail per click) ---------- */
+    document.querySelectorAll('.shot-strip').forEach(strip => {
+        const track = strip.querySelector('.shot-thumbs');
+        const prev = strip.querySelector('.shot-strip__btn--prev');
+        const next = strip.querySelector('.shot-strip__btn--next');
+        if (!track || !prev || !next) return;
+        const step = () => {
+            const item = track.querySelector('.shot-item');
+            return item ? item.getBoundingClientRect().width + 12 : 240;
+        };
+        prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+        next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+
+        /* page dots: one per viewport-width "page" of thumbnails */
+        const dotsBox = document.createElement('div');
+        dotsBox.className = 'shot-strip__dots';
+        strip.appendChild(dotsBox);
+        let dots = [];
+        const maxScroll = () => track.scrollWidth - track.clientWidth;
+        const setActive = () => {
+            if (!dots.length) return;
+            const m = maxScroll();
+            const i = m > 0 ? Math.round(track.scrollLeft / m * (dots.length - 1)) : 0;
+            dots.forEach((d, k) => d.classList.toggle('is-active', k === i));
+        };
+        const buildDots = () => {
+            const n = Math.max(1, Math.ceil(track.scrollWidth / track.clientWidth));
+            dotsBox.innerHTML = '';
+            dots = [];
+            if (n < 2) { setActive(); return; }
+            for (let k = 0; k < n; k++) {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'shot-strip__dot';
+                b.setAttribute('aria-label', 'Page ' + (k + 1) + ' of ' + n);
+                b.addEventListener('click', () => track.scrollTo({ left: maxScroll() * k / (n - 1), behavior: 'smooth' }));
+                dotsBox.appendChild(b);
+                dots.push(b);
+            }
+            setActive();
+        };
+        buildDots();
+        let dotScrollTimer;
+        track.addEventListener('scroll', () => {
+            clearTimeout(dotScrollTimer);
+            dotScrollTimer = setTimeout(setActive, 80);
+        }, { passive: true });
+        let dotResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(dotResizeTimer);
+            dotResizeTimer = setTimeout(buildDots, 150);
+        });
+    });
+
+    /* ---------- 6. Lightbox: click a .shot-thumb to enlarge ---------- */
+    const thumbGroups = document.querySelectorAll('.shot-thumbs');
+    if (thumbGroups.length) {
+        const lb = document.createElement('div');
+        lb.className = 'lightbox';
+        lb.innerHTML =
+            '<button class="lightbox__btn lightbox__btn--prev" aria-label="Previous">&lsaquo;</button>' +
+            '<img alt="" />' +
+            '<button class="lightbox__btn lightbox__btn--next" aria-label="Next">&rsaquo;</button>' +
+            '<button class="lightbox__close" aria-label="Close">&times;</button>';
+        document.body.appendChild(lb);
+        const lbImg = lb.querySelector('img');
+        let group = [];
+        let idx = 0;
+
+        let switchTimer;
+        /* dir: 0 = no transition (first open), -1 = slide from left, 1 = slide from right */
+        const show = (i, dir = 0) => {
+            idx = (i + group.length) % group.length;
+            const t = group[idx];
+            const src = t.dataset.full || t.src;
+            clearTimeout(switchTimer);
+            if (!dir) {
+                lbImg.style.opacity = '';
+                lbImg.style.transform = '';
+                lbImg.src = src;
+                lbImg.alt = t.alt;
+                return;
+            }
+            lbImg.style.opacity = '0';
+            lbImg.style.transform = 'translateX(' + (dir > 0 ? -28 : 28) + 'px)';
+            switchTimer = setTimeout(() => {
+                lbImg.src = src;
+                lbImg.alt = t.alt;
+                const arrive = () => {
+                    lbImg.style.transition = 'none';
+                    lbImg.style.transform = 'translateX(' + (dir > 0 ? 28 : -28) + 'px)';
+                    void lbImg.offsetWidth; /* flush so the enter position applies before animating */
+                    lbImg.style.transition = '';
+                    lbImg.style.opacity = '';
+                    lbImg.style.transform = '';
+                };
+                if (lbImg.complete) arrive();
+                else lbImg.addEventListener('load', arrive, { once: true });
+            }, 220);
+        };
+        const open = () => { lb.classList.add('is-open'); document.body.style.overflow = 'hidden'; };
+        const close = () => { lb.classList.remove('is-open'); document.body.style.overflow = ''; };
+
+        thumbGroups.forEach(g => {
+            const imgs = Array.from(g.querySelectorAll('.shot-thumb img'));
+            g.querySelectorAll('.shot-thumb').forEach((btn, i) => {
+                btn.addEventListener('click', () => { group = imgs; show(i); open(); });
+            });
+        });
+        lb.querySelector('.lightbox__btn--prev').addEventListener('click', () => show(idx - 1, -1));
+        lb.querySelector('.lightbox__btn--next').addEventListener('click', () => show(idx + 1, 1));
+        lb.querySelector('.lightbox__close').addEventListener('click', close);
+        lb.addEventListener('click', e => { if (e.target === lb) close(); });
+        document.addEventListener('keydown', e => {
+            if (!lb.classList.contains('is-open')) return;
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowLeft') show(idx - 1, -1);
+            if (e.key === 'ArrowRight') show(idx + 1, 1);
+        });
+    }
 })();

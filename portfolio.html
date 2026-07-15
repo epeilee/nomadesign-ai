@@ -23,7 +23,7 @@
     /* Case body — narrow editorial column, black & white + teal accents */
     .case-body { padding: 72px 0; max-width: 820px; margin: 0 auto; }
     body { counter-reset: cs; }
-    .case-body h2 {
+    .case-body h2:not(.detail-section__title) {
         display: flex;
         align-items: baseline;
         gap: 18px;
@@ -36,8 +36,8 @@
         color: var(--text-main);
         margin: 72px 0 16px;
     }
-    .case-body h2:first-child { margin-top: 0; }
-    .case-body h2::before {
+    .case-body h2:not(.detail-section__title):first-child { margin-top: 0; }
+    .case-body h2:not(.detail-section__title)::before {
         counter-increment: cs;
         content: counter(cs, decimal-leading-zero);
         flex: none;
@@ -64,6 +64,34 @@
     .case-body ul li { font-size: 16px; line-height: 180%; letter-spacing: .056em; color: var(--txt-2); margin-bottom: 10px; list-style: disc; }
     .case-body strong { color: var(--text-main); font-weight: 600; letter-spacing: 1.4px; }
     .case-body blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; background: #f7f7f7; margin: 32px 0; font-size: 18px; line-height: 180%; letter-spacing: 1.4px; color: var(--text-main); font-style: italic; }
+    .challenge-list { text-align: center; }
+
+    /* Shared item style — About this Project 與 Challenge 共用同一套小標題字級、
+       行距與分隔線，讓兩區塊視覺一致。 */
+    .case-item { margin-bottom: 40px; }
+    .case-item:not(:last-of-type)::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 0;
+        margin: 24px auto 0;
+        border-top: 2px solid var(--accent);
+    }
+    .case-item strong {
+        display: inline-block;
+        color: var(--text-main);
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 160%;
+        letter-spacing: 0.5px;
+    }
+    /* About this Project — 產品名稱（英文）比照全站 h6 設定：Orpheus Pro Regular + 0.2px text-stroke */
+    .detail-about--text-only .case-item strong {
+        font-family: 'Orpheus Pro', 'Noto Sans TC', serif;
+        font-weight: 400;
+        letter-spacing: 1.4px;
+        -webkit-text-stroke: 0.2px currentColor;
+    }
 
     /* Product showcase — editorial rows, media/text alternating like the homepage.
        Breaks out of the 820px column to give the two columns room to breathe. */
@@ -86,6 +114,26 @@
     .product-show__video { order: -1; }
     .product-show__item:nth-child(even) { grid-template-columns: 1fr 1.25fr; }
     .product-show__item:nth-child(even) .product-show__video { order: 2; }
+    .product-show__item--workagent { border-bottom: 0px solid var(--line); }
+    /* 02 AI Agent Desktop — 整個 session 換成白底，且左右滿版（跳脫 .product-show 置中寬度）。
+       z-index: 0 讓這個 item 自成一個 stacking context，避免 ::before 的負 z-index
+       被灰底 section 蓋過去（沒有 stacking context 時負 z-index 會被祖先的背景蓋住）。 */
+    .product-show__item--upagent { position: relative; z-index: 0; }
+    .product-show__item--upagent::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 100vw;
+        transform: translateX(-50%);
+        background: #fff;
+        z-index: -1;
+    }
+    /* 內含的 slider 也要換白底（原本比照 Overview 灰底做的漸層遮罩） */
+    .product-show__item--upagent .shot-thumbs { background: #fff; }
+    .product-show__item--upagent .shot-strip::before { background: linear-gradient(to right, #fff 10%, rgba(255, 255, 255, 0)); }
+    .product-show__item--upagent .shot-strip::after { background: linear-gradient(to left, #fff 10%, rgba(255, 255, 255, 0)); }
     .product-show__head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
     .product-show__num {
         font-family: 'Orpheus Pro', serif;
@@ -108,9 +156,66 @@
         .case-body { padding: 56px 0; }
         .case-body h2 { gap: 12px; }
         .product-show { --show-w: 100%; margin-left: 0; }
+        /* 加左右 20px 內距（疊加在 .container 原本的 20px 之上，
+           跟 portfolio-design-system-aiagent.html 的 .ds-section 同樣做法），
+           讓說明文與影片都跟畫面邊緣保持間距，不再貼邊 */
         .product-show__item,
-        .product-show__item:nth-child(even) { grid-template-columns: 1fr; padding: 28px 0 36px; }
+        .product-show__item:nth-child(even) { grid-template-columns: 1fr; padding: 28px 20px 36px; }
         .product-show__item:nth-child(even) .product-show__video { order: -1; }
+        .product-show__num { font-size: 26px; }
+        .product-show__title { font-size: 20px; }
+        /* 文字置中，呼應 Overview／Challenge 的置中排版 */
+        .product-show__head { justify-content: center; }
+        .product-show__item--upgpt .product-show__desc { text-align: center; margin-left: auto; margin-right: auto; }
+        /* 01 AI Agent：標題要在影片之上 */
+        .product-show__item--upgpt .product-show__body { order: 1; }
+        .product-show__item--upgpt .product-show__video { order: 2; }
+        .product-show__item--upgpt .shot-strip { order: 3; }
+        /* 子標題（Functional Map／Flow Chart／Design System）跟著全站 .detail-section__title
+           的手機字級縮小，並收斂間距，不要因為 class 特異性比較高而卡在桌機尺寸 */
+        .detail-section__title--sub { font-size: 20px; }
+        .detail-section__title--divider { padding-top: 32px; }
+        .case-item { margin-bottom: 28px; }
+        .case-item:not(:last-of-type)::after { margin-top: 36px; }
+        /* SVG 圖表文字不能無限縮小，改成可橫向滑動、維持可讀字級 */
+        .ux-diagram--scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .ux-diagram--scroll svg { width: auto; min-width: 640px; height: auto; }
+        .case-body p.text-center { margin: 16px; }
+        .case-body p { margin: 36px 16px; font-size: 14px; }
+    }
+
+    /* Page-specific: top hero slider on the fixed background image */
+    .case-hero { background: url('img/upgpt-process/hero bg.jpg') center / cover no-repeat #eef3f8; padding: 72px 0 56px; }
+    .case-hero .slider { max-width: 100%; }
+    /* equal-height slides so mixed aspect ratios don't make the hero jump */
+    .case-hero .slider__slide { display: flex; align-items: center; justify-content: center; height: min(56vw, 540px); }
+    .case-hero .slider__slide img { width: auto; max-width: 100%; max-height: 100%; margin: 0; box-shadow: none; }
+    .case-hero .slider__slide--shot img { box-shadow: 0 16px 40px rgba(0, 0, 0, .16); }
+    .case-hero .slider__dot { background: rgba(0, 0, 0, .22); }
+    .case-hero .slider__dot.is-active { background: #333; }
+    /* .hero-caption 卡片預設貼齊 slide 右下角 (right:0/bottom:0)，但它的
+       box-shadow 會往右、往下暈開一段距離。slide 的右/下邊界剛好等於
+       .slider__track 的可視邊界，陰影暈出去的部分就被 overflow 裁掉了——
+       同時前一張 slide 貼齊右下角的卡片，陰影也會暈到下一張 slide 的左下角。
+       桌機版把卡片往內縮一點，讓陰影有空間完整顯示；手機版是直向堆疊版型，
+       不受影響，所以只在桌機寬度套用。 */
+    @media (min-width: 769px) {
+        .case-hero .hero-caption { right: 24px; bottom: 24px; }
+    }
+    @media (max-width: 768px) {
+        .case-hero { padding: 40px 0 32px; }
+        /* max-width:100% 會蓋掉 style.css 的滿版負 margin 破格技巧：
+           margin:0 -20px 讓寬度想撐開到「容器寬+40px」，但 max-width:100%
+           以容器寬為基準把它夾住，寬度被砍掉的 40px 只從右邊扣，導致左邊
+           凸出、右邊縮進，畫面整個歪一邊。手機版要解除這個上限。 */
+        .case-hero .slider { max-width: none; }
+        /* 手機版截圖跟畫面邊緣要留間距，不要貼邊（原本只有 8px，太窄） */
+        .case-hero .slider__slide { padding: 0 20px; }
+        /* 加入 hero-caption 後，圖片+說明卡是直向堆疊，desktop 的固定高度
+           (min(56vw,540px)) 裝不下，會讓內容溢出、視覺跑位偏一邊，
+           改成隨內容自動撐開高度 */
+        .case-hero .slider__slide--hero-caption { height: auto; }
+        .case-hero .slider__slide--hero-caption img { width: 100%; max-height: none; }
     }
 
     /* Page-specific: shrink all case-study images to 70% */
@@ -123,6 +228,61 @@
     .project-grid__item img,
     .detail-about__media img {
         box-shadow: 0 0 24px rgba(0, 0, 0, 0.10);
+    }
+
+    /* Page-specific: About this Project — 內文置中排列 */
+    .detail-about--text-only .detail-about__text { text-align: center; }
+
+    /* Page-specific: UX Design Process — 三個子標題（功能地圖／流程圖／設計系統與元件庫）
+       比主標題「UX Design Process」降一級字級，並各自間隔出分隔線，呼應 Overview 的產品分隔線。 */
+    .detail-section__title--sub {
+        /* font-size: var(--font-h5); */
+        /* margin-top: 56px; */
+    }
+    .detail-section__title--divider {
+        padding-top: 56px;
+        border-top: 1px solid var(--line);
+    }
+
+    /* Page-specific: UX process diagrams (inline SVG) */
+    .ux-diagram { margin: 28px 0 44px; }
+    /* Flow Chart sits in its own full-bleed .detail-section--alt band —
+       drop .case-body's own vertical padding so it doesn't stack with
+       .detail-section's, keeping just the .detail-section 64px rhythm */
+    .detail-section.detail-section--alt > .case-body { padding-top: 0; padding-bottom: 0; }
+    .ux-diagram svg { display: block; width: 100%; height: auto; }
+    /* 小字級下 Orpheus 英文不易讀 — 圖內說明文改用 Lato */
+    .ux-diagram svg text { font-family: 'Lato', 'Noto Sans TC', sans-serif; }
+    .ux-diagram img { display: block; width: 100%; height: auto; margin: 0; }
+    /* primary outline button — teal accent, hover fill */
+    .btn--outline-primary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+    }
+    .btn--outline-primary:hover,
+    .btn--outline-primary:focus {
+        background: var(--accent);
+        color: #fff;
+    }
+    .case-body p.text-center { text-align: center; }
+    .case-body-btn-center { text-align: center; }
+    .btn__arrow {
+        display: inline-block;
+        margin-left: 8px;
+        transition: transform .2s var(--ease);
+    }
+    .btn--outline-primary:hover .btn__arrow,
+    .btn--outline-primary:focus .btn__arrow {
+        transform: translateX(4px);
+    }
+    .ux-diagram figcaption {
+        font-family: 'Lato', 'Noto Sans TC', sans-serif;
+        text-align: center;
+        font-size: 13px;
+        letter-spacing: .04em;
+        color: var(--text-second);
+        margin-top: 12px;
     }
 </style>
 </head>
@@ -172,96 +332,283 @@
                     <p>UI/UX</p>
                 </div>
                 <div class="detail-nav">
-                    <a href="portfolio-logo.html" class="detail-nav__prev">&lt; Previous Project</a>
-                    <a href="portfolio-design-system-aiagent.html" class="detail-nav__next">Next Project &gt;</a>
+                    <a href="portfolio-logo.html" class="detail-nav__prev"><span class="nav-arrow nav-arrow--prev" aria-hidden="true">←</span> Previous Project</a>
+                    <a href="portfolio-design-system-aiagent.html" class="detail-nav__next">Next Project <span class="nav-arrow nav-arrow--next" aria-hidden="true">→</span></a>
                 </div>
             </div>
         </div>
     </section>
 
     <main>
-        <section class="detail-section">
+        <section class="case-hero">
           <div class="container">
-            <div class="slider">
+            <div class="slider case-hero__slider">
               <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
               <div class="slider__track">
                 <div class="slider__slide slider__slide--hero-caption">
-                  <img src="img/aiagent/aiagent-answer-page.jpg" alt="AI Agent 以圖搜圖答案頁" loading="lazy" />
+                  <img src="img/upgpt-process/hero.png" alt="AI Agent 平台三大產品介面：AI Agent、AI Agent Desktop、Work Agent" />
                   <div class="hero-caption">
-                    <div class="hero-caption__title">UpGPT（AI Agent）</div>
-                    <div class="hero-caption__body">Web 版 RAG 知識庫問答入口，暖色系對話介面，讓非技術同仁也能用自然語言查找企業內部資訊。</div>
+                    <div class="hero-caption__title">AI Agent Platform</div>
+                    <div class="hero-caption__body">AI Agent、AI Agent Desktop、Work Agent 三大產品介面總覽</div>
                   </div>
                 </div>
-                <div class="slider__slide slider__slide--hero-caption">
-                  <img src="img/aiagent/aiagentdesktop-reasoning.jpg" alt="AI Agent Desktop 多輪推理與工作資料夾" loading="lazy" />
+                <div class="slider__slide slider__slide--shot slider__slide--hero-caption">
+                  <img src="img/upgpt-process/Chat Agent.jpg" alt="AI Agent Chat Agent — 文件代理中心與 Advanced Agent 卡片" loading="lazy" />
                   <div class="hero-caption">
-                    <div class="hero-caption__title">UpAgent（AI Agent Desktop）</div>
-                    <div class="hero-caption__body">桌面應用程式，可操作本機檔案、多輪推理並執行工具，適合高變異、需要互動澄清的任務。</div>
+                    <div class="hero-caption__title">AI Agent</div>
+                    <div class="hero-caption__body">Web 版 RAG 知識庫問答入口<br>非技術同仁也能用自然語言查找企業內部資訊</div>
                   </div>
                 </div>
-                <div class="slider__slide slider__slide--hero-caption">
-                  <img src="img/aiagent/workagent-flow-06-complete.jpg" alt="Work Agent 生成完成資料表" loading="lazy" />
+                <div class="slider__slide slider__slide--shot slider__slide--hero-caption">
+                  <img src="img/upgpt-process/work agent.jpg" alt="Work Agent — 土地清冊批次擷取與匯出" loading="lazy" />
                   <div class="hero-caption">
                     <div class="hero-caption__title">Work Agent</div>
-                    <div class="hero-caption__body">批次工作流引擎，處理高度重複、大量且需一致輸出的任務，支援並行批次處理。</div>
+                    <div class="hero-caption__body">批次工作流引擎<br>處理高度重複、大量且需一致輸出的任務</div>
+                  </div>
+                </div>
+                <div class="slider__slide slider__slide--shot slider__slide--hero-caption">
+                  <img src="img/upgpt-process/UpAgent/3-Frame.jpg" alt="AI Agent Desktop — 任務執行：思考過程、步驟進度與指令授權" loading="lazy" />
+                  <div class="hero-caption">
+                    <div class="hero-caption__title">AI Agent Desktop</div>
+                    <div class="hero-caption__body">桌面應用程式，能操作本機檔案、多輪推理並執行工具<br>適合高變異、需要互動澄清的任務</div>
                   </div>
                 </div>
               </div>
               <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-              <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+              <div class="slider__dots">
+                <span class="slider__dot is-active"></span>
+                <span class="slider__dot"></span>
+                <span class="slider__dot"></span>
+                <span class="slider__dot"></span>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- About this Project — vmware-style intro band (alt grey, follows the white hero) -->
+        <!-- About this Project — vmware-style intro band (alt grey, follows the teal hero) -->
         <section class="detail-section detail-section--alt">
           <div class="container">
             <h2 class="detail-section__title reveal">About this Project</h2>
             <div class="detail-about detail-about--text-only reveal">
               <div class="detail-about__text">
-                <p>AI Agent 平台讓企業能部署專屬的 AI 助理、自動化工作流與內部知識庫問答系統，整體規劃為三大產品線：</p>
-                <ul>
-                  <li><strong>UpGPT（AI Agent）</strong>— Web 版 RAG 知識庫問答入口，非技術同仁也能用自然語言查找企業內部資訊。</li>
-                  <li><strong>UpAgent（AI Agent Desktop）</strong>— 桌面應用程式，能操作本機檔案、多輪推理並執行工具，適合高變異、需要互動澄清的任務。</li>
-                  <li><strong>Work Agent</strong>— 批次工作流引擎，處理高度重複、大量且需一致輸出的任務，支援並行批次處理。</li>
-                </ul>
+                <p class="case-item"><strong>AI Agent</strong><br>Web 版 RAG 知識庫問答入口，非技術同仁也能用自然語言查找企業內部資訊。</p>
+                <p class="case-item"><strong>AI Agent Desktop</strong><br>桌面應用程式，能操作本機檔案、多輪推理並執行工具，適合高變異、需要互動澄清的任務。</p>
+                <p class="case-item"><strong>Work Agent</strong><br>批次工作流引擎，處理高度重複、大量且需一致輸出的任務，支援並行批次處理。</p>
                 <p>作為主要產品設計師，我負責從概念、理解開發需求、將其轉變成介面、建立設計系統，到持續的產品體驗優化。</p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Case Body -->
+        <!-- UX Design Process -->
         <article class="case-body container">
+            <h2 class="detail-section__title detail-section__title--sub reveal">Functional Map</h2>
+            <p class="reveal text-center">
+                列出每個頁面具備的功能與按鈕，確保操作邏輯完整、不遺漏關鍵行為。
+            </p>
+            <figure class="ux-diagram ux-diagram--scroll reveal">
+              <svg viewBox="0 0 1000 320" role="img" aria-label="功能地圖：三個核心頁面的功能清單">
+                <path d="M170 62 V262 M500 62 V262 M830 62 V262" fill="none" stroke="#c9c9c9"/>
+                <rect x="45" y="16" width="250" height="46" rx="6" fill="#e6faf9" stroke="#04cbc3"/>
+                <text x="170" y="45" text-anchor="middle" font-size="14" fill="#0e7c77">首頁 — Agent 中心</text>
+                <rect x="375" y="16" width="250" height="46" rx="6" fill="#e6faf9" stroke="#04cbc3"/>
+                <text x="500" y="45" text-anchor="middle" font-size="14" fill="#0e7c77">Work Agent — 文件代理中心</text>
+                <rect x="705" y="16" width="250" height="46" rx="6" fill="#e6faf9" stroke="#04cbc3"/>
+                <text x="830" y="45" text-anchor="middle" font-size="14" fill="#0e7c77">AI Agent Desktop — 任務執行頁</text>
+                <rect x="55" y="78" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="170" y="101" text-anchor="middle" font-size="13" fill="#555">新增對話（Chat Agent）</text>
+                <rect x="55" y="124" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="170" y="147" text-anchor="middle" font-size="13" fill="#555">基本 Agent</text>
+                <rect x="55" y="170" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="170" y="193" text-anchor="middle" font-size="13" fill="#555">進階 Agent－客製化 Agent</text>
+                <rect x="55" y="216" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="170" y="239" text-anchor="middle" font-size="13" fill="#555">引用企業知識庫</text>
+                <rect x="55" y="262" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="170" y="285" text-anchor="middle" font-size="13" fill="#555">產出對話結果</text>
+                <rect x="385" y="78" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="500" y="101" text-anchor="middle" font-size="13" fill="#555">連結雲端／拖拉本機檔案</text>
+                <rect x="385" y="124" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="500" y="147" text-anchor="middle" font-size="13" fill="#555">Run Agent 批次讀取大量資料</text>
+                <rect x="385" y="170" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="500" y="193" text-anchor="middle" font-size="13" fill="#555">自由編修資料正確性</text>
+                <rect x="385" y="216" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="500" y="239" text-anchor="middle" font-size="13" fill="#555">追溯參考資料及來源</text>
+                <rect x="385" y="262" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="500" y="285" text-anchor="middle" font-size="13" fill="#555">匯出 Excel、同意書</text>
+                <rect x="715" y="78" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="830" y="101" text-anchor="middle" font-size="13" fill="#555">本機任務執行</text>
+                <rect x="715" y="124" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="830" y="147" text-anchor="middle" font-size="13" fill="#555">工作資料夾管理</text>
+                <rect x="715" y="170" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="830" y="193" text-anchor="middle" font-size="13" fill="#555">指令授權（Approve／Deny）</text>
+                <rect x="715" y="216" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="830" y="239" text-anchor="middle" font-size="13" fill="#555">Memory 與 Skill 設定</text>
+                <rect x="715" y="262" width="230" height="36" fill="#fff" stroke="#d9d9d9"/>
+                <text x="830" y="285" text-anchor="middle" font-size="13" fill="#555">產出結果</text>
+              </svg>
+              <figcaption>功能地圖 — 每個頁面的功能與按鈕清單</figcaption>
+            </figure>
+        </article>
+
+        <!-- Flow Chart — full-bleed alt band, matches "About this Project" -->
+        <section class="detail-section detail-section--alt">
+          <div class="case-body container">
+            <h2 class="detail-section__title detail-section__title--sub reveal">Flow Chart</h2>
+            <p class="reveal text-center">
+                以 AI Agent Desktop 登入／登出流程為例，將從 App 啟動到進入工作區的每個決策點視覺化，
+                涵蓋 SSO／標準登入雙模式、Token 驗證與錯誤重試的分支路徑。
+            </p>
+            <figure class="ux-diagram reveal">
+              <img src="img/upgpt-process/UpAgent/UpAgent user flow.jpg" alt="AI Agent Desktop 登入／登出使用者流程圖：SSO 與標準登入分支、Token 驗證、加密儲存與登出流程" loading="lazy" />
+              <figcaption>Flow Chart — AI Agent Desktop 登入／登出使用者流程</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <article class="case-body container">
+            <h2 class="detail-section__title detail-section__title--sub reveal">Design System</h2>
+            <p class="reveal text-center">
+                AI Agent 的設計系統，涵蓋色彩、字體、間距、Border、Shadow 等 Design Tokens，
+                以及 Buttons、Inputs、Selectors、Tabs、Pagination、Scroll Bar、Dialog 等核心元件，供設計與工程團隊共享使用。
+            </p>
+            <div class="case-body-btn-center reveal">
+              <a class="btn btn--outline-primary" href="portfolio-design-system-aiagent.html">Design System<span class="btn__arrow" aria-hidden="true">→</span></a>
+            </div>
+        </article>
+
+        <!-- Case Body -->
+        <section class="detail-section--alt">
+        <article class="case-body container">
+            <h2 class="detail-section__title reveal">Overview</h2>
             <div class="product-show">
               <div class="product-show__item product-show__item--upgpt reveal">
                 <div class="product-show__body">
                   <div class="product-show__head">
                     <span class="product-show__num">01</span>
-                    <span class="product-show__title">UpGPT（AI Agent）</span>
-                    <span class="product-show__tag">Web App</span>
+                    <span class="product-show__title">AI Agent</span>
                   </div>
-                  <p class="product-show__desc">Web 版檢索增強（RAG）知識庫問答入口，暖色系對話介面，讓非技術同仁也能直接用自然語言查找企業內部資訊。</p>
+                  <p class="product-show__desc">SaaS 企業知識庫問答平台，提供企業問答 Chat Agent 與可自訂流程的客製 Agent；每則回答都能查看參考資料與來源出處，搭配簡單友善的介面設計，讓非技術同仁也能用自然語言查找企業內部資訊。</p>
                 </div>
                 <div class="product-show__video">
-                  <video controls preload="none" playsinline poster="img/aiagent/aiagent-answer-page.jpg" aria-label="UpGPT 產品操作示範影片">
+                  <video controls preload="none" playsinline poster="img/aiagent/aiagent-answer-page.jpg" aria-label="AI Agent 產品操作示範影片">
                     <source src="video/upgpt.mp4" type="video/mp4" />
                   </video>
+                </div>
+                <div class="shot-strip">
+                  <button class="shot-strip__btn shot-strip__btn--prev" type="button" aria-label="Previous">&lsaquo;</button>
+                  <div class="shot-thumbs">
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：登入頁">
+                        <img src="img/upgpt-process/advanced agent/LOG IN-Portal-CH.jpg" alt="AI Agent 登入頁：品牌識別視覺與 Microsoft 帳號登入" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">登入頁 — 品牌識別視覺</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：新對話上傳圖片提問">
+                        <img src="img/upgpt-process/advanced agent/Portal-New thread-Upload image-1.jpg" alt="新對話：上傳圖片搭配自然語言提問" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">新對話 — 上傳圖片提問</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：新對話附加功能">
+                        <img src="img/upgpt-process/advanced agent/Portal-New thread-add image -4.jpg" alt="新對話：附加圖片與選擇知識來源" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">新對話 — 附加圖片與知識來源</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：回答頁相關圖檔">
+                        <img src="img/upgpt-process/advanced agent/Portal-Upload image-1.jpg" alt="回答頁：列出參考來源、相關圖檔與以圖搜圖" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">回答頁 — 相關圖檔與以圖搜圖</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：完整回答與以圖搜圖">
+                        <img src="img/upgpt-process/advanced agent/5_Agent-施工圖說流程-answer-1.jpg" alt="企業問答：完整回答與以圖搜圖結果" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">完整回答與以圖搜圖結果</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：問答與參考來源">
+                        <img src="img/upgpt-process/advanced agent/5_Agent-施工圖說流程-answer.jpg" alt="企業問答：回答生成中，即時列出參考資料與來源" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">回答生成中，即時列出參考來源</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：客製 Agent 自訂欄位與儲存">
+                        <img src="img/upgpt-process/advanced agent/2-5_Edit Advanced Agent-dialog-save input.jpg" alt="客製 Agent 設定：自訂欄位、儲存並執行" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">客製 Agent — 自訂欄位並儲存執行</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：客製 Agent 步驟編輯">
+                        <img src="img/upgpt-process/advanced agent/2-2_Edit Advanced Agent-construction-edit input.jpg" alt="客製 Agent 設定：欄位與步驟編輯" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">客製 Agent — 編輯欄位與步驟</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：客製 Agent 選擇圖示">
+                        <img src="img/upgpt-process/advanced agent/2-2_Edit Advanced Agent-change icon.jpg" alt="客製 Agent 設定：選擇圖示" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">客製 Agent — 選擇圖示</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：知識庫管理">
+                        <img src="img/upgpt-process/advanced agent/UpGPT-知識庫.jpg" alt="知識庫管理：分類、啟用狀態與機器人指派" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">知識庫管理 — 分類與啟用狀態</figcaption>
+                    </figure>
+                  </div>
+                  <button class="shot-strip__btn shot-strip__btn--next" type="button" aria-label="Next">&rsaquo;</button>
                 </div>
               </div>
               <div class="product-show__item product-show__item--upagent reveal">
                 <div class="product-show__body">
                   <div class="product-show__head">
                     <span class="product-show__num">02</span>
-                    <span class="product-show__title">UpAgent（AI Agent Desktop）</span>
-                    <span class="product-show__tag">Desktop App</span>
+                    <span class="product-show__title">AI Agent Desktop</span>
                   </div>
-                  <p class="product-show__desc">桌面應用程式，定位為「像 AI 員工一樣靈活協作」— 能操作本機檔案、多回合推理並執行工具（如 Python），適合高變異、需要互動澄清的任務。</p>
+                  <p class="product-show__desc">桌面應用程式，定位為「像 AI 員工一樣靈活協作」— 可直接操作本機資料與檔案，例如自動整理資料夾、依年度報表產出分析統計檔；結合多回合推理與工具執行，資料全程在本機處理，機敏資料不外洩。</p>
                 </div>
                 <div class="product-show__video">
-                  <video controls preload="none" playsinline poster="img/aiagent/aiagentdesktop-reasoning.jpg" aria-label="UpAgent 產品操作示範影片">
+                  <video controls preload="none" playsinline poster="img/aiagent/upagent-desktop-running.jpg" aria-label="AI Agent Desktop 產品操作示範影片">
                     <source src="video/upagent-demo.mp4" type="video/mp4" />
                   </video>
+                </div>
+                <div class="shot-strip">
+                  <button class="shot-strip__btn shot-strip__btn--prev" type="button" aria-label="Previous">&lsaquo;</button>
+                  <div class="shot-thumbs">
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：AI Agent Desktop 登入頁">
+                        <img src="img/upgpt-process/UpAgent/1-LOG IN-Portal-EN.jpg" alt="AI Agent Desktop 登入頁：品牌識別視覺" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">登入頁 — 品牌識別視覺</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：新增任務">
+                        <img src="img/upgpt-process/UpAgent/2-UpAgent-new.jpg" alt="AI Agent Desktop 新增任務：指定工作資料夾並以自然語言下指令" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">新增任務 — 指定工作資料夾、自然語言下指令</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：任務背景側欄">
+                        <img src="img/upgpt-process/UpAgent/4-UpAgent-右側drawer無資料.jpg" alt="AI Agent Desktop 回答頁：右側任務背景側欄的空狀態" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">回答頁 — 右側任務背景側欄（空狀態）</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：任務執行過程">
+                        <img src="img/upgpt-process/UpAgent/3-Frame.jpg" alt="AI Agent Desktop 任務執行：思考過程、工具呼叫、步驟進度與指令授權" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">任務執行 — 思考過程、步驟進度與指令授權</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：檔案預覽">
+                        <img src="img/upgpt-process/UpAgent/5-UpAgent-點擊Memory.md.jpg" alt="AI Agent Desktop 檔案預覽：點擊 Memory.md 開啟原始內容" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">檔案預覽 — 點擊開啟 Memory.md</figcaption>
+                    </figure>
+                  </div>
+                  <button class="shot-strip__btn shot-strip__btn--next" type="button" aria-label="Next">&rsaquo;</button>
                 </div>
               </div>
               <div class="product-show__item product-show__item--workagent reveal">
@@ -269,99 +616,108 @@
                   <div class="product-show__head">
                     <span class="product-show__num">03</span>
                     <span class="product-show__title">Work Agent</span>
-                    <span class="product-show__tag">Batch Workflow</span>
                   </div>
-                  <p class="product-show__desc">批次工作流引擎，定位為「穩定可靠的工作者」— 處理高度重複、大量且需一致輸出的任務，支援並行批次處理，以步驟條追蹤與狀態指示呈現執行進度。</p>
+                  <p class="product-show__desc">批次工作流引擎，定位為「穩定可靠的工作者」— 可讀取地端與雲端的大量文件，批次整理並擷取重點，一鍵匯出同意書等各式文書格式；支援並行批次處理，以步驟條與狀態指示追蹤執行進度。</p>
                 </div>
                 <div class="product-show__video">
                   <video controls preload="none" playsinline poster="img/aiagent/workagent-flow-06-complete.jpg" aria-label="Work Agent 產品操作示範影片">
                     <source src="video/workagent.mp4" type="video/mp4" />
                   </video>
                 </div>
+                <div class="shot-strip">
+                  <button class="shot-strip__btn shot-strip__btn--prev" type="button" aria-label="Previous">&lsaquo;</button>
+                  <div class="shot-thumbs">
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：文件代理中心">
+                        <img src="img/upgpt-process/work agent/01-upload.jpg" alt="Work Agent 文件代理中心首頁，選擇 Advanced Agent" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">文件代理中心 — 選擇 Agent 開始任務</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：選擇模板">
+                        <img src="img/upgpt-process/work agent/02-template.jpg" alt="選擇模板對話框，套用土地清冊欄位模板" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">選擇模板 — 套用預設欄位模板</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：連結 M365 帳戶">
+                        <img src="img/upgpt-process/work agent/03-connect.jpg" alt="連結 M365 帳戶對話框，授權讀取雲端來源文件" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">連結 M365 — 授權讀取雲端文件</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：指定資料夾並執行">
+                        <img src="img/upgpt-process/work agent/04-run.jpg" alt="指定 SharePoint 資料夾後即可 Run Agent" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">指定資料夾 — 讀取來源後一鍵執行</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：批次執行中">
+                        <img src="img/upgpt-process/work agent/05-processing.jpg" alt="批次執行中，逐列處理並顯示狀態指示" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">批次執行中 — 逐列處理與狀態指示</figcaption>
+                    </figure>
+                    <figure class="shot-item">
+                      <button class="shot-thumb" type="button" aria-label="放大檢視：執行完成">
+                        <img src="img/upgpt-process/work agent/06-complete.jpg" alt="批次擷取全數完成，可匯出 Excel 或生成文書" loading="lazy" />
+                      </button>
+                      <figcaption class="shot-item__caption">執行完成 — 可匯出 Excel／生成同意書</figcaption>
+                    </figure>
+                  </div>
+                  <button class="shot-strip__btn shot-strip__btn--next" type="button" aria-label="Next">&rsaquo;</button>
+                </div>
               </div>
             </div>
 
         </article>
+        </section>
 
-        <!-- Challenge — alt grey band, alternating with the white sections around it -->
+        <article class="case-body container">
+            <h2 class="detail-section__title reveal">Challenge</h2>
+            <div class="challenge-list">
+              <p class="reveal case-item"><strong>1. AI 能力邊界模糊，難以預判產出品質</strong><br>
+                在專案初期，無法準確掌握 AI 生成內容的品質上限與穩定性，導致設計規劃時難以評估哪些任務可以放心交給 AI、哪些仍需人工把關。</p>
+
+              <p class="reveal case-item"><strong>2. 原始設計素材的掌控權疑慮</strong><br>
+                提供設計稿作為 AI 訓練或參考素材時，設計師難以確保 AI 不會擅自更動風格、版型或視覺邏輯，原創設計的一致性與可控性受到挑戰。</p>
+
+              <p class="reveal case-item"><strong>3. 工作流程根本轉變：從「讀懂 PM Brief」到「讀懂規格文件」</strong><br>
+                過去設計師的輸入來源是 PM 撰寫的需求說明，現在核心輸入變成給 AI 讀取的規格文件（md 檔）。這類文件是為機器解析而寫，邏輯結構、專業術語密度都與人類溝通習慣不同，設計師必須同時扮演「讀懂機器語言」與「產出人性化設計」兩種角色，學習成本大幅提高。</p>
+
+              <p class="reveal case-item"><strong>4. 設計產出與規格文件的一致性核對</strong><br>
+                每次交付都需要額外花時間逐項核對設計結果是否確實符合 md 規格文件的定義，增加了設計流程中的驗證環節，也考驗設計師對規格的解讀能力。</p>
+
+              <p class="reveal case-item"><strong>5. 交付檔案與實際開發結果的落差</strong><br>
+                即使設計稿與規格文件完全吻合，也無法保證開發實作後的成品與設計檔案 100% 一致。這種「所見非所得」的落差，是目前 AI 導向設計流程中最核心、也最難解決的問題。</p>
+            </div>
+        </article>
+
         <section class="detail-section--alt">
-          <article class="case-body container">
-            <h2 class="reveal">Challenge</h2>
-            <h3 class="reveal">使用者端：複雜概念的心智模型</h3>
-            <p class="reveal">
-                AI Agent 這個概念對大多數使用者來說是全新的 — Prompt、Tools、Memory、Workflow 這些技術語彙
-                若直接暴露在介面上，會造成極大的認知負擔。如何把複雜的技術概念「翻譯」成使用者看得懂的視覺語言，是最大挑戰。
-            </p>
-
-            <h3 class="reveal">產品端：從 0 開始建立設計系統</h3>
-            <p class="reveal">
-                一個 SaaS 產品會有大量重複的元件（表單、表格、對話介面、節點編輯器），
-                我們必須在早期就建立一套可擴充的設計系統，否則產品快速迭代時會累積大量的視覺債。
-            </p>
-          </article>
-        </section>
-
         <article class="case-body container">
-            <h2 class="reveal">Process</h2>
-            <h3 class="reveal">1. 使用者研究與任務分析</h3>
-            <p class="reveal">
-                透過訪談 10+ 位目標使用者（業務主管、行銷、客服負責人），建立出 3 個核心 Persona，
-                並拆解出他們最想自動化的 20+ 個任務情境，做為核心功能的優先順序依據。
-            </p>
+            <h2 class="detail-section__title reveal">Advantage</h2>
+            <div class="challenge-list">
+              <p class="reveal case-item"><strong>1. 具備基礎前端知識，讓人機協作更精準</strong><br>
+                具備 HTML／CSS 的基本理解與操作能力，讓我在調整設計時能用自然語言與語法互相輔助溝通，大幅提升與 AI 協作修改介面的效率與準確度。</p>
 
-            <h3 class="reveal">2. 資訊架構與原型</h3>
-            <p class="reveal">
-                以「Agent → Workflow → Task」為核心的三層資訊架構，搭配「Playground 試玩 → 發佈」的雙階段操作流程，
-                讓使用者可以在零風險的狀態下探索能力邊界。以 Work Agent 的「文件代理中心」為例：
-            </p>
-        </article>
+              <p class="reveal case-item"><strong>2. Figma 與 Claude Design 相輔相成</strong><br>
+                善用 Figma 搭配 Claude Design 協作，能快速產出高度符合規格與視覺樣式的設計稿，兩者截長補短，兼顧效率與品質。</p>
 
-        <section class="detail-section">
-          <div class="container">
-            <div class="slider reveal">
-              <button class="slider__btn slider__btn--prev" aria-label="Previous">&lsaquo;</button>
-              <div class="slider__track">
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-01-upload.jpg" alt="文件代理中心：上傳檔案" loading="lazy" /></div>
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-02-template.jpg" alt="文件代理中心：選擇模板" loading="lazy" /></div>
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-03-connect.jpg" alt="文件代理中心：連結帳戶" loading="lazy" /></div>
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-04-run.jpg" alt="文件代理中心：Run Agent" loading="lazy" /></div>
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-05-processing.jpg" alt="文件代理中心：生成中狀態" loading="lazy" /></div>
-                <div class="slider__slide"><img src="img/aiagent/workagent-flow-06-complete.jpg" alt="文件代理中心：生成完成" loading="lazy" /></div>
-              </div>
-              <button class="slider__btn slider__btn--next" aria-label="Next">&rsaquo;</button>
-              <div class="slider__dots"><span class="slider__dot is-active"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span><span class="slider__dot"></span></div>
+              <p class="reveal case-item"><strong>3. 即時請教 AI，邊做邊學</strong><br>
+                遇到問題時直接請 AI 分析並提出多種解決方案，不僅加快決策速度，也讓自己在實作過程中持續累積新知識與解法。</p>
+
+              <p class="reveal case-item"><strong>4. 跨足設計、開發、測試技能，節省設計時間</strong><br>
+                主動學習設計、開發與測試相關技能，讓自己能更全面地掌握產品從規劃到落地的每個環節，大幅節省重複溝通與返工的設計時間。</p>
             </div>
-          </div>
+        </article>
         </section>
-
-        <article class="case-body container">
-            <h3 class="reveal">3. 設計系統與元件庫</h3>
-            <p class="reveal">
-                建立 100+ 個 Figma 元件，包含 tokens、typography、spacing、dark/light mode、8 種 node 類型，
-                供設計與工程團隊共享使用。
-            </p>
-            <div class="detail-about detail-about--text-only reveal">
-              <div class="detail-about__media"><img src="img/aiagent/upgpt-portal-settings.png" alt="UpGPT Portal Agent 設定面板" loading="lazy" /></div>
-            </div>
-
-        </article>
-
-        <article class="case-body container">
-            <h2 class="reveal">Learnings</h2>
-            <p class="reveal">
-                AI 產品設計最大的挑戰，不是「把 AI 能做什麼呈現出來」，而是「把 AI 不能做什麼也清楚溝通出來」。
-                在這個專案中我們花了大量時間在設計「失敗狀態」、「降級方案」、「不確定性提示」等微互動，
-                這些細節才是讓使用者持續信任產品的關鍵。
-            </p>
-        </article>
 
     </main>
 
 <section class="detail-bottom-nav">
   <div class="container">
     <div class="detail-bottom-nav__inner">
-      <a href="portfolio-logo.html">&lt; Previous Project</a>
-      <a href="portfolio-design-system-aiagent.html">Next Project &gt;</a>
+      <a href="portfolio-logo.html"><span class="nav-arrow nav-arrow--prev" aria-hidden="true">←</span> Previous Project</a>
+      <a href="portfolio-design-system-aiagent.html">Next Project <span class="nav-arrow nav-arrow--next" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -370,7 +726,7 @@
     <div class="footer__brand">
       <h3>Nomad Design</h3>
       <div class="footer__tags">
-        <span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
+        <span>AI</span><span class="sep">×</span><span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
       </div>
     </div>
     <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
