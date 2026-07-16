@@ -1,0 +1,123 @@
+{
+  "name": "Opal",
+  "type": "flow",
+  "profile": "sRGB",
+  "dividers": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "soften": 0,
+  "noise": 5,
+  "speed": 24,
+  "texts": [
+    {
+      "id": "feral-brand",
+      "content": "Vellichor",
+      "ink": "auto",
+      "color": "#2A2622",
+      "family": "'Instrument Serif', Georgia, serif",
+      "sizePct": 9,
+      "x": 50,
+      "y": 50,
+      "align": "center",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "letter": 0,
+      "line": 1.2,
+      "shadow": 10,
+      "blur": 30,
+      "textBlur": 0,
+      "skew": 0,
+      "rotate": 0,
+      "curve": 0
+    }
+  ],
+  "stops": [
+    {
+      "name": "MISTED SKY",
+      "hex": "#F6F9FF",
+      "rgb": [
+        246,
+        249,
+        255
+      ],
+      "oklch": [
+        0.9816,
+        0.0086,
+        264.5
+      ],
+      "cmyk": [
+        4,
+        2,
+        0,
+        0
+      ],
+      "position": 0.125
+    },
+    {
+      "name": "RAIN INDIGO",
+      "hex": "#9BE0E8",
+      "rgb": [
+        155,
+        224,
+        232
+      ],
+      "oklch": [
+        0.8636,
+        0.0697,
+        205.1
+      ],
+      "cmyk": [
+        33,
+        3,
+        0,
+        9
+      ],
+      "position": 0.375
+    },
+    {
+      "name": "MISTED SKY",
+      "hex": "#C4B5F7",
+      "rgb": [
+        196,
+        181,
+        247
+      ],
+      "oklch": [
+        0.8087,
+        0.0931,
+        294.7
+      ],
+      "cmyk": [
+        21,
+        27,
+        0,
+        3
+      ],
+      "position": 0.625
+    },
+    {
+      "name": "LILAC PAPER",
+      "hex": "#F8B8D9",
+      "rgb": [
+        248,
+        184,
+        217
+      ],
+      "oklch": [
+        0.8508,
+        0.0847,
+        346.7
+      ],
+      "cmyk": [
+        0,
+        26,
+        13,
+        3
+      ],
+      "position": 0.875
+    }
+  ]
+}

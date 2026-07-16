@@ -1,0 +1,123 @@
+{
+  "name": "Untitled blend",
+  "type": "flow",
+  "profile": "sRGB",
+  "dividers": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "soften": 0,
+  "noise": 5,
+  "speed": 24,
+  "texts": [
+    {
+      "id": "feral-brand",
+      "content": "Vellichor",
+      "ink": "auto",
+      "color": "#2A2622",
+      "family": "'Instrument Serif', Georgia, serif",
+      "sizePct": 9,
+      "x": 50,
+      "y": 50,
+      "align": "center",
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "letter": 0,
+      "line": 1.2,
+      "shadow": 10,
+      "blur": 30,
+      "textBlur": 0,
+      "skew": 0,
+      "rotate": 0,
+      "curve": 0
+    }
+  ],
+  "stops": [
+    {
+      "name": "MISTED SKY",
+      "hex": "#F6F9FF",
+      "rgb": [
+        246,
+        249,
+        255
+      ],
+      "oklch": [
+        0.9816,
+        0.0086,
+        264.5
+      ],
+      "cmyk": [
+        4,
+        2,
+        0,
+        0
+      ],
+      "position": 0.125
+    },
+    {
+      "name": "SKY",
+      "hex": "#A0D8EF",
+      "rgb": [
+        160,
+        216,
+        239
+      ],
+      "oklch": [
+        0.8515,
+        0.0657,
+        225.2
+      ],
+      "cmyk": [
+        33,
+        10,
+        0,
+        6
+      ],
+      "position": 0.375
+    },
+    {
+      "name": "EGGSHELL",
+      "hex": "#FFF1CF",
+      "rgb": [
+        255,
+        241,
+        207
+      ],
+      "oklch": [
+        0.9606,
+        0.0468,
+        88.3
+      ],
+      "cmyk": [
+        0,
+        5,
+        19,
+        0
+      ],
+      "position": 0.625
+    },
+    {
+      "name": "PALE HANADA",
+      "hex": "#D6EAF3",
+      "rgb": [
+        214,
+        234,
+        243
+      ],
+      "oklch": [
+        0.9249,
+        0.0245,
+        226.5
+      ],
+      "cmyk": [
+        12,
+        4,
+        0,
+        5
+      ],
+      "position": 0.875
+    }
+  ]
+}
