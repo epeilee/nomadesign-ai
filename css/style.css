@@ -45,10 +45,11 @@ ul { list-style: none; }
 /* ---- Global headings — content scale.
    Display sizes (--font-h1/--font-h2) are reserved for hero/section
    components; bare content headings deliberately sit one step down.
-   h3 is the site's accent display heading (teal, --font-h3). ---- */
+   h3 uses --text-main (not --accent) for WCAG contrast; the brand
+   teal stays reserved for decorative-only elements like .nav__sep. ---- */
 h1 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h4); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
 h2 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h5); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; padding-bottom: 24px; -webkit-text-stroke: 0.2px currentColor; }
-h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h3); color: var(--accent); font-weight: 400; -webkit-text-stroke: 0.2px currentColor; }
+h3 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h3); color: var(--text-main); font-weight: 400; -webkit-text-stroke: 0.2px currentColor; }
 h4 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-size: var(--font-h5); color: var(--text-main); font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
 h5, h6 { font-family: 'Orpheus Pro', 'Noto Sans TC', serif; font-weight: 400; letter-spacing: 1.4px; -webkit-text-stroke: 0.2px currentColor; }
 p  { font-family: var(--font-sans); font-size: var(--font-p); color: var(--text-second); font-weight: 400; line-height: 2; }
@@ -436,7 +437,7 @@ body { padding-top: var(--nav-h); }
     color: #333333;
 }
 .project__cat {
-    color: var(--accent);
+    color: var(--text-main);
     font-size: var(--font-h5);
     letter-spacing: 1.4px;
     line-height: 160%;
@@ -810,6 +811,10 @@ body { padding-top: var(--nav-h); }
 .pf-tab.is-active {
     color: var(--accent);
 }
+.pf-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
 
 /* pf-tab: growing 1px underline to match the nav links */
 .pf-tab { position: relative; }
@@ -870,7 +875,7 @@ body { padding-top: var(--nav-h); }
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
     font-size: var(--font-p2);
-    color: var(--accent);
+    color: var(--text-main);
     letter-spacing: 1.4px;
     line-height: 160%;
 }
@@ -933,6 +938,7 @@ body { padding-top: var(--nav-h); }
     transition: color .2s var(--ease);
 }
 .detail-nav a:hover { color: var(--accent); }
+.detail-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .detail-nav a.is-disabled { opacity: .3; pointer-events: none; text-decoration: none; }
 /* Prev/Next arrow glyph — same style as the Design System button's .btn__arrow
    (thin arrow, slides on hover) instead of the plain </> characters */
@@ -993,6 +999,8 @@ body { padding-top: var(--nav-h); }
 .detail-about__text li { margin-bottom: 4px; }
 .list--2col { columns: 2; column-gap: 24px; }
 .detail-about__media img { border-radius: 0; width: 100%; }
+.media-row { display: flex; gap: 12px; align-items: flex-start; }
+.media-row img { flex: 1; width: 0; }
 .video-embed {
     position: relative;
     width: 80%;
@@ -1469,6 +1477,7 @@ body { padding-top: var(--nav-h); }
     text-decoration: underline;
 }
 .detail-bottom-nav a:hover { color: var(--accent); }
+.detail-bottom-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .detail-bottom-nav a.is-disabled { opacity: .3; pointer-events: none; text-decoration: none; }
 
 /* Logo single-image card (for portfolio-logo.html) */
@@ -1526,12 +1535,12 @@ body { padding-top: var(--nav-h); }
     gap: 14px;
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
-    color: var(--accent);
+    color: var(--text-main);
     font-size: var(--font-h3);
     letter-spacing: normal;
     line-height: 160%;
 }
-.footer__tags .sep { color: var(--accent); }
+.footer__tags .sep { color: var(--text-main); }
 .footer__logo { height: 160px; width: auto; margin: 0 auto; opacity: .8; }
 .footer__right {
     font-family: 'Orpheus Pro', serif;
@@ -1729,7 +1738,7 @@ body { padding-top: var(--nav-h); }
 
     /* Slider full-width with arrow lanes on mobile */
     .slider { margin: 0 -20px; padding: 0 40px; }
-    .slider__btn { width: 40px; height: 40px; font-size: 40px; }
+    .slider__btn { width: 44px; height: 44px; font-size: 40px; }
     .slider__btn--prev { left: 0; }
     .slider__btn--next { right: 0; }
     .detail-section { padding: 40px 0; }
@@ -1943,7 +1952,7 @@ body { padding-top: var(--nav-h); }
 @media (max-width: 768px) {
     .shot-thumbs { padding: 12px 44px; gap: 8px; }
     .shot-item { flex-basis: calc((100% - 8px) / 2); }
-    .shot-strip__btn { width: 36px; height: 56px; font-size: 40px; }
+    .shot-strip__btn { width: 44px; height: 56px; font-size: 40px; }
     .shot-strip__btn--prev { left: 2px; }
     .shot-strip__btn--next { right: 2px; }
     .shot-strip::before,
