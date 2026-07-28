@@ -562,6 +562,32 @@ body { padding-top: var(--nav-h); }
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
     font-size: 16px;
+    z-index: 6;
+}
+
+/* ---------- Spotlight hover effect (project images) ---------- */
+/* Radial gradient follows the cursor; position is set by js/script.js via
+   --spot-x/--spot-y custom properties. Lives on ::before, not the
+   container itself, so the <img> child never paints over it. */
+#top .project__media,
+#top .project-grid__item {
+    overflow: hidden;
+}
+#top .project__media::before,
+#top .project-grid__item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    background: radial-gradient(circle at var(--spot-x, 30%) var(--spot-y, 30%), var(--spot-color, rgb(3, 255, 247)), transparent 50%);
+    transition: opacity .35s ease;
+}
+#top .project__media.is-spot-active::before,
+#top .project-grid__item.is-spot-active::before {
+    opacity: 1;
 }
 
 /* ==========================================================================

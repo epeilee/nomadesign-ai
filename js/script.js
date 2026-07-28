@@ -375,4 +375,19 @@
             trackClick(el, 'resume_click', el.textContent.trim());
         });
     }
+
+    /* ---------- 9. Spotlight hover effect (project images) ---------- */
+    document.querySelectorAll('#top .project__media, #top .project-grid__item').forEach(el => {
+        let isFocused = false;
+        el.addEventListener('mousemove', e => {
+            if (isFocused) return;
+            const rect = el.getBoundingClientRect();
+            el.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
+            el.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+        });
+        el.addEventListener('mouseenter', () => el.classList.add('is-spot-active'));
+        el.addEventListener('mouseleave', () => el.classList.remove('is-spot-active'));
+        el.addEventListener('focus', () => { isFocused = true; el.classList.add('is-spot-active'); });
+        el.addEventListener('blur', () => { isFocused = false; el.classList.remove('is-spot-active'); });
+    });
 })();
