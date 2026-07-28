@@ -317,4 +317,62 @@
             if (e.key === 'ArrowRight') show(idx + 1, 1);
         });
     }
+
+    /* ---------- 7. True Focus text effect (.true-focus) ---------- */
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+        document.querySelectorAll('.true-focus').forEach(container => {
+            const words = Array.from(container.querySelectorAll('.tf-word'));
+            const frame = container.querySelector('.tf-frame');
+            if (!words.length || !frame) return;
+
+            const duration = parseFloat(container.dataset.duration) || 0.5;
+            const pause = parseFloat(container.dataset.pause) || 1;
+            frame.style.transitionDuration = duration + 's';
+
+            let current = 0;
+            const focusWord = i => {
+                words.forEach((w, idx) => w.classList.toggle('is-active', idx === i));
+                const w = words[i];
+                frame.style.width = w.offsetWidth + 'px';
+                frame.style.height = w.offsetHeight + 'px';
+                frame.style.transform = 'translate(' + w.offsetLeft + 'px,' + w.offsetTop + 'px)';
+                frame.classList.add('is-visible');
+            };
+            focusWord(current);
+            setInterval(() => {
+                current = (current + 1) % words.length;
+                focusWord(current);
+            }, (duration + pause) * 1000);
+        });
+    }
+
+    /* ---------- 8. GA4 click tracking (project cards / category tabs / contact / resume) ---------- */
+    if (typeof gtag === 'function') {
+        const trackClick = (el, eventName, label) => {
+            el.addEventListener('click', () => {
+                gtag('event', eventName, { link_text: label, link_url: el.getAttribute('href') || '' });
+            });
+        };
+
+        document.querySelectorAll('.project__card .btn, .project-grid__item').forEach(el => {
+            const card = el.closest('.project__card');
+            const titleEl = card ? card.querySelector('.project__title') : null;
+            const capEl = el.querySelector('.project-grid__cap');
+            const label = (titleEl && titleEl.textContent.trim()) || (capEl && capEl.textContent.trim()) || el.textContent.trim();
+            trackClick(el, 'project_card_click', label);
+        });
+
+        document.querySelectorAll('.pf-tab').forEach(el => {
+            trackClick(el, 'category_tab_click', el.textContent.trim());
+        });
+
+        document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+            trackClick(el, 'contact_click', el.textContent.trim());
+        });
+
+        document.querySelectorAll('a[href="resume.html"], a[href="enresume.html"]').forEach(el => {
+            trackClick(el, 'resume_click', el.textContent.trim());
+        });
+    }
 })();

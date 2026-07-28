@@ -332,6 +332,41 @@ body { padding-top: var(--nav-h); }
 }
 .hero .accent { color: var(--accent); font-weight: 400; }
 
+/* ---------- True Focus text effect (hero tagline) ---------- */
+.true-focus { position: relative; display: inline-block; }
+.true-focus .tf-word {
+    display: inline-block;
+    filter: blur(2px);
+    transition: filter .5s ease;
+}
+.true-focus .tf-word.is-active { filter: blur(0); }
+.true-focus .tf-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .5s ease, width .5s ease, height .5s ease, opacity .3s ease;
+}
+.true-focus .tf-frame.is-visible { opacity: 1; }
+.true-focus .tf-frame i {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--accent);
+    filter: drop-shadow(0 0 4px var(--accent));
+}
+.true-focus .tf-frame i:nth-child(1) { top: -8px; left: -8px; border-right: 0; border-bottom: 0; border-radius: 3px 0 0 0; }
+.true-focus .tf-frame i:nth-child(2) { top: -8px; right: -8px; border-left: 0; border-bottom: 0; border-radius: 0 3px 0 0; }
+.true-focus .tf-frame i:nth-child(3) { bottom: -8px; left: -8px; border-right: 0; border-top: 0; border-radius: 0 0 0 3px; }
+.true-focus .tf-frame i:nth-child(4) { bottom: -8px; right: -8px; border-left: 0; border-top: 0; border-radius: 0 0 3px 0; }
+@media (prefers-reduced-motion: reduce) {
+    .true-focus .tf-word { filter: none !important; transition: none !important; }
+    .true-focus .tf-frame { display: none !important; }
+}
+
 /* ==========================================================================
    SECTIONS — alternating black / grey / white
    ========================================================================== */
