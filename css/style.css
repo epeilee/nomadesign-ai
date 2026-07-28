@@ -562,7 +562,7 @@ body { padding-top: var(--nav-h); }
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
     font-size: 16px;
-    z-index: 6;
+    z-index: 7;
 }
 
 /* ---------- Spotlight hover effect (project images) ---------- */
@@ -588,6 +588,33 @@ body { padding-top: var(--nav-h); }
 #top .project__media.is-spot-active::before,
 #top .project-grid__item.is-spot-active::before {
     opacity: 1;
+}
+
+/* ---------- Edge glow hover effect (project images) ---------- */
+/* A real <span class="edge-glow"> injected by js/script.js (not a pseudo-
+   element, since .project-grid__item::after is already used for the
+   underline sweep). Sits on top of the spotlight, adding a directional
+   blue glow along the edge closest to the cursor — angle/opacity are set
+   live via --edge-angle/--edge-opacity. Additive with the yellow-orange
+   spotlight above, not a replacement for it. */
+#top .edge-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    box-shadow:
+        inset 0 0 10px 0 rgba(56, 189, 248, .9),
+        inset 0 0 24px 4px rgba(56, 189, 248, .55),
+        inset 0 0 44px 10px rgba(56, 189, 248, .3);
+    -webkit-mask-image: conic-gradient(from var(--edge-angle, 0deg) at 50% 50%, #000 0%, #000 20%, transparent 32%, transparent 68%, #000 80%, #000 100%);
+    mask-image: conic-gradient(from var(--edge-angle, 0deg) at 50% 50%, #000 0%, #000 20%, transparent 32%, transparent 68%, #000 80%, #000 100%);
+    transition: opacity .2s ease;
+}
+#top .project__media.is-spot-active .edge-glow,
+#top .project-grid__item.is-spot-active .edge-glow {
+    opacity: var(--edge-opacity, 0);
 }
 
 /* ==========================================================================
@@ -1851,9 +1878,9 @@ body { padding-top: var(--nav-h); }
 }
 @media (max-width: 480px) {
     .section__h2 { font-size: 26px; }
-    .hero__logo { width: 150px; }
+    .hero__logo { width: 200px; }
     .hero__title { font-size: 28px; }
-    .hero__tagline { font-size: 18px; }
+    .hero__tagline { font-size: 22px; }
     .toolbox__grid { grid-template-columns: 1fr 1fr; }
     .btn { padding: 10px 22px; font-size: 13px; }
 }

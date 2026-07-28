@@ -376,14 +376,34 @@
         });
     }
 
-    /* ---------- 9. Spotlight hover effect (project images) ---------- */
+    /* ---------- 9. Spotlight + edge glow hover effect (project images) ---------- */
     document.querySelectorAll('#top .project__media, #top .project-grid__item').forEach(el => {
+        const edgeGlow = document.createElement('span');
+        edgeGlow.className = 'edge-glow';
+        edgeGlow.setAttribute('aria-hidden', 'true');
+        el.appendChild(edgeGlow);
+
         let isFocused = false;
         el.addEventListener('mousemove', e => {
             if (isFocused) return;
             const rect = el.getBoundingClientRect();
-            el.style.setProperty('--spot-x', (e.clientX - rect.left) + 'px');
-            el.style.setProperty('--spot-y', (e.clientY - rect.top) + 'px');
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            el.style.setProperty('--spot-x', x + 'px');
+            el.style.setProperty('--spot-y', y + 'px');
+
+            /* Edge proximity/angle: how close the cursor is to the nearest
+               edge (0 = center, 1 = at/beyond edge) and which direction it's
+               in, so the blue glow concentrates toward that edge. */
+            const cx = rect.width / 2, cy = rect.height / 2;
+            const dx = x - cx, dy = y - cy;
+            const kx = dx !== 0 ? cx / Math.abs(dx) : Infinity;
+            const ky = dy !== 0 ? cy / Math.abs(dy) : Infinity;
+            const proximity = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+            let angle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+            if (angle < 0) angle += 360;
+            el.style.setProperty('--edge-opacity', proximity.toFixed(3));
+            el.style.setProperty('--edge-angle', angle.toFixed(1) + 'deg');
         });
         el.addEventListener('mouseenter', () => el.classList.add('is-spot-active'));
         el.addEventListener('mouseleave', () => el.classList.remove('is-spot-active'));
