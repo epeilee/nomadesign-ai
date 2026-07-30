@@ -1095,12 +1095,21 @@ body { padding-top: var(--nav-h); }
     margin: 0 auto;
     aspect-ratio: 9 / 16;
 }
-.video-embed iframe {
+.video-embed iframe,
+.video-embed video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     border: 0;
+    background: #000;
+}
+
+/* Wide (16:9) variant for landscape demo videos */
+.video-embed--wide {
+    width: 100%;
+    max-width: 960px;
+    aspect-ratio: 16 / 9;
 }
 
 /* Full-width hero */
