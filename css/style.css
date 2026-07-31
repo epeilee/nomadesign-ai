@@ -1316,6 +1316,8 @@ body { padding-top: var(--nav-h); }
 }
 .slider__slide--captioned {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 /* Vertical hero slider */
@@ -1386,6 +1388,21 @@ body { padding-top: var(--nav-h); }
     display: block;
     margin: 0 auto;
     box-shadow: -8px -8px 13px 1px white, 0 8px 48px -8px rgba(0, 0, 0, 0.2);
+}
+.slider__slide--w40 img {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+.slider__slide--w55 img {
+    width: 55%;
+    display: block;
+    margin: 0 auto;
+}
+.slider__slide--w70 img {
+    width: 70%;
+    display: block;
+    margin: 0 auto;
 }
 .slider__slide--logo {
     padding-top: 28px;
