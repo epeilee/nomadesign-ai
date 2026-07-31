@@ -1404,6 +1404,11 @@ body { padding-top: var(--nav-h); }
     display: block;
     margin: 0 auto;
 }
+.slider__slide--w90 img {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
 .slider__slide--logo {
     padding-top: 28px;
     padding-bottom: 28px;
@@ -1430,6 +1435,7 @@ body { padding-top: var(--nav-h); }
 /* Hero slide with bottom-right caption overlay */
 .slider__slide--hero-caption {
     position: relative;
+    overflow: hidden;
 }
 .hero-caption {
     position: absolute;
@@ -1483,7 +1489,7 @@ body { padding-top: var(--nav-h); }
     gap: 20px;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 8px;
+    padding: 0 8px 24px;
 }
 .slider__slide--triple img {
     flex: 0 0 calc(26.667% - 11px);
