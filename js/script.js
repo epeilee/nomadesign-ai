@@ -88,8 +88,7 @@
         'portfolio-ww.html':     'portfolio-good.html',   /* Web */
         'portfolio-aft.html':    'portfolio-good.html',   /* Web */
         'portfolio-taish.html':  'portfolio-good.html',   /* Web */
-        'portfolio-game.html':   'portfolio-good.html',   /* Web */
-        'portfolio-logo.html':   'portfolio-visual.html'  /* Visual */
+        'portfolio-game.html':   'portfolio-good.html'    /* Web */
     };
     const activeFile = currentFile.startsWith('portfolio-design-system')
         ? 'portfolio.html' /* AI Agent Design System pages → AI Agent tab */
@@ -315,6 +314,99 @@
             if (e.key === 'Escape') close();
             if (e.key === 'ArrowLeft') show(idx - 1, -1);
             if (e.key === 'ArrowRight') show(idx + 1, 1);
+        });
+    }
+
+    /* ---------- 6b. Gallery lightbox: .bento-gallery card -> enlarged image + description ---------- */
+    const galleryDataEl = document.getElementById('visualGalleryData');
+    const bentoGallery = document.querySelector('.bento-gallery');
+    if (galleryDataEl && bentoGallery) {
+        const groups = JSON.parse(galleryDataEl.textContent);
+        const byId = {};
+        groups.forEach(g => { byId[g.id] = g; });
+
+        const glb = document.createElement('div');
+        glb.className = 'gallery-lightbox';
+        glb.innerHTML =
+            '<div class="gallery-lightbox__dialog">' +
+                '<button class="gallery-lightbox__close" aria-label="Close">&times;</button>' +
+                '<div class="gallery-lightbox__viewer">' +
+                    '<button class="gallery-lightbox__arrow gallery-lightbox__arrow--prev" aria-label="Previous">&lsaquo;</button>' +
+                    '<img alt="" />' +
+                    '<button class="gallery-lightbox__arrow gallery-lightbox__arrow--next" aria-label="Next">&rsaquo;</button>' +
+                '</div>' +
+                '<div class="gallery-lightbox__info">' +
+                    '<span class="gallery-lightbox__eyebrow"></span>' +
+                    '<h3 class="gallery-lightbox__title"></h3>' +
+                    '<p class="gallery-lightbox__desc"></p>' +
+                    '<p class="gallery-lightbox__count"></p>' +
+                '</div>' +
+            '</div>';
+        document.body.appendChild(glb);
+
+        const glbImg = glb.querySelector('.gallery-lightbox__viewer img');
+        const glbEyebrow = glb.querySelector('.gallery-lightbox__eyebrow');
+        const glbTitle = glb.querySelector('.gallery-lightbox__title');
+        const glbDesc = glb.querySelector('.gallery-lightbox__desc');
+        const glbCount = glb.querySelector('.gallery-lightbox__count');
+
+        let currentGroup = null;
+        let idx = 0;
+
+        const render = () => {
+            const img = currentGroup.images[idx];
+            glbImg.src = img.src;
+            glbImg.alt = img.alt || currentGroup.title;
+            glbEyebrow.textContent = currentGroup.category;
+            glbTitle.textContent = currentGroup.title;
+            glbDesc.textContent = currentGroup.desc;
+            glbCount.textContent = (idx + 1) + ' / ' + currentGroup.images.length;
+        };
+        const show = i => {
+            idx = (i + currentGroup.images.length) % currentGroup.images.length;
+            render();
+        };
+        const open = (groupId, startIndex) => {
+            currentGroup = byId[groupId];
+            if (!currentGroup) return;
+            idx = startIndex || 0;
+            render();
+            glb.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        };
+        const close = () => {
+            glb.classList.remove('is-open');
+            document.body.style.overflow = '';
+        };
+
+        bentoGallery.querySelectorAll('.bento-gallery__card').forEach(card => {
+            card.addEventListener('click', () => open(card.dataset.group, parseInt(card.dataset.index, 10) || 0));
+        });
+        glb.querySelector('.gallery-lightbox__arrow--prev').addEventListener('click', () => show(idx - 1));
+        glb.querySelector('.gallery-lightbox__arrow--next').addEventListener('click', () => show(idx + 1));
+        glb.querySelector('.gallery-lightbox__close').addEventListener('click', close);
+        glb.addEventListener('click', e => { if (e.target === glb) close(); });
+        document.addEventListener('keydown', e => {
+            if (!glb.classList.contains('is-open')) return;
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowLeft') show(idx - 1);
+            if (e.key === 'ArrowRight') show(idx + 1);
+        });
+    }
+
+    /* ---------- 6c. Gallery filter tags (.gallery-filter -> show/hide .bento-gallery__card) ---------- */
+    const galleryFilter = document.getElementById('galleryFilter');
+    if (galleryFilter && bentoGallery) {
+        const filterCards = bentoGallery.querySelectorAll('.bento-gallery__card');
+        galleryFilter.querySelectorAll('.gallery-filter__btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                galleryFilter.querySelectorAll('.gallery-filter__btn').forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                const tag = btn.dataset.tag;
+                filterCards.forEach(card => {
+                    card.classList.toggle('is-hidden', tag !== 'all' && card.dataset.tag !== tag);
+                });
+            });
         });
     }
 
