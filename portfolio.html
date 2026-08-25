@@ -689,6 +689,30 @@
         </article>
         </section>
 
+        <section class="detail-section">
+          <article class="case-body container">
+
+            <h2 class="detail-section__title reveal">Design Decisions</h2>
+
+            <div class="challenge-list">
+              <p class="reveal case-item">
+                <strong>1. 思考過程放哪裡？AI Agent、AI Agent Desktop 兩個產品剛好相反</strong><br>
+                AI Agent：引用企業內部的知識庫，所以重點放在快速產出答案，思考過程較不重要。答案出來後，思考過程會自動切到另一個分頁。<br>
+                AI Agent Desktop：需要產出報告或是結果，所以思考過程很重要。把思考步驟展開，能及時在思考過程中有錯誤時停止並矯正思考的方向，節省 token。<br>
+                <strong>代價：</strong>AI Agent 使用者幾乎不會點回思考過程的分頁，過程的價值就顯現不出來。
+              </p>
+
+              <p class="reveal case-item">
+                <strong>2. Work Agent 批次：錯的資料無法帶入</strong><br>
+                Work Agent 批次讀大量資料，有資料格式不符，會在讀取結束後，帶出錯的資料筆數。失敗的檔案退回本機，改好再上傳一次，系統會自動去掉重複的。<br>
+                <strong>代價：</strong>目前只帶出失敗的筆數，沒有列出是哪幾筆，使用者得自己回去檢查格式。因為有去重機制、可以只補失敗的檔案，資料完整性不受影響，所以先不做明細。
+              </p>
+            </div>
+
+          </article>
+        </section>
+
+        <section class="detail-section--alt">
         <article class="case-body container">
             <h2 class="detail-section__title reveal">Challenge</h2>
             <div class="challenge-list">
@@ -708,8 +732,8 @@
                 即使設計稿與規格文件完全吻合，也無法保證開發實作後的成品與設計檔案 100% 一致。這種「所見非所得」的落差，是目前 AI 導向設計流程中最核心、也最難解決的問題。</p>
             </div>
         </article>
+        </section>
 
-        <section class="detail-section--alt">
         <article class="case-body container">
             <h2 class="detail-section__title reveal">Advantage</h2>
             <div class="challenge-list">
@@ -726,7 +750,6 @@
                 主動學習設計、開發與測試相關技能，讓自己能更全面地掌握產品從規劃到落地的每個環節，大幅節省重複溝通與返工的設計時間。</p>
             </div>
         </article>
-        </section>
 
     </main>
 
