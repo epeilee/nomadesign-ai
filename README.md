@@ -1,22 +1,24 @@
-# Rachel Lee — Portfolio
+# Nomad Design — Rachel Lee Portfolio
 
 > Senior UI/UX Product Designer based in Taiwan 🇹🇼
 > 專注於 AI Agent 平台、SaaS 產品設計與視覺規劃。
 
-[🌐 Live Demo](https://epeilee.github.io/nomad-design/) · [✉️ Contact](mailto:epeilee@gmail.com)
+[🌐 Live Demo](https://epeilee.github.io/nomadesign-ai/) · [✉️ Contact](mailto:epeilee@gmail.com) · [💻 Repo](https://github.com/epeilee/nomadesign-ai)
 
 ---
 
 ## About this project
 
-這是我整合舊版 [Nomadesign](https://github.com/epeilee/Nomadesign) 與 Webflow 版 [nomad-design.webflow.io](https://nomad-design.webflow.io/) 之後重新製作的個人作品集網站。
+個人作品集網站「Nomad Design」，展示 AI Agent 平台（UpGPT / UpAgent）、Web / Mobile UI、視覺設計等作品案例，並附中英文履歷頁與設計系統文件。
 
-**目標：**
+> ⚠️ **此網站設定為不被搜尋引擎索引**（`robots.txt` + 全站 `<meta name="robots" content="noindex, nofollow" />`），僅供求職 / 接案時分享連結使用，請勿另外調整這項設定。
+
+**特色：**
 - ✅ 完整響應式（手機 / 平板 / 桌機）
-- ✅ UI/UX 作品案例展示（含分類 Filter）
-- ✅ AI Agent 相關經驗專區
-- ✅ 清楚的聯絡 CTA（求職 / 接案）
-- ✅ 純 HTML / CSS / JS，易維護、易部署
+- ✅ 依「AI Agent / Web UI / Mobile UI / Web / Visual」分類的作品展示，含 Bento Gallery + Lightbox 大圖檢視
+- ✅ 中 / 英文履歷頁
+- ✅ 內附設計系統（Design Tokens、色彩、字體、間距、動態等）說明頁
+- ✅ 純 HTML / CSS / JS，無框架、易維護、易部署
 
 ---
 
@@ -24,102 +26,83 @@
 
 | 項目 | 技術 |
 | --- | --- |
-| HTML | Semantic HTML5 |
-| CSS | Vanilla CSS + CSS Variables + Flex/Grid |
-| JavaScript | Vanilla JS (ES6+) — no framework |
-| Fonts | **Orpheus Pro**（自架 .ttf）+ Lato + Noto Sans TC |
-| 部署 | GitHub Pages（靜態站） |
-
-**不依賴任何框架**，整個網站下載即可直接用瀏覽器開啟，也可以一鍵部署到 GitHub Pages / Vercel / Netlify。
+| HTML | Semantic HTML5，36 個獨立頁面 |
+| CSS | Vanilla CSS + CSS Variables + Flex/Grid（`css/style.css`） |
+| JavaScript | Vanilla JS（ES6+）— 無框架（`js/script.js`、`js/hero-blend.js`） |
+| Fonts | **Orpheus Pro**（自架 .woff2/.ttf）+ Lato + Noto Sans TC（Google Fonts） |
+| 部署 | GitHub Pages，透過 GitHub Actions 自動部署（push 到 `main` 即觸發） |
+| Analytics | Google Analytics（gtag.js） |
 
 ---
 
 ## Project Structure
 
 ```
-nomad-design/
-├── index.html              # 首頁（Hero / About / Works / AI / Contact）
-├── css/
-│   └── style.css           # 主樣式（含 1024px / 768px / 480px 響應式斷點）
+nomadesign-ai/
+├── index.html                          # 首頁（Hero / About / 精選作品 / Contact）
+├── me.html                             # 自我介紹，連結到中英文履歷
+├── resume.html / enresume.html         # 中文 / 英文履歷
+├── portfolio.html                      # 作品總覽（AI Agent 分類）
+├── portfolio-*.html                    # 各分類 / 各案例詳細頁
+│   ├── portfolio-sonar.html            #   Web UI
+│   ├── portfolio-erp.html              #   Mobile UI
+│   ├── portfolio-cmc.html 等           #   Web
+│   ├── portfolio-visual-design.html    #   Visual（Bento Gallery + Lightbox）
+│   └── portfolio-design-system-*.html  #   Design System 子頁（tokens / colors / typography / spacing / border / elevation / motion / zindex / theme / impact / products / aiagent）
+├── design-system.html                  # Design System 總覽頁
+├── css/style.css                       # 主樣式（含響應式斷點與 :root 色彩變數）
 ├── js/
-│   └── script.js           # Nav / 篩選 / Reveal 動畫 / 滑順捲動
-├── img/                    # 作品縮圖資料夾（自行放置實際圖片）
-├── works/                  # 作品詳細頁（Case Study，目前無獨立頁面，內容已併入 portfolio.html）
-├── .github/
-│   └── workflows/
-│       └── deploy.yml      # GitHub Pages 自動部署
+│   ├── script.js                       # Nav / 篩選 / Reveal 動畫 / Lightbox
+│   └── hero-blend.js                   # 首頁 Hero 動態效果
+├── img/                                # 依專案分資料夾（aiagent / visual / erp / logo-proposals ... 等）
+├── video/                              # 作品 Demo 影片
+├── fonts/                              # Orpheus Pro 字體檔
+├── robots.txt                          # 禁止搜尋引擎索引全站
+├── .github/workflows/deploy.yml        # GitHub Pages 自動部署
 └── README.md
 ```
 
 ---
 
-## 🚀 如何部署到 GitHub Pages
+## 🚀 部署
 
-### 方法一：最簡單（不寫 YAML）
+Repo 已內建 `.github/workflows/deploy.yml`：push 到 `main` 分支會自動建置並部署到 GitHub Pages，網址為 `https://epeilee.github.io/nomadesign-ai/`。
 
-1. 在 GitHub 建立一個新的 repository，命名為 `nomad-design`（或任何你想要的名字）
-2. 把這個資料夾的所有內容 push 上去：
+首次設定（僅需一次）：
+1. 開 repo → **Settings** → **Pages**
+2. **Source** 選 **GitHub Actions**
+3. 之後每次 `git push` 到 `main`，Actions 會自動部署，1–2 分鐘後線上生效
+
+本地預覽（不需要 npx，避免路徑含空格報錯）：
 
 ```bash
-# 在這個資料夾內
-git init
-git add .
-git commit -m "feat: initial portfolio"
-git branch -M main
-git remote add origin https://github.com/epeilee/nomad-design.git
-git push -u origin main
+python -m http.server 3000 --directory "."
+# 開瀏覽器: http://localhost:3000
 ```
-
-3. 打開 GitHub repo → **Settings** → **Pages**
-4. **Source** 選 `Deploy from a branch`
-5. **Branch** 選 `main`，資料夾選 `/ (root)`，按 **Save**
-6. 等 1–2 分鐘，你的網站就會在 `https://epeilee.github.io/nomad-design/` 上線 ✨
-
-### 方法二：用 GitHub Actions 自動部署（已含 `.github/workflows/deploy.yml`）
-
-只要 push 到 `main`，Action 會自動幫你部署。打開 repo → **Settings** → **Pages** → Source 改選 **GitHub Actions** 即可。
-
-### 想用自訂網域？
-
-1. 在 repo 根目錄新增 `CNAME` 檔，內容只寫一行：`yourdomain.com`
-2. 在你的 DNS 服務商設 CNAME 指向 `epeilee.github.io`
-3. 回 GitHub Pages 設定頁填入自訂網域，打勾 Enforce HTTPS
 
 ---
 
 ## 🖼️ 如何替換作品集內容
 
 ### 1. 換文案
+直接打開對應的 `.html`，用編輯器 Ctrl+F 搜尋文字修改即可，所有文案都寫在 HTML 裡。
 
-打開 `index.html`，所有文字都直接寫在 HTML 裡，用編輯器 Ctrl+F 搜尋要改的字即可。
+### 2. 換作品圖片
+把新圖放到 `img/<專案資料夾>/`，回到對應頁面把 `<img src="img/...">` 的路徑改成新檔名。Visual 分類（`portfolio-visual-design.html`）用的是 Bento Gallery，卡片背景（黑/白）由 `data-bg="dark"` / `data-bg="light"` 屬性控制，對應樣式在 `css/style.css` 的 `.bento-gallery__card[data-bg="..."]` 區塊。
 
-### 2. 換作品縮圖
-
-目前作品卡片用 CSS 漸層當縮圖占位。要換成真實圖片：
-
-1. 把圖片放到 `img/` 資料夾（建議尺寸 1200×900，JPG/WebP）
-2. 打開 `index.html`，找到對應的 `<div class="work-card__media" style="background:...">`
-3. 把 `style="background: linear-gradient(...)"` 改成：
-
-   ```html
-   <div class="work-card__media" style="background-image: url('img/your-image.jpg'); background-size: cover; background-position: center;">
-   ```
-
-### 3. 新增 / 修改作品
-
-複製一個現有的作品頁（如 `portfolio.html`）另存成新檔名，照著區塊改文案即可。
-首頁作品卡片的 `href` 也要記得改到新的檔名。
+### 3. 新增作品頁
+複製一個現有的 `portfolio-*.html` 另存新檔名，改內容後，記得到 `index.html` 首頁卡片與 `nav__sub` 選單補上連結。
 
 ### 4. 調整配色
-
-打開 `css/style.css` 最上面的 `:root`，改這幾個變數就能改全站色：
+打開 `css/style.css` 最上面的 `:root`，改這幾個變數即可調整全站色彩：
 
 ```css
 :root {
-  --accent: #04cbc3;        /* 主色（藍綠） */
-  --accent-dark: #03a8a1;   /* Hover 用深色 */
-  --ink: #0a0a0a;           /* 黑色（按鈕、主文字） */
-  --bg: #ffffff;            /* 底色 */
+  --accent: #04cbc3;        /* 品牌主色（藍綠） */
+  --accent-dark: #03a8a1;   /* Hover 深色 */
+  --text-main: #333;        /* 主文字色 */
+  --text-second: #666;      /* 次要文字色 */
+  --bg-bk: #000000;         /* 黑底 */
 }
 ```
 
@@ -127,25 +110,20 @@ git push -u origin main
 
 ## 📱 Responsive Breakpoints
 
-| 裝置 | 斷點 | 主要調整 |
-| --- | --- | --- |
-| Desktop | > 1024px | 3 欄作品 / 側邊 sticky about |
-| Tablet | ≤ 1024px | 2 欄作品 / 堆疊式版型 |
-| Mobile | ≤ 768px | 1 欄 / Hamburger menu / 大字體縮小 |
-| Small | ≤ 480px | 進一步壓縮 padding、字級 |
+| 裝置 | 斷點 |
+| --- | --- |
+| Desktop | > 1024px |
+| Tablet | ≤ 1024px |
+| Mobile | ≤ 768px |
+| Small | ≤ 480px |
 
 ---
 
-## ✅ Checklist
+## 🔒 隱私設定
 
-- [x] Semantic HTML with proper heading hierarchy
-- [x] Mobile-first responsive（新 Webflow 版的主要改進點）
-- [x] Google Fonts 預連線 (preconnect)
-- [x] Open Graph meta tags（分享預覽）
-- [x] `prefers-reduced-motion` 支援
-- [x] Keyboard & screen reader friendly nav
-- [x] SVG favicon（不需要額外檔案）
-- [x] Lazy-ready structure（加上 `loading="lazy"` 到 img 即可）
+- `robots.txt`：`Disallow: /`，禁止所有搜尋引擎爬取
+- 每個 `.html` 頁面 `<head>` 都有 `<meta name="robots" content="noindex, nofollow" />`
+- 新增頁面時記得補上這兩個設定，維持不被索引的狀態
 
 ---
 
