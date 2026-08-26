@@ -129,6 +129,10 @@ b, strong { font-weight: bolder; }
 .nav.is-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 /* Scrolling down on sub-menu pages slides the nav out of view (JS toggles) */
 .nav.is-up { transform: translateY(-100%); }
+/* ...but the language switch counter-slides to stay pinned at the
+   viewport's top-right corner, even while its .nav parent is hidden
+   and the .pf-tabs sub-menu takes over the top edge. */
+.nav.is-up .nav__lang { transform: translateY(calc(var(--nav-h) - 50%)); }
 .nav__inner {
     height: 100%;
     display: flex;
@@ -247,6 +251,42 @@ b, strong { font-weight: bolder; }
 .nav__toggle.is-open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
 .nav__toggle.is-open span:nth-child(2) { opacity: 0; }
 .nav__toggle.is-open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* Language switch — 中/EN toggle pinned to the header's right edge */
+.nav__lang {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    position: absolute;
+    right: 24px; top: 50%;
+    transform: translateY(-50%);
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    transition: transform 0.2s;
+}
+.nav__lang-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-family: 'Lato', 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: all .25s var(--ease);
+}
+.nav__lang-link:hover { color: var(--accent); }
+.nav__lang-link.is-active {
+    color: #fff;
+    background: var(--accent);
+}
 
 body { padding-top: var(--nav-h); }
 
@@ -688,7 +728,7 @@ body { padding-top: var(--nav-h); }
 }
 .exp-item__date small {
     display: block;
-    color: var(--text-second);
+    color: #1a1a1a;
     margin-top: 4px;
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
@@ -707,18 +747,18 @@ body { padding-top: var(--nav-h); }
 }
 .exp-item__row {
     display: grid;
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 140px 1fr;
     gap: 12px;
     font-family: 'Noto Sans TC', sans-serif;
     font-size: var(--font-p);
     line-height: 180%;
     letter-spacing: .056em;
-    color: #444;
+    color: var(--text-second);
     font-weight: 400;
     margin-bottom: 8px;
 }
 .exp-item__row strong {
-    color: var(--text-main);
+    color: #1a1a1a;
     font-weight: 400;
     font-family: 'Orpheus Pro', serif;
     -webkit-text-stroke: 0.2px currentColor;
@@ -1978,17 +2018,43 @@ body { padding-top: var(--nav-h); }
         background: #fff;
         flex-direction: column;
         align-items: center;
-        padding: 40px 28px;
-        gap: 24px;
+        justify-content: center;
+        padding: 24px 28px 64px;
+        gap: 16px;
         transform: translateX(100%);
         transition: transform .35s var(--ease);
-        font-size: 28px;
+        font-size: 22px;
         box-shadow: -10px 0 30px rgba(0,0,0,.08);
         text-align: center;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .nav__menu.is-open { transform: none; }
     .nav__sep { display: none; }
     .nav__toggle { display: block; }
+    /* On mobile the language switch moves out of the top bar and into the
+       slide-out menu, pinned to the bottom of that panel — it only shows
+       while the menu is open, and the extra bottom padding above keeps
+       menu links from being hidden behind it. */
+    .nav__lang { display: none; }
+    .nav__menu.is-open ~ .nav__lang {
+        display: flex;
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        width: 80vw;
+        max-width: 360px;
+        justify-content: center;
+        padding: 14px 0;
+        border: none;
+        border-top: 1px solid var(--line);
+        border-radius: 0;
+        box-shadow: 0 -6px 16px rgba(0,0,0,.06);
+        z-index: 60;
+    }
+    .nav__menu.is-open ~ .nav__lang .nav__lang-link { min-width: 40px; height: 32px; padding: 0 16px; font-size: 14px; }
 
     /* Portfolio sub-menu */
     .nav__sub {
@@ -2059,7 +2125,7 @@ body { padding-top: var(--nav-h); }
     .skills-section__title,
     .education-section__title { font-size: 22px; }
     .exp-item { grid-template-columns: 1fr; gap: 6px; }
-    .exp-item__row { grid-template-columns: 80px 1fr; }
+    .exp-item__row { grid-template-columns: 1fr; gap: 4px; }
     .toolbox__grid { grid-template-columns: repeat(2, 1fr); }
     .edu-item { grid-template-columns: 1fr; gap: 4px; text-align: center; }
     .exp-item__date { font-size: 16px; }

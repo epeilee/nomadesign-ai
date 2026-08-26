@@ -1,21 +1,21 @@
 ﻿<!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow" />
 <title>AI Agent Design System — Rachel Lee</title>
-<meta name="description" content="統一的 AI 產品設計系統，三產品線共用設計 Token 與 Theme 管理" />
-<link rel="icon" type="image/png" href="img/rachelLogo.png" />
-<link rel="preload" href="fonts/Orpheus-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<meta name="description" content="A unified AI product design system — shared design tokens and theme management across three product lines" />
+<link rel="icon" type="image/png" href="../img/rachelLogo.png" />
+<link rel="preload" href="../fonts/Orpheus-Regular.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/style.css" />
 <style>
 /* ============================================================
-   PRIMITIVE LAYER — 原始值，不直接在元件中使用
-   命名規則：--upgpt-[category]-[scale]
+   PRIMITIVE LAYER — Raw values, not used directly in components
+   Naming convention: --upgpt-[category]-[scale]
    ============================================================ */
 :root {
   /* Color Primitives - UpGPT (Cyan) */
@@ -114,7 +114,7 @@
   --upgpt-line-height-normal: 1.6;
   --upgpt-line-height-loose:  1.8;
 
-  /* Page-chrome accent tint — site brand teal (頁面裝飾用，非產品 token) */
+  /* Page-chrome accent tint — site brand teal (page decoration only, not a product token) */
   --accent-subtle: rgba(4, 203, 195, 0.10);
 
   /* Motion Primitives */
@@ -141,11 +141,11 @@
   --upgpt-z-index-floating: 500;
 }
 /* ============================================================
-   SEMANTIC LAYER — 語意 Token，元件直接引用此層
-   命名規則：--upgpt-[object]-[base]-[modifier]
+   SEMANTIC LAYER — Semantic tokens, referenced directly by components
+   Naming convention: --upgpt-[object]-[base]-[modifier]
    ============================================================ */
 
-/* === Default Theme (共用基礎) === */
+/* === Default Theme (shared base) === */
 :root {
   /* Surface */
   --upgpt-surface-canvas:       var(--upgpt-neutral-50);
@@ -221,8 +221,8 @@
 }
 
 /* ============================================================
-   THEME LAYER — 三個產品各自的 Theme 覆蓋
-   使用方式：<body data-theme="upgpt|upagent|workagent">
+   THEME LAYER — Per-product theme overrides
+   Usage: <body data-theme="upgpt|upagent|workagent">
    ============================================================ */
 
 [data-theme="ai-agent"] {
@@ -259,7 +259,7 @@
 }
 /* ============================================================
    COMPONENT-SPECIFIC TOKENS
-   命名規則：--upgpt-[component]-[role]-[property]-[modifier]
+   Naming convention: --upgpt-[component]-[role]-[property]-[modifier]
    ============================================================ */
 :root {
   /* Button */
@@ -1994,8 +1994,8 @@ body {
       </div>
     </nav>
     <div class="nav__lang" role="group" aria-label="Language">
-      <a href="portfolio-design-system-aiagent.html" class="nav__lang-link is-active" aria-current="page">中</a>
-      <a href="en/portfolio-design-system-aiagent.html" class="nav__lang-link">EN</a>
+      <a href="../portfolio-design-system-aiagent.html" class="nav__lang-link">中</a>
+      <a href="portfolio-design-system-aiagent.html" class="nav__lang-link is-active" aria-current="page">EN</a>
     </div>
     <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -2071,9 +2071,9 @@ body {
       <section class="ds-section" id="products-theme">
         <h2>Products Theme</h2>
         <p class="ds-section__desc">
-          同一套 Token 系統，透過 <code>data-theme</code> 屬性切換出三種產品體驗。
-          Semantic Token 映射到不同的 Primitive 色值，元件程式碼無需修改。
-          點擊頁面頂部的 Preview Theme 按鈕即可即時切換。
+          One token system switches between three product experiences via the <code>data-theme</code> attribute.
+          Semantic tokens map to different primitive color values, so component code never needs to change.
+          Click the Preview Theme button at the top of the page to switch instantly.
         </p>
 
         <div class="spec-subheading">Products</div>
@@ -2081,49 +2081,49 @@ body {
           <div class="product-card">
             <svg class="product-card__icon" style="color:var(--upgpt-cyan-500);"><use href="#icon-ai-bot"></use></svg>
             <h3>AI Agent</h3>
-            <div class="product-card__subtitle">企業知識庫入口</div>
+            <div class="product-card__subtitle">Enterprise knowledge base entry point</div>
             <div class="color-swatches">
               <div class="color-swatch" style="background:#14C6DE;" title="primary-bg-default: #14C6DE"></div>
               <div class="color-swatch" style="background:#E9F8FB;" title="primary-bg-subtle: #E9F8FB"></div>
               <div class="color-swatch" style="background:#FCFBF7;" title="surface-canvas: #FCFBF7"></div>
               <div class="color-swatch" style="background:#F3F3EE;" title="surface-subtle: #F3F3EE"></div>
             </div>
-            <div class="color-card__desc">Cyan-Blue 品牌色 × 暖奶油白背景</div>
+            <div class="color-card__desc">Cyan-Blue brand color × warm off-white background</div>
             <p>
-              <strong>定位：</strong>知識庫與 AI 對話的核心平台<br>
-              <strong>視覺：</strong>暖色系背景，卡片式佈局
+              <strong>Positioning:</strong> the core platform for the knowledge base and AI conversations<br>
+              <strong>Visual:</strong> warm-toned background, card-based layout
             </p>
           </div>
           <div class="product-card">
             <svg class="product-card__icon" style="color:var(--upgpt-blue-500);"><use href="#icon-ai-bot"></use></svg>
             <h3>AI Agent Desktop</h3>
-            <div class="product-card__subtitle">本機文件查詢應用</div>
+            <div class="product-card__subtitle">Local file analysis application</div>
             <div class="color-swatches">
               <div class="color-swatch" style="background:#4694B5;" title="primary-bg-default: #4694B5"></div>
               <div class="color-swatch" style="background:#EFF9FB;" title="primary-bg-subtle: #EFF9FB"></div>
               <div class="color-swatch" style="background:#FAFEFF;" title="surface-canvas: #FAFEFF"></div>
               <div class="color-swatch" style="background:#D0EAF3;" title="surface-subtle: #D0EAF3"></div>
             </div>
-            <div class="color-card__desc">Steel Blue 品牌色 × 極淡藍白背景</div>
+            <div class="color-card__desc">Steel Blue brand color × ultra-pale blue-white background</div>
             <p>
-              <strong>定位：</strong>桌面端的本機文件 AI 分析工具<br>
-              <strong>視覺：</strong>冷淡藍白，Sidebar 導航
+              <strong>Positioning:</strong> a desktop app for local file analysis, multi-turn reasoning, and tool execution<br>
+              <strong>Visual:</strong> cool pale blue-white, sidebar navigation
             </p>
           </div>
           <div class="product-card">
             <svg class="product-card__icon" style="color:var(--upgpt-blue-700);"><use href="#icon-ai-bot"></use></svg>
             <h3>Work Agent</h3>
-            <div class="product-card__subtitle">批次工作流程管理</div>
+            <div class="product-card__subtitle">Batch workflow management</div>
             <div class="color-swatches">
               <div class="color-swatch" style="background:#4694B5;" title="primary-bg-default: #4694B5"></div>
               <div class="color-swatch" style="background:#FFDA47;" title="accent-bg-default: #FFDA47"></div>
               <div class="color-swatch" style="background:#FAFEFF;" title="surface-canvas: #FAFEFF"></div>
               <div class="color-swatch" style="background:#EFF9FB;" title="surface-subtle: #EFF9FB"></div>
             </div>
-            <div class="color-card__desc">Steel Blue 主 + 黃色強調 × 批次流程導向</div>
+            <div class="color-card__desc">Steel Blue primary + yellow accent × batch-process oriented</div>
             <p>
-              <strong>定位：</strong>企業自動化工作流編排與執行<br>
-              <strong>視覺：</strong>步驟條追蹤，黃色強調
+              <strong>Positioning:</strong> a batch workflow engine for high-volume document processing<br>
+              <strong>Visual:</strong> step-tracker progress bar, yellow accent
             </p>
           </div>
         </div>
@@ -2139,8 +2139,8 @@ body {
         <span class="ds-section__label">Design Tokens</span>
         <h2>Token Architecture</h2>
         <p class="ds-section__desc">
-          本設計系統採用與 SGDS 相同的五層 Token 架構。每層引用下一層，
-          修改單一 Primitive 值即可透過整個系統傳遞，確保設計與程式碼的一致性。
+          This design system uses the same five-layer token architecture as SGDS. Each layer references the next,
+          so changing a single primitive value propagates through the whole system, keeping design and code consistent.
         </p>
 
         <div class="layer-diagram">
@@ -2148,54 +2148,54 @@ body {
             <div class="layer-row__num">1</div>
             <div class="layer-row__name">Raw Value</div>
             <code class="layer-row__example">#14C6DE</code>
-            <div class="layer-row__desc">實際的原始值（顏色碼、px 值等），不直接在元件中使用。</div>
+            <div class="layer-row__desc">The actual raw value (a color code, a px value, etc.), not used directly in components.</div>
           </div>
           <div class="layer-row">
             <div class="layer-row__num">2</div>
             <div class="layer-row__name">Primitive Token</div>
             <code class="layer-row__example">--upgpt-cyan-500</code>
-            <div class="layer-row__desc">基礎設計決策，定義色階、間距刻度、字型大小等核心值。</div>
+            <div class="layer-row__desc">Foundational design decisions — defines core values like color ramps, spacing scales, and font sizes.</div>
           </div>
           <div class="layer-row">
             <div class="layer-row__num">3</div>
             <div class="layer-row__name">Simplified Semantic</div>
             <code class="layer-row__example">--upgpt-primary-bg-default</code>
-            <div class="layer-row__desc">語意化別名，描述「用途」而非「值」，跨元件通用。</div>
+            <div class="layer-row__desc">Semantic aliases that describe "purpose" rather than "value," shared across components.</div>
           </div>
           <div class="layer-row">
             <div class="layer-row__num">4</div>
             <div class="layer-row__name">Granular Semantic</div>
             <code class="layer-row__example">--upgpt-btn-primary-bg-default</code>
-            <div class="layer-row__desc">針對特定情境的語意 Token，如 form、action、feedback。</div>
+            <div class="layer-row__desc">Semantic tokens for specific contexts, such as form, action, or feedback.</div>
           </div>
           <div class="layer-row">
             <div class="layer-row__num">5</div>
             <div class="layer-row__name">Component-specific</div>
             <code class="layer-row__example">--upgpt-btn-label-padding-x</code>
-            <div class="layer-row__desc">元件專屬 Token，供個別元件微調，引用上層 Token。</div>
+            <div class="layer-row__desc">Component-specific tokens for fine-tuning individual components, referencing tokens from the layers above.</div>
           </div>
         </div>
 
-        <h3>Token 命名規則</h3>
+        <h3>Token Naming Convention</h3>
         <p class="ds-section__desc" style="margin-bottom: 16px;">
-          採用四段式命名：<strong>namespace · object · base · modifier</strong>
+          A four-part naming scheme: <strong>namespace · object · base · modifier</strong>
         </p>
         <div class="token-grid">
           <div class="token-item">
             <div class="token-name">upgpt</div>
-            <div class="token-value">Namespace — 系統識別符</div>
+            <div class="token-value">Namespace — system identifier</div>
           </div>
           <div class="token-item">
             <div class="token-name">primary / btn / form</div>
-            <div class="token-value">Object — 套用對象或情境</div>
+            <div class="token-value">Object — the target or context of application</div>
           </div>
           <div class="token-item">
             <div class="token-name">bg / color / padding</div>
-            <div class="token-value">Base — 設計屬性或角色</div>
+            <div class="token-value">Base — design property or role</div>
           </div>
           <div class="token-item">
             <div class="token-name">default / hover / md</div>
-            <div class="token-value">Modifier — 狀態、強調或尺寸</div>
+            <div class="token-value">Modifier — state, emphasis, or size</div>
           </div>
         </div>
       </section>
@@ -2206,11 +2206,11 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="colour">
-        <span class="ds-section__label">色彩系統</span>
+        <span class="ds-section__label">Color System</span>
         <h2>Colour</h2>
         <p class="ds-section__desc">
-          三款產品共用同一套 Primitive 色階，透過 Semantic Token 映射不同的 Theme，
-          實現品牌差異化同時維持設計一致性。
+          All three products share the same set of primitive color ramps, mapped to different themes via semantic tokens —
+          achieving brand differentiation while keeping design consistency.
         </p>
 
         <h3>Steel Blue — Primary (AI Agent Desktop)</h3>
@@ -2594,7 +2594,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="typography">
-        <span class="ds-section__label">字體排版系統</span>
+        <span class="ds-section__label">Typography System</span>
         <h2>Typography</h2>
         <div class="type-display">
           <div class="type-display__row type-display__row--head">
@@ -2739,7 +2739,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="spacing">
-        <span class="ds-section__label">間距系統</span>
+        <span class="ds-section__label">Spacing System</span>
         <h2>Spacing</h2>
         <div class="spacing-specimen">
           <table class="token-table">
@@ -2753,23 +2753,23 @@ body {
               </tr>
               <tr>
                 <td>--space-1</td>
-                <td><span class="token-table__badge">4px</span><span class="token-table__desc">icon 內間距</span></td>
+                <td><span class="token-table__badge">4px</span><span class="token-table__desc">Inner padding for icons</span></td>
               </tr>
               <tr>
                 <td>--space-2</td>
-                <td><span class="token-table__badge">8px</span><span class="token-table__desc">元件內部 padding</span></td>
+                <td><span class="token-table__badge">8px</span><span class="token-table__desc">Internal component padding</span></td>
               </tr>
               <tr>
                 <td>--space-3</td>
-                <td><span class="token-table__badge">16px</span><span class="token-table__desc">區塊間距、卡片 padding（最常用）</span></td>
+                <td><span class="token-table__badge">16px</span><span class="token-table__desc">Block spacing, card padding (most common)</span></td>
               </tr>
               <tr>
                 <td>--space-4</td>
-                <td><span class="token-table__badge">24px</span><span class="token-table__desc">section 間距</span></td>
+                <td><span class="token-table__badge">24px</span><span class="token-table__desc">Section spacing</span></td>
               </tr>
               <tr>
                 <td>--space-5</td>
-                <td><span class="token-table__badge">36px</span><span class="token-table__desc">大型區塊分隔</span></td>
+                <td><span class="token-table__badge">36px</span><span class="token-table__desc">Large block separation</span></td>
               </tr>
               <tr>
                 <td>--space-6</td>
@@ -2777,7 +2777,7 @@ body {
               </tr>
               <tr>
                 <td>--space-7</td>
-                <td><span class="token-table__badge">48px</span><span class="token-table__desc">頁面層級分隔</span></td>
+                <td><span class="token-table__badge">48px</span><span class="token-table__desc">Page-level separation</span></td>
               </tr>
               <tr>
                 <td>--space-8</td>
@@ -2789,7 +2789,7 @@ body {
               </tr>
               <tr class="is-base">
                 <td>Base unit</td>
-                <td><span class="token-table__badge">4px</span><span class="token-table__desc">所有間距取 4 的倍數</span></td>
+                <td><span class="token-table__badge">4px</span><span class="token-table__desc">All spacing values are multiples of 4</span></td>
               </tr>
             </tbody>
           </table>
@@ -2855,11 +2855,11 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="border">
-        <span class="ds-section__label">邊框與圓角</span>
+        <span class="ds-section__label">Border &amp; Radius</span>
         <h2>Border Radius</h2>
         <table class="token-table">
           <thead>
-            <tr><th>Token</th><th>Value · 用途</th></tr>
+            <tr><th>Token</th><th>Value · Usage</th></tr>
           </thead>
           <tbody>
             <tr>
@@ -2868,15 +2868,15 @@ body {
             </tr>
             <tr>
               <td>--radius-sm</td>
-              <td><span class="token-table__badge">4px</span><span class="token-table__desc">按鈕、輸入框、dropdown item</span></td>
+              <td><span class="token-table__badge">4px</span><span class="token-table__desc">Buttons, inputs, dropdown items</span></td>
             </tr>
             <tr>
               <td>--radius-md</td>
-              <td><span class="token-table__badge">8px</span><span class="token-table__desc">卡片、面板、dialog</span></td>
+              <td><span class="token-table__badge">8px</span><span class="token-table__desc">Cards, panels, dialogs</span></td>
             </tr>
             <tr>
               <td>--radius-lg</td>
-              <td><span class="token-table__badge">16px</span><span class="token-table__desc">大型卡片</span></td>
+              <td><span class="token-table__badge">16px</span><span class="token-table__desc">Large cards</span></td>
             </tr>
             <tr>
               <td>--radius-xl</td>
@@ -2888,7 +2888,7 @@ body {
             </tr>
             <tr>
               <td>--radius-round</td>
-              <td><span class="token-table__badge">999px</span><span class="token-table__desc">Chip、pill、avatar（全圓）</span></td>
+              <td><span class="token-table__badge">999px</span><span class="token-table__desc">Chip, pill, avatar (fully round)</span></td>
             </tr>
           </tbody>
         </table>
@@ -2931,11 +2931,11 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="elevation">
-        <span class="ds-section__label">陰影</span>
+        <span class="ds-section__label">Shadow</span>
         <h2>Shadow</h2>
         <table class="token-table">
           <thead>
-            <tr><th>Token</th><th>Value · 用途</th></tr>
+            <tr><th>Token</th><th>Value · Usage</th></tr>
           </thead>
           <tbody>
             <tr>
@@ -2944,23 +2944,23 @@ body {
             </tr>
             <tr>
               <td>--shadow-card-hover</td>
-              <td><span class="token-table__badge">0 2px 8px rgba(0,0,0,0.12)</span><span class="token-table__desc">卡片 hover</span></td>
+              <td><span class="token-table__badge">0 2px 8px rgba(0,0,0,0.12)</span><span class="token-table__desc">Card hover</span></td>
             </tr>
             <tr>
               <td>--shadow-card-active</td>
-              <td><span class="token-table__badge">0 1px 2px rgba(0,0,0,0.18)</span><span class="token-table__desc">卡片 press</span></td>
+              <td><span class="token-table__badge">0 1px 2px rgba(0,0,0,0.18)</span><span class="token-table__desc">Card press</span></td>
             </tr>
             <tr>
               <td>--shadow-down</td>
-              <td><span class="token-table__badge">0 4px 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">dropdown、popover 向下</span></td>
+              <td><span class="token-table__badge">0 4px 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">Dropdown, popover — downward</span></td>
             </tr>
             <tr>
               <td>--shadow-left</td>
-              <td><span class="token-table__badge">-4px 0 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">右側 drawer 滑入</span></td>
+              <td><span class="token-table__badge">-4px 0 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">Right-side drawer slide-in</span></td>
             </tr>
             <tr>
               <td>--shadow-right</td>
-              <td><span class="token-table__badge">4px 0 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">左側 drawer 滑入</span></td>
+              <td><span class="token-table__badge">4px 0 10px rgba(0,0,0,0.18)</span><span class="token-table__desc">Left-side drawer slide-in</span></td>
             </tr>
             <tr>
               <td>Dropdown</td>
@@ -2968,7 +2968,7 @@ body {
             </tr>
             <tr class="is-base">
               <td>Rule</td>
-              <td><span class="token-table__desc">靜態卡片 → card-hover；hover → 升一階；不對同元素同時用 border + shadow</span></td>
+              <td><span class="token-table__desc">Static card → card-hover; hover → step up one level; never combine border + shadow on the same element</span></td>
             </tr>
           </tbody>
         </table>
@@ -3013,55 +3013,55 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="breakpoints">
-        <span class="ds-section__label">斷點</span>
+        <span class="ds-section__label">Breakpoints</span>
         <h2>Breakpoint</h2>
 
         <table class="token-table">
           <thead>
-            <tr><th>Breakpoint</th><th>Min width · 用途</th></tr>
+            <tr><th>Breakpoint</th><th>Min width · Usage</th></tr>
           </thead>
           <tbody>
             <tr>
               <td>MD</td>
-              <td><span class="token-table__badge">960px</span><span class="token-table__desc">平板橫向</span></td>
+              <td><span class="token-table__badge">960px</span><span class="token-table__desc">Tablet landscape</span></td>
             </tr>
             <tr>
               <td>LG</td>
-              <td><span class="token-table__badge">1280px</span><span class="token-table__desc">標準桌機</span></td>
+              <td><span class="token-table__badge">1280px</span><span class="token-table__desc">Standard desktop</span></td>
             </tr>
             <tr>
               <td>XL</td>
-              <td><span class="token-table__badge">1600px</span><span class="token-table__desc">寬螢幕</span></td>
+              <td><span class="token-table__badge">1600px</span><span class="token-table__desc">Wide screen</span></td>
             </tr>
             <tr>
               <td>Sidebar</td>
-              <td><span class="token-table__badge">固定 240px</span><span class="token-table__desc">（AI Agent / AI Agent Desktop）</span></td>
+              <td><span class="token-table__badge">Fixed 240px</span><span class="token-table__desc"> (AI Agent / AI Agent Desktop)</span></td>
             </tr>
             <tr>
               <td>Drawer</td>
-              <td><span class="token-table__badge">固定 400px</span><span class="token-table__desc">，右側滑入</span></td>
+              <td><span class="token-table__badge">Fixed 400px</span><span class="token-table__desc">, slides in from the right</span></td>
             </tr>
             <tr>
               <td>Content max-w</td>
-              <td><span class="token-table__badge">800px</span><span class="token-table__desc">置中（AI Agent 對話列）</span></td>
+              <td><span class="token-table__badge">800px</span><span class="token-table__desc">Centered (AI Agent conversation column)</span></td>
             </tr>
             <tr class="is-base">
               <td>Platform</td>
-              <td><span class="token-table__desc">Desktop-only — 無行動版斷點</span></td>
+              <td><span class="token-table__desc">Desktop-only — no mobile breakpoint</span></td>
             </tr>
           </tbody>
         </table>
 
         <div class="spec-subheading">Layout Width Reference</div>
         <div class="bp-card">
-          <div class="bp-card__header"><span class="bp-tag">桌機</span>Figma 製作尺寸：width <b>1200</b></div>
+          <div class="bp-card__header"><span class="bp-tag">Desktop</span>Figma artboard width: <b>1200</b></div>
           <div class="bp-card__desc">Medium devices · 1200 – 1439 px <span class="bp-card__note">1 rem = 16px</span></div>
           <div class="bp-card__row">
             <div class="bp-card__width-label">WIDTH : 1200</div>
             <div class="bp-card__bar">
               <div class="bp-card__seg bp-card__seg--side" style="flex:240;">240 · Left menu</div>
               <div class="bp-card__seg bp-card__seg--content" style="flex:560;">Result · 800px</div>
-              <div class="bp-card__seg bp-card__seg--side" style="flex:400;">400 · Right drawer · 浮起</div>
+              <div class="bp-card__seg bp-card__seg--side" style="flex:400;">400 · Right drawer · overlay</div>
             </div>
             <div class="bp-card__legend">
               <span><i style="background:var(--upgpt-blue-400);"></i>Left sidebar 240px</span>
@@ -3072,18 +3072,18 @@ body {
         </div>
 
         <div class="bp-card">
-          <div class="bp-card__header"><span class="bp-tag">桌機</span>Figma 製作尺寸：width <b>1440</b></div>
+          <div class="bp-card__header"><span class="bp-tag">Desktop</span>Figma artboard width: <b>1440</b></div>
           <div class="bp-card__desc">Large devices · laptops / desktops · 1440 – 1800 px</div>
           <div class="bp-card__row">
             <div class="bp-card__width-label">WIDTH : 1440</div>
             <div class="bp-card__bar">
               <div class="bp-card__seg bp-card__seg--side" style="flex:240;">240 · Left menu</div>
-              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px，置左</div>
+              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px, left-aligned</div>
               <div class="bp-card__seg bp-card__seg--side" style="flex:400;">400 · Right drawer</div>
             </div>
             <div class="bp-card__legend">
               <span><i style="background:var(--upgpt-blue-400);"></i>Left sidebar 240px</span>
-              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px，置左</span>
+              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px, left-aligned</span>
               <span><i style="background:var(--upgpt-blue-400);"></i>Right drawer 400px</span>
             </div>
           </div>
@@ -3092,33 +3092,33 @@ body {
             <div class="bp-card__bar">
               <div class="bp-card__seg bp-card__seg--side" style="flex:240;">240 · Left menu</div>
               <div class="bp-card__seg bp-card__seg--gap" style="flex:180;"></div>
-              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px，置中</div>
+              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px, centered</div>
               <div class="bp-card__seg bp-card__seg--gap" style="flex:180;"></div>
               <div class="bp-card__seg bp-card__seg--side" style="flex:400;">400 · Right drawer</div>
             </div>
             <div class="bp-card__legend">
               <span><i style="background:var(--upgpt-blue-400);"></i>Left sidebar 240px</span>
-              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px，置中</span>
+              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px, centered</span>
               <span><i style="background:var(--upgpt-blue-400);"></i>Right drawer 400px</span>
             </div>
           </div>
         </div>
 
         <div class="bp-card">
-          <div class="bp-card__header"><span class="bp-tag">桌機</span>Figma 製作尺寸：width <b>1920</b></div>
+          <div class="bp-card__header"><span class="bp-tag">Desktop</span>Figma artboard width: <b>1920</b></div>
           <div class="bp-card__desc">Xtra Large devices · desktops · 1801 – 1920 px</div>
           <div class="bp-card__row">
             <div class="bp-card__width-label">WIDTH : 1920</div>
             <div class="bp-card__bar">
               <div class="bp-card__seg bp-card__seg--side" style="flex:240;">240 · Left menu</div>
               <div class="bp-card__seg bp-card__seg--gap" style="flex:240;"></div>
-              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px，置中</div>
+              <div class="bp-card__seg bp-card__seg--content" style="flex:800;">Result · 800px, centered</div>
               <div class="bp-card__seg bp-card__seg--gap" style="flex:240;"></div>
               <div class="bp-card__seg bp-card__seg--side" style="flex:400;">400 · Right drawer</div>
             </div>
             <div class="bp-card__legend">
               <span><i style="background:var(--upgpt-blue-400);"></i>Left sidebar 240px</span>
-              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px，置中</span>
+              <span><i style="background:var(--upgpt-blue-100);"></i>Content 800px, centered</span>
               <span><i style="background:var(--upgpt-blue-400);"></i>Right drawer 400px</span>
             </div>
           </div>
@@ -3138,15 +3138,15 @@ body {
             </tr>
             <tr>
               <td><span class="bp-summary-table__chip">LG</span></td>
-              <td>1440 – 1799</td><td>1440</td><td>240px</td><td>800px</td><td>400px</td><td>置左</td>
+              <td>1440 – 1799</td><td>1440</td><td>240px</td><td>800px</td><td>400px</td><td>Left-aligned</td>
             </tr>
             <tr>
               <td><span class="bp-summary-table__chip">LG+</span></td>
-              <td>1800</td><td>1440</td><td>240px</td><td>800px</td><td>400px</td><td>置中</td>
+              <td>1800</td><td>1440</td><td>240px</td><td>800px</td><td>400px</td><td>Centered</td>
             </tr>
             <tr>
               <td><span class="bp-summary-table__chip">XL</span></td>
-              <td>1801 – 1920</td><td>1920</td><td>240px</td><td>800px</td><td>400px</td><td>置中</td>
+              <td>1801 – 1920</td><td>1920</td><td>240px</td><td>800px</td><td>400px</td><td>Centered</td>
             </tr>
           </tbody>
         </table>
@@ -3159,7 +3159,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="buttons">
-        <span class="ds-section__label">按鈕</span>
+        <span class="ds-section__label">Buttons</span>
         <h2>Buttons</h2>
 
         <table class="token-table">
@@ -3314,7 +3314,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="inputs">
-        <span class="ds-section__label">輸入框</span>
+        <span class="ds-section__label">Inputs</span>
         <h2>Inputs</h2>
 
         <table class="token-table">
@@ -3349,7 +3349,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--pad-left mock-field--pad-right" placeholder="••••••••">
-                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="img/icons/Lock.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="../img/icons/Lock.svg" alt=""></span>
                   <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
               </td>
@@ -3369,7 +3369,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--pad-right" placeholder="Select date">
-                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="img/icons/Calendar.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="../img/icons/Calendar.svg" alt=""></span>
                 </div>
               </td>
             </tr>
@@ -3382,7 +3382,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--focus mock-field--pad-left mock-field--pad-right" placeholder="••••••••">
-                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="img/icons/Lock.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="../img/icons/Lock.svg" alt=""></span>
                   <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
               </td>
@@ -3402,7 +3402,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--focus mock-field--pad-right" value="2026-07-15">
-                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="img/icons/Calendar.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="../img/icons/Calendar.svg" alt=""></span>
                 </div>
               </td>
             </tr>
@@ -3414,7 +3414,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--pad-left mock-field--pad-right" placeholder="••••••••">
-                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="img/icons/Lock.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="../img/icons/Lock.svg" alt=""></span>
                   <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
               </td>
@@ -3440,7 +3440,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--pad-right" value="2026-04-23">
-                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="img/icons/Calendar.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="../img/icons/Calendar.svg" alt=""></span>
                 </div>
               </td>
             </tr>
@@ -3453,7 +3453,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--error mock-field--pad-left mock-field--pad-right" placeholder="••••">
-                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="img/icons/Lock.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="../img/icons/Lock.svg" alt=""></span>
                   <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
                 <div class="mock-helper mock-helper--error">Too short</div>
@@ -3479,7 +3479,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--error mock-field--pad-right" value="2026-13-45">
-                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="img/icons/Calendar.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="../img/icons/Calendar.svg" alt=""></span>
                 </div>
                 <div class="mock-helper mock-helper--error">Invalid date</div>
               </td>
@@ -3493,7 +3493,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--disabled mock-field--pad-left mock-field--pad-right" placeholder="••••••••" disabled>
-                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="img/icons/Lock.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--left"><img class="icon-svg" src="../img/icons/Lock.svg" alt=""></span>
                   <span class="mock-field-icon mock-field-icon--right"><svg class="icon-svg"><use href="#icon-hide-pw"></use></svg></span>
                 </div>
               </td>
@@ -3513,7 +3513,7 @@ body {
               <td>
                 <div class="mock-field-wrap">
                   <input class="mock-field mock-field--disabled mock-field--pad-right" value="2026-01-01" disabled>
-                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="img/icons/Calendar.svg" alt=""></span>
+                  <span class="mock-field-icon mock-field-icon--right"><img class="icon-svg" src="../img/icons/Calendar.svg" alt=""></span>
                 </div>
               </td>
             </tr>
@@ -3528,7 +3528,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="selectors">
-        <span class="ds-section__label">選擇器</span>
+        <span class="ds-section__label">Selectors</span>
         <h2>Selectors</h2>
 
         <table class="token-table">
@@ -3707,7 +3707,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="tabs">
-        <span class="ds-section__label">頁籤</span>
+        <span class="ds-section__label">Tabs</span>
         <h2>Tabs</h2>
 
         <table class="token-table">
@@ -3781,7 +3781,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="pagination">
-        <span class="ds-section__label">分頁</span>
+        <span class="ds-section__label">Pagination</span>
         <h2>Pagination</h2>
 
         <table class="token-table">
@@ -3850,7 +3850,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="scrollbar">
-        <span class="ds-section__label">捲軸</span>
+        <span class="ds-section__label">Scroll Bar</span>
         <h2>Scroll Bar</h2>
 
         <table class="token-table">
@@ -3879,7 +3879,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="dialog">
-        <span class="ds-section__label">對話框</span>
+        <span class="ds-section__label">Dialog</span>
         <h2>Dialog</h2>
 
         <table class="token-table">
@@ -3887,14 +3887,14 @@ body {
           <tbody>
             <tr><td>Size</td><td><span class="token-table__badge">Small 480</span><span class="token-table__badge">Medium 720</span><span class="token-table__badge">Large 960</span></td></tr>
             <tr><td>Height</td><td><span class="token-table__desc">max-height 90vh · min-height 600px (Main) / 240px (Confirm)</span></td></tr>
-            <tr><td>Header</td><td><span class="token-table__desc">60px · 固定上方</span></td></tr>
-            <tr><td>Footer</td><td><span class="token-table__desc">60px · 固定下方</span></td></tr>
-            <tr><td>Content</td><td><span class="token-table__desc">超出捲動 (scroll)</span></td></tr>
-            <tr><td>Close</td><td><span class="token-table__desc">X icon / Cancel / 完成表單才關閉 · 點擊 mask 不關閉</span></td></tr>
+            <tr><td>Header</td><td><span class="token-table__desc">60px · fixed at top</span></td></tr>
+            <tr><td>Footer</td><td><span class="token-table__desc">60px · fixed at bottom</span></td></tr>
+            <tr><td>Content</td><td><span class="token-table__desc">Scrolls when overflowing</span></td></tr>
+            <tr><td>Close</td><td><span class="token-table__desc">X icon / Cancel / closes only when the form is completed · clicking the mask does not close it</span></td></tr>
             <tr><td>Action</td><td><span class="token-table__badge">#14C6DE</span><span class="token-table__desc">Next / Save</span></td></tr>
-            <tr><td>Cancel / Back</td><td><span class="token-table__desc">中性灰框</span></td></tr>
-            <tr><td>Delete</td><td><span class="token-table__badge">#ED4242</span><span class="token-table__desc">紅底白字</span></td></tr>
-            <tr class="is-base"><td>Position</td><td><span class="token-table__desc">Action 固定右側 · Cancel 次順位 · Back 靠左</span></td></tr>
+            <tr><td>Cancel / Back</td><td><span class="token-table__desc">Neutral grey outline</span></td></tr>
+            <tr><td>Delete</td><td><span class="token-table__badge">#ED4242</span><span class="token-table__desc">White text on red</span></td></tr>
+            <tr class="is-base"><td>Position</td><td><span class="token-table__desc">Action fixed to the right · Cancel next in order · Back aligned left</span></td></tr>
           </tbody>
         </table>
 
@@ -3971,7 +3971,7 @@ body {
         <svg class="icon-svg ds-accordion-toggle__icon"><use href="#icon-caret-down"></use></svg>
       </button>
       <section class="ds-section" id="icons">
-        <span class="ds-section__label">圖示</span>
+        <span class="ds-section__label">Icons</span>
         <h2>Icons</h2>
 
         <table class="token-table">
@@ -3984,256 +3984,256 @@ body {
         </table>
 
         <div class="icon-grid">
-          <figure class="icon-grid__item"><img src="img/icons/AI agent.svg" alt="AI agent" loading="lazy"><figcaption>AI agent</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/AI analysis.svg" alt="AI analysis" loading="lazy"><figcaption>AI analysis</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/AI bot.svg" alt="AI bot" loading="lazy"><figcaption>AI bot</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/AI note.svg" alt="AI note" loading="lazy"><figcaption>AI note</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/AI send.svg" alt="AI send" loading="lazy"><figcaption>AI send</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Accuracy.svg" alt="Accuracy" loading="lazy"><figcaption>Accuracy</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Add _ Round.svg" alt="Add _ Round" loading="lazy"><figcaption>Add _ Round</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Add folder.svg" alt="Add folder" loading="lazy"><figcaption>Add folder</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Add group.svg" alt="Add group" loading="lazy"><figcaption>Add group</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Add user.svg" alt="Add user" loading="lazy"><figcaption>Add user</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Add.svg" alt="Add" loading="lazy"><figcaption>Add</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Agents.svg" alt="Agents" loading="lazy"><figcaption>Agents</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Ai write.svg" alt="Ai write" loading="lazy"><figcaption>Ai write</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Answer total.svg" alt="Answer total" loading="lazy"><figcaption>Answer total</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Answer.svg" alt="Answer" loading="lazy"><figcaption>Answer</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Apply.svg" alt="Apply" loading="lazy"><figcaption>Apply</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ Down.svg" alt="Arrow Line _ Down" loading="lazy"><figcaption>Arrow Line _ Down</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ Up.svg" alt="Arrow Line _ Up" loading="lazy"><figcaption>Arrow Line _ Up</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ left.svg" alt="Arrow Line _ left" loading="lazy"><figcaption>Arrow Line _ left</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Arrow Line _ right.svg" alt="Arrow Line _ right" loading="lazy"><figcaption>Arrow Line _ right</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Bookmark.svg" alt="Bookmark" loading="lazy"><figcaption>Bookmark</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Bookmarl-flat.svg" alt="Bookmarl-flat" loading="lazy"><figcaption>Bookmarl-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Calendar.svg" alt="Calendar" loading="lazy"><figcaption>Calendar</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Chart.svg" alt="Chart" loading="lazy"><figcaption>Chart</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Chat record.svg" alt="Chat record" loading="lazy"><figcaption>Chat record</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Check.svg" alt="Check" loading="lazy"><figcaption>Check</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Chevron _ Left.svg" alt="Chevron _ Left" loading="lazy"><figcaption>Chevron _ Left</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Chevron _ Right.svg" alt="Chevron _ Right" loading="lazy"><figcaption>Chevron _ Right</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Click.svg" alt="Click" loading="lazy"><figcaption>Click</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Close _ Round.svg" alt="Close _ Round" loading="lazy"><figcaption>Close _ Round</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Close.svg" alt="Close" loading="lazy"><figcaption>Close</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Command.svg" alt="Command" loading="lazy"><figcaption>Command</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Connect tool.svg" alt="Connect tool" loading="lazy"><figcaption>Connect tool</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Construction.svg" alt="Construction" loading="lazy"><figcaption>Construction</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Copy.svg" alt="Copy" loading="lazy"><figcaption>Copy</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Custom.svg" alt="Custom" loading="lazy"><figcaption>Custom</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Custom2.svg" alt="Custom2" loading="lazy"><figcaption>Custom2</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Custom3.svg" alt="Custom3" loading="lazy"><figcaption>Custom3</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Data analysis.svg" alt="Data analysis" loading="lazy"><figcaption>Data analysis</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Deactivate.svg" alt="Deactivate" loading="lazy"><figcaption>Deactivate</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Delete.svg" alt="Delete" loading="lazy"><figcaption>Delete</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Department.svg" alt="Department" loading="lazy"><figcaption>Department</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Design.svg" alt="Design" loading="lazy"><figcaption>Design</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Dislike-flat.svg" alt="Dislike-flat" loading="lazy"><figcaption>Dislike-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Done.svg" alt="Done" loading="lazy"><figcaption>Done</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Download.svg" alt="Download" loading="lazy"><figcaption>Download</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Duplicate-flat.svg" alt="Duplicate-flat" loading="lazy"><figcaption>Duplicate-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Edit.svg" alt="Edit" loading="lazy"><figcaption>Edit</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Expire date.svg" alt="Expire date" loading="lazy"><figcaption>Expire date</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Export CSV.svg" alt="Export CSV" loading="lazy"><figcaption>Export CSV</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Export DOC.svg" alt="Export DOC" loading="lazy"><figcaption>Export DOC</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Export HTML.svg" alt="Export HTML" loading="lazy"><figcaption>Export HTML</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Export JSON.svg" alt="Export JSON" loading="lazy"><figcaption>Export JSON</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Export PDF.svg" alt="Export PDF" loading="lazy"><figcaption>Export PDF</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/External - Link.svg" alt="External - Link" loading="lazy"><figcaption>External - Link</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Failed.svg" alt="Failed" loading="lazy"><figcaption>Failed</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-HTML.svg" alt="File-HTML" loading="lazy"><figcaption>File-HTML</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-csv.svg" alt="File-csv" loading="lazy"><figcaption>File-csv</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-doc.svg" alt="File-doc" loading="lazy"><figcaption>File-doc</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-excel.svg" alt="File-excel" loading="lazy"><figcaption>File-excel</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-jpg.svg" alt="File-jpg" loading="lazy"><figcaption>File-jpg</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-md.svg" alt="File-md" loading="lazy"><figcaption>File-md</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-pdf.svg" alt="File-pdf" loading="lazy"><figcaption>File-pdf</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-png.svg" alt="File-png" loading="lazy"><figcaption>File-png</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-ppt.svg" alt="File-ppt" loading="lazy"><figcaption>File-ppt</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/File-txt.svg" alt="File-txt" loading="lazy"><figcaption>File-txt</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Filter.svg" alt="Filter" loading="lazy"><figcaption>Filter</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Folder.svg" alt="Folder" loading="lazy"><figcaption>Folder</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/GPT.svg" alt="GPT" loading="lazy"><figcaption>GPT</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Gear.svg" alt="Gear" loading="lazy"><figcaption>Gear</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Back.svg" alt="Go Back" loading="lazy"><figcaption>Go Back</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Down.svg" alt="Go Down" loading="lazy"><figcaption>Go Down</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Left.svg" alt="Go Left" loading="lazy"><figcaption>Go Left</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Next.svg" alt="Go Next" loading="lazy"><figcaption>Go Next</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Right.svg" alt="Go Right" loading="lazy"><figcaption>Go Right</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Go Up.svg" alt="Go Up" loading="lazy"><figcaption>Go Up</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Goal.svg" alt="Goal" loading="lazy"><figcaption>Goal</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Grab.svg" alt="Grab" loading="lazy"><figcaption>Grab</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/HR.svg" alt="HR" loading="lazy"><figcaption>HR</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Hamburger.svg" alt="Hamburger" loading="lazy"><figcaption>Hamburger</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Hide PW.svg" alt="Hide PW" loading="lazy"><figcaption>Hide PW</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Hover.svg" alt="Hover" loading="lazy"><figcaption>Hover</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Icon.svg" alt="Icon" loading="lazy"><figcaption>Icon</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Idea.svg" alt="Idea" loading="lazy"><figcaption>Idea</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Import CSV.svg" alt="Import CSV" loading="lazy"><figcaption>Import CSV</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Info - s.svg" alt="Info - s" loading="lazy"><figcaption>Info - s</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Information.svg" alt="Information" loading="lazy"><figcaption>Information</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Instructions.svg" alt="Instructions" loading="lazy"><figcaption>Instructions</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Intelligen file2.svg" alt="Intelligen file2" loading="lazy"><figcaption>Intelligen file2</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Intelligen file3.svg" alt="Intelligen file3" loading="lazy"><figcaption>Intelligen file3</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Jira.svg" alt="Jira" loading="lazy"><figcaption>Jira</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Library.svg" alt="Library" loading="lazy"><figcaption>Library</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Like-flat.svg" alt="Like-flat" loading="lazy"><figcaption>Like-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Line.svg" alt="Line" loading="lazy"><figcaption>Line</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Link.svg" alt="Link" loading="lazy"><figcaption>Link</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/List.svg" alt="List" loading="lazy"><figcaption>List</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Loading.svg" alt="Loading" loading="lazy"><figcaption>Loading</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Lock-path.svg" alt="Lock-path" loading="lazy"><figcaption>Lock-path</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Lock.svg" alt="Lock" loading="lazy"><figcaption>Lock</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Logout.svg" alt="Logout" loading="lazy"><figcaption>Logout</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Meeting record.svg" alt="Meeting record" loading="lazy"><figcaption>Meeting record</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Meeting.svg" alt="Meeting" loading="lazy"><figcaption>Meeting</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Minus _ Round.svg" alt="Minus _ Round" loading="lazy"><figcaption>Minus _ Round</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Minus.svg" alt="Minus" loading="lazy"><figcaption>Minus</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/More image.svg" alt="More image" loading="lazy"><figcaption>More image</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/More.svg" alt="More" loading="lazy"><figcaption>More</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Move to.svg" alt="Move to" loading="lazy"><figcaption>Move to</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Move.svg" alt="Move" loading="lazy"><figcaption>Move</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/New upside chat.svg" alt="New upside chat" loading="lazy"><figcaption>New upside chat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/No image.svg" alt="No image" loading="lazy"><figcaption>No image</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Not Activated.svg" alt="Not Activated" loading="lazy"><figcaption>Not Activated</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Notification _ OFF.svg" alt="Notification _ OFF" loading="lazy"><figcaption>Notification _ OFF</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Notification _ ON.svg" alt="Notification _ ON" loading="lazy"><figcaption>Notification _ ON</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/PDF view.svg" alt="PDF view" loading="lazy"><figcaption>PDF view</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Pause.svg" alt="Pause" loading="lazy"><figcaption>Pause</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Public.svg" alt="Public" loading="lazy"><figcaption>Public</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Python Execution.svg" alt="Python Execution" loading="lazy"><figcaption>Python Execution</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Reduce.svg" alt="Reduce" loading="lazy"><figcaption>Reduce</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Reference.svg" alt="Reference" loading="lazy"><figcaption>Reference</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Refresh.svg" alt="Refresh" loading="lazy"><figcaption>Refresh</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Related.svg" alt="Related" loading="lazy"><figcaption>Related</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Relevance.svg" alt="Relevance" loading="lazy"><figcaption>Relevance</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Reply.svg" alt="Reply" loading="lazy"><figcaption>Reply</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Reset.svg" alt="Reset" loading="lazy"><figcaption>Reset</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Run all.svg" alt="Run all" loading="lazy"><figcaption>Run all</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Run.svg" alt="Run" loading="lazy"><figcaption>Run</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Save as.svg" alt="Save as" loading="lazy"><figcaption>Save as</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Save.svg" alt="Save" loading="lazy"><figcaption>Save</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Schedule.svg" alt="Schedule" loading="lazy"><figcaption>Schedule</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Screenshot.svg" alt="Screenshot" loading="lazy"><figcaption>Screenshot</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Search by image.svg" alt="Search by image" loading="lazy"><figcaption>Search by image</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Search by image2.svg" alt="Search by image2" loading="lazy"><figcaption>Search by image2</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Search by image3.svg" alt="Search by image3" loading="lazy"><figcaption>Search by image3</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Search.svg" alt="Search" loading="lazy"><figcaption>Search</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/SearchByImage.svg" alt="SearchByImage" loading="lazy"><figcaption>SearchByImage</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/SearchImage.svg" alt="SearchImage" loading="lazy"><figcaption>SearchImage</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Setting.svg" alt="Setting" loading="lazy"><figcaption>Setting</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Shop.svg" alt="Shop" loading="lazy"><figcaption>Shop</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Single image.svg" alt="Single image" loading="lazy"><figcaption>Single image</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Software.svg" alt="Software" loading="lazy"><figcaption>Software</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sort Ascending.svg" alt="Sort Ascending" loading="lazy"><figcaption>Sort Ascending</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sort Deafult.svg" alt="Sort Deafult" loading="lazy"><figcaption>Sort Deafult</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sort Descending.svg" alt="Sort Descending" loading="lazy"><figcaption>Sort Descending</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sort.svg" alt="Sort" loading="lazy"><figcaption>Sort</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Star.svg" alt="Star" loading="lazy"><figcaption>Star</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Status Failed.svg" alt="Status Failed" loading="lazy"><figcaption>Status Failed</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Status Success.svg" alt="Status Success" loading="lazy"><figcaption>Status Success</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Status Warning.svg" alt="Status Warning" loading="lazy"><figcaption>Status Warning</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Step-line.svg" alt="Step-line" loading="lazy"><figcaption>Step-line</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Step-pending.svg" alt="Step-pending" loading="lazy"><figcaption>Step-pending</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Steps.svg" alt="Steps" loading="lazy"><figcaption>Steps</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Stop.svg" alt="Stop" loading="lazy"><figcaption>Stop</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sub - duplicate.svg" alt="Sub - duplicate" loading="lazy"><figcaption>Sub - duplicate</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sub - pin.svg" alt="Sub - pin" loading="lazy"><figcaption>Sub - pin</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sublayer.svg" alt="Sublayer" loading="lazy"><figcaption>Sublayer</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Subtable.svg" alt="Subtable" loading="lazy"><figcaption>Subtable</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Success.svg" alt="Success" loading="lazy"><figcaption>Success</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Sync.svg" alt="Sync" loading="lazy"><figcaption>Sync</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/TXT view.svg" alt="TXT view" loading="lazy"><figcaption>TXT view</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Table.svg" alt="Table" loading="lazy"><figcaption>Table</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Teams.svg" alt="Teams" loading="lazy"><figcaption>Teams</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Thinking content.svg" alt="Thinking content" loading="lazy"><figcaption>Thinking content</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Thread-flat.svg" alt="Thread-flat" loading="lazy"><figcaption>Thread-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Thread.svg" alt="Thread" loading="lazy"><figcaption>Thread</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Tiles.svg" alt="Tiles" loading="lazy"><figcaption>Tiles</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Translate.svg" alt="Translate" loading="lazy"><figcaption>Translate</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Travel.svg" alt="Travel" loading="lazy"><figcaption>Travel</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Triangle-down.svg" alt="Triangle-down" loading="lazy"><figcaption>Triangle-down</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Triangle-right.svg" alt="Triangle-right" loading="lazy"><figcaption>Triangle-right</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/UpAgent.svg" alt="UpAgent" loading="lazy"><figcaption>UpAgent</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/UpChat.svg" alt="UpChat" loading="lazy"><figcaption>UpChat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/UpGPT-color.svg" alt="UpGPT-color" loading="lazy"><figcaption>UpGPT-color</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/UpGPT.svg" alt="UpGPT" loading="lazy"><figcaption>UpGPT</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Update todo list.svg" alt="Update todo list" loading="lazy"><figcaption>Update todo list</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Upload record.svg" alt="Upload record" loading="lazy"><figcaption>Upload record</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Upload.svg" alt="Upload" loading="lazy"><figcaption>Upload</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/User management.svg" alt="User management" loading="lazy"><figcaption>User management</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/User.svg" alt="User" loading="lazy"><figcaption>User</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Video.svg" alt="Video" loading="lazy"><figcaption>Video</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/View PW.svg" alt="View PW" loading="lazy"><figcaption>View PW</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/View details.svg" alt="View details" loading="lazy"><figcaption>View details</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/View schedule.svg" alt="View schedule" loading="lazy"><figcaption>View schedule</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/Warning.svg" alt="Warning" loading="lazy"><figcaption>Warning</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/account.svg" alt="account" loading="lazy"><figcaption>account</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/add cloud file.svg" alt="add cloud file" loading="lazy"><figcaption>add cloud file</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/attach.svg" alt="attach" loading="lazy"><figcaption>attach</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/broom.svg" alt="broom" loading="lazy"><figcaption>broom</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/camera-flat.svg" alt="camera-flat" loading="lazy"><figcaption>camera-flat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/camera.svg" alt="camera" loading="lazy"><figcaption>camera</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/chat.svg" alt="chat" loading="lazy"><figcaption>chat</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/cloud.svg" alt="cloud" loading="lazy"><figcaption>cloud</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/company.svg" alt="company" loading="lazy"><figcaption>company</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/cosmetic.svg" alt="cosmetic" loading="lazy"><figcaption>cosmetic</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/details.svg" alt="details" loading="lazy"><figcaption>details</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/dislike-line.svg" alt="dislike-line" loading="lazy"><figcaption>dislike-line</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/done-border.svg" alt="done-border" loading="lazy"><figcaption>done-border</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/earth.svg" alt="earth" loading="lazy"><figcaption>earth</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/edit form.svg" alt="edit form" loading="lazy"><figcaption>edit form</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/email reply.svg" alt="email reply" loading="lazy"><figcaption>email reply</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/email.svg" alt="email" loading="lazy"><figcaption>email</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/enlarge.svg" alt="enlarge" loading="lazy"><figcaption>enlarge</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/export excel.svg" alt="export excel" loading="lazy"><figcaption>export excel</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/folder-line.svg" alt="folder-line" loading="lazy"><figcaption>folder-line</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/folder-yellow.svg" alt="folder-yellow" loading="lazy"><figcaption>folder-yellow</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/generate steps.svg" alt="generate steps" loading="lazy"><figcaption>generate steps</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/group.svg" alt="group" loading="lazy"><figcaption>group</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/history.svg" alt="history" loading="lazy"><figcaption>history</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/image understanding-500.svg" alt="image understanding-500" loading="lazy"><figcaption>image understanding-500</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/image understanding.svg" alt="image understanding" loading="lazy"><figcaption>image understanding</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/image understanding2.svg" alt="image understanding2" loading="lazy"><figcaption>image understanding2</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/image understanding3.svg" alt="image understanding3" loading="lazy"><figcaption>image understanding3</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/intelligent file.svg" alt="intelligent file" loading="lazy"><figcaption>intelligent file</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/keypoint.svg" alt="keypoint" loading="lazy"><figcaption>keypoint</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/knowledge.svg" alt="knowledge" loading="lazy"><figcaption>knowledge</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/lang.svg" alt="lang" loading="lazy"><figcaption>lang</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/left drawer-collapse.svg" alt="left drawer-collapse" loading="lazy"><figcaption>left drawer-collapse</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/left drawer-open.svg" alt="left drawer-open" loading="lazy"><figcaption>left drawer-open</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/license active.svg" alt="license active" loading="lazy"><figcaption>license active</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/license inactive.svg" alt="license inactive" loading="lazy"><figcaption>license inactive</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/like-line.svg" alt="like-line" loading="lazy"><figcaption>like-line</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/mobile.svg" alt="mobile" loading="lazy"><figcaption>mobile</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/new thread.svg" alt="new thread" loading="lazy"><figcaption>new thread</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/no reference.svg" alt="no reference" loading="lazy"><figcaption>no reference</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/open link.svg" alt="open link" loading="lazy"><figcaption>open link</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/password.svg" alt="password" loading="lazy"><figcaption>password</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/pending.svg" alt="pending" loading="lazy"><figcaption>pending</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/private.svg" alt="private" loading="lazy"><figcaption>private</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/progress.svg" alt="progress" loading="lazy"><figcaption>progress</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/python.svg" alt="python" loading="lazy"><figcaption>python</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/question analysis.svg" alt="question analysis" loading="lazy"><figcaption>question analysis</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/question.svg" alt="question" loading="lazy"><figcaption>question</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/read.svg" alt="read" loading="lazy"><figcaption>read</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/record review.svg" alt="record review" loading="lazy"><figcaption>record review</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/rename.svg" alt="rename" loading="lazy"><figcaption>rename</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/rewrite.svg" alt="rewrite" loading="lazy"><figcaption>rewrite</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/right drawer-collapse.svg" alt="right drawer-collapse" loading="lazy"><figcaption>right drawer-collapse</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/right drawer-open.svg" alt="right drawer-open" loading="lazy"><figcaption>right drawer-open</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/save n run.svg" alt="save n run" loading="lazy"><figcaption>save n run</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/security.svg" alt="security" loading="lazy"><figcaption>security</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/share.svg" alt="share" loading="lazy"><figcaption>share</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/skill.svg" alt="skill" loading="lazy"><figcaption>skill</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/step-process.svg" alt="step-process" loading="lazy"><figcaption>step-process</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/storage.svg" alt="storage" loading="lazy"><figcaption>storage</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/web.svg" alt="web" loading="lazy"><figcaption>web</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/webpage.svg" alt="webpage" loading="lazy"><figcaption>webpage</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/website.svg" alt="website" loading="lazy"><figcaption>website</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/width.svg" alt="width" loading="lazy"><figcaption>width</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/windows.svg" alt="windows" loading="lazy"><figcaption>windows</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/work agent.svg" alt="work agent" loading="lazy"><figcaption>work agent</figcaption></figure>
-          <figure class="icon-grid__item"><img src="img/icons/write.svg" alt="write" loading="lazy"><figcaption>write</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/AI agent.svg" alt="AI agent" loading="lazy"><figcaption>AI agent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/AI analysis.svg" alt="AI analysis" loading="lazy"><figcaption>AI analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/AI bot.svg" alt="AI bot" loading="lazy"><figcaption>AI bot</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/AI note.svg" alt="AI note" loading="lazy"><figcaption>AI note</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/AI send.svg" alt="AI send" loading="lazy"><figcaption>AI send</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Accuracy.svg" alt="Accuracy" loading="lazy"><figcaption>Accuracy</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Add _ Round.svg" alt="Add _ Round" loading="lazy"><figcaption>Add _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Add folder.svg" alt="Add folder" loading="lazy"><figcaption>Add folder</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Add group.svg" alt="Add group" loading="lazy"><figcaption>Add group</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Add user.svg" alt="Add user" loading="lazy"><figcaption>Add user</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Add.svg" alt="Add" loading="lazy"><figcaption>Add</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Agents.svg" alt="Agents" loading="lazy"><figcaption>Agents</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Ai write.svg" alt="Ai write" loading="lazy"><figcaption>Ai write</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Answer total.svg" alt="Answer total" loading="lazy"><figcaption>Answer total</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Answer.svg" alt="Answer" loading="lazy"><figcaption>Answer</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Apply.svg" alt="Apply" loading="lazy"><figcaption>Apply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Arrow Line _ Down.svg" alt="Arrow Line _ Down" loading="lazy"><figcaption>Arrow Line _ Down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Arrow Line _ Up.svg" alt="Arrow Line _ Up" loading="lazy"><figcaption>Arrow Line _ Up</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Arrow Line _ left.svg" alt="Arrow Line _ left" loading="lazy"><figcaption>Arrow Line _ left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Arrow Line _ right.svg" alt="Arrow Line _ right" loading="lazy"><figcaption>Arrow Line _ right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Bookmark.svg" alt="Bookmark" loading="lazy"><figcaption>Bookmark</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Bookmarl-flat.svg" alt="Bookmarl-flat" loading="lazy"><figcaption>Bookmarl-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Calendar.svg" alt="Calendar" loading="lazy"><figcaption>Calendar</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Chart.svg" alt="Chart" loading="lazy"><figcaption>Chart</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Chat record.svg" alt="Chat record" loading="lazy"><figcaption>Chat record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Check.svg" alt="Check" loading="lazy"><figcaption>Check</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Chevron _ Left.svg" alt="Chevron _ Left" loading="lazy"><figcaption>Chevron _ Left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Chevron _ Right.svg" alt="Chevron _ Right" loading="lazy"><figcaption>Chevron _ Right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Click.svg" alt="Click" loading="lazy"><figcaption>Click</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Close _ Round.svg" alt="Close _ Round" loading="lazy"><figcaption>Close _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Close.svg" alt="Close" loading="lazy"><figcaption>Close</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Command.svg" alt="Command" loading="lazy"><figcaption>Command</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Connect tool.svg" alt="Connect tool" loading="lazy"><figcaption>Connect tool</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Construction.svg" alt="Construction" loading="lazy"><figcaption>Construction</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Copy.svg" alt="Copy" loading="lazy"><figcaption>Copy</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Custom.svg" alt="Custom" loading="lazy"><figcaption>Custom</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Custom2.svg" alt="Custom2" loading="lazy"><figcaption>Custom2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Custom3.svg" alt="Custom3" loading="lazy"><figcaption>Custom3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Data analysis.svg" alt="Data analysis" loading="lazy"><figcaption>Data analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Deactivate.svg" alt="Deactivate" loading="lazy"><figcaption>Deactivate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Delete.svg" alt="Delete" loading="lazy"><figcaption>Delete</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Department.svg" alt="Department" loading="lazy"><figcaption>Department</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Design.svg" alt="Design" loading="lazy"><figcaption>Design</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Dislike-flat.svg" alt="Dislike-flat" loading="lazy"><figcaption>Dislike-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Done.svg" alt="Done" loading="lazy"><figcaption>Done</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Download.svg" alt="Download" loading="lazy"><figcaption>Download</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Duplicate-flat.svg" alt="Duplicate-flat" loading="lazy"><figcaption>Duplicate-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Edit.svg" alt="Edit" loading="lazy"><figcaption>Edit</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Expire date.svg" alt="Expire date" loading="lazy"><figcaption>Expire date</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Export CSV.svg" alt="Export CSV" loading="lazy"><figcaption>Export CSV</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Export DOC.svg" alt="Export DOC" loading="lazy"><figcaption>Export DOC</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Export HTML.svg" alt="Export HTML" loading="lazy"><figcaption>Export HTML</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Export JSON.svg" alt="Export JSON" loading="lazy"><figcaption>Export JSON</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Export PDF.svg" alt="Export PDF" loading="lazy"><figcaption>Export PDF</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/External - Link.svg" alt="External - Link" loading="lazy"><figcaption>External - Link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Failed.svg" alt="Failed" loading="lazy"><figcaption>Failed</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-HTML.svg" alt="File-HTML" loading="lazy"><figcaption>File-HTML</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-csv.svg" alt="File-csv" loading="lazy"><figcaption>File-csv</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-doc.svg" alt="File-doc" loading="lazy"><figcaption>File-doc</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-excel.svg" alt="File-excel" loading="lazy"><figcaption>File-excel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-jpg.svg" alt="File-jpg" loading="lazy"><figcaption>File-jpg</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-md.svg" alt="File-md" loading="lazy"><figcaption>File-md</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-pdf.svg" alt="File-pdf" loading="lazy"><figcaption>File-pdf</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-png.svg" alt="File-png" loading="lazy"><figcaption>File-png</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-ppt.svg" alt="File-ppt" loading="lazy"><figcaption>File-ppt</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/File-txt.svg" alt="File-txt" loading="lazy"><figcaption>File-txt</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Filter.svg" alt="Filter" loading="lazy"><figcaption>Filter</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Folder.svg" alt="Folder" loading="lazy"><figcaption>Folder</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/GPT.svg" alt="GPT" loading="lazy"><figcaption>GPT</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Gear.svg" alt="Gear" loading="lazy"><figcaption>Gear</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Back.svg" alt="Go Back" loading="lazy"><figcaption>Go Back</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Down.svg" alt="Go Down" loading="lazy"><figcaption>Go Down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Left.svg" alt="Go Left" loading="lazy"><figcaption>Go Left</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Next.svg" alt="Go Next" loading="lazy"><figcaption>Go Next</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Right.svg" alt="Go Right" loading="lazy"><figcaption>Go Right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Go Up.svg" alt="Go Up" loading="lazy"><figcaption>Go Up</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Goal.svg" alt="Goal" loading="lazy"><figcaption>Goal</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Grab.svg" alt="Grab" loading="lazy"><figcaption>Grab</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/HR.svg" alt="HR" loading="lazy"><figcaption>HR</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Hamburger.svg" alt="Hamburger" loading="lazy"><figcaption>Hamburger</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Hide PW.svg" alt="Hide PW" loading="lazy"><figcaption>Hide PW</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Hover.svg" alt="Hover" loading="lazy"><figcaption>Hover</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Icon.svg" alt="Icon" loading="lazy"><figcaption>Icon</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Idea.svg" alt="Idea" loading="lazy"><figcaption>Idea</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Import CSV.svg" alt="Import CSV" loading="lazy"><figcaption>Import CSV</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Info - s.svg" alt="Info - s" loading="lazy"><figcaption>Info - s</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Information.svg" alt="Information" loading="lazy"><figcaption>Information</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Instructions.svg" alt="Instructions" loading="lazy"><figcaption>Instructions</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Intelligen file2.svg" alt="Intelligen file2" loading="lazy"><figcaption>Intelligen file2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Intelligen file3.svg" alt="Intelligen file3" loading="lazy"><figcaption>Intelligen file3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Jira.svg" alt="Jira" loading="lazy"><figcaption>Jira</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Library.svg" alt="Library" loading="lazy"><figcaption>Library</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Like-flat.svg" alt="Like-flat" loading="lazy"><figcaption>Like-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Line.svg" alt="Line" loading="lazy"><figcaption>Line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Link.svg" alt="Link" loading="lazy"><figcaption>Link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/List.svg" alt="List" loading="lazy"><figcaption>List</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Loading.svg" alt="Loading" loading="lazy"><figcaption>Loading</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Lock-path.svg" alt="Lock-path" loading="lazy"><figcaption>Lock-path</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Lock.svg" alt="Lock" loading="lazy"><figcaption>Lock</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Logout.svg" alt="Logout" loading="lazy"><figcaption>Logout</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Meeting record.svg" alt="Meeting record" loading="lazy"><figcaption>Meeting record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Meeting.svg" alt="Meeting" loading="lazy"><figcaption>Meeting</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Minus _ Round.svg" alt="Minus _ Round" loading="lazy"><figcaption>Minus _ Round</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Minus.svg" alt="Minus" loading="lazy"><figcaption>Minus</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/More image.svg" alt="More image" loading="lazy"><figcaption>More image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/More.svg" alt="More" loading="lazy"><figcaption>More</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Move to.svg" alt="Move to" loading="lazy"><figcaption>Move to</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Move.svg" alt="Move" loading="lazy"><figcaption>Move</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/New upside chat.svg" alt="New upside chat" loading="lazy"><figcaption>New upside chat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/No image.svg" alt="No image" loading="lazy"><figcaption>No image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Not Activated.svg" alt="Not Activated" loading="lazy"><figcaption>Not Activated</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Notification _ OFF.svg" alt="Notification _ OFF" loading="lazy"><figcaption>Notification _ OFF</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Notification _ ON.svg" alt="Notification _ ON" loading="lazy"><figcaption>Notification _ ON</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/PDF view.svg" alt="PDF view" loading="lazy"><figcaption>PDF view</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Pause.svg" alt="Pause" loading="lazy"><figcaption>Pause</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Public.svg" alt="Public" loading="lazy"><figcaption>Public</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Python Execution.svg" alt="Python Execution" loading="lazy"><figcaption>Python Execution</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Reduce.svg" alt="Reduce" loading="lazy"><figcaption>Reduce</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Reference.svg" alt="Reference" loading="lazy"><figcaption>Reference</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Refresh.svg" alt="Refresh" loading="lazy"><figcaption>Refresh</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Related.svg" alt="Related" loading="lazy"><figcaption>Related</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Relevance.svg" alt="Relevance" loading="lazy"><figcaption>Relevance</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Reply.svg" alt="Reply" loading="lazy"><figcaption>Reply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Reset.svg" alt="Reset" loading="lazy"><figcaption>Reset</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Run all.svg" alt="Run all" loading="lazy"><figcaption>Run all</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Run.svg" alt="Run" loading="lazy"><figcaption>Run</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Save as.svg" alt="Save as" loading="lazy"><figcaption>Save as</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Save.svg" alt="Save" loading="lazy"><figcaption>Save</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Schedule.svg" alt="Schedule" loading="lazy"><figcaption>Schedule</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Screenshot.svg" alt="Screenshot" loading="lazy"><figcaption>Screenshot</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Search by image.svg" alt="Search by image" loading="lazy"><figcaption>Search by image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Search by image2.svg" alt="Search by image2" loading="lazy"><figcaption>Search by image2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Search by image3.svg" alt="Search by image3" loading="lazy"><figcaption>Search by image3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Search.svg" alt="Search" loading="lazy"><figcaption>Search</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/SearchByImage.svg" alt="SearchByImage" loading="lazy"><figcaption>SearchByImage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/SearchImage.svg" alt="SearchImage" loading="lazy"><figcaption>SearchImage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Setting.svg" alt="Setting" loading="lazy"><figcaption>Setting</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Shop.svg" alt="Shop" loading="lazy"><figcaption>Shop</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Single image.svg" alt="Single image" loading="lazy"><figcaption>Single image</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Software.svg" alt="Software" loading="lazy"><figcaption>Software</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sort Ascending.svg" alt="Sort Ascending" loading="lazy"><figcaption>Sort Ascending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sort Deafult.svg" alt="Sort Deafult" loading="lazy"><figcaption>Sort Deafult</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sort Descending.svg" alt="Sort Descending" loading="lazy"><figcaption>Sort Descending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sort.svg" alt="Sort" loading="lazy"><figcaption>Sort</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Star.svg" alt="Star" loading="lazy"><figcaption>Star</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Status Failed.svg" alt="Status Failed" loading="lazy"><figcaption>Status Failed</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Status Success.svg" alt="Status Success" loading="lazy"><figcaption>Status Success</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Status Warning.svg" alt="Status Warning" loading="lazy"><figcaption>Status Warning</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Step-line.svg" alt="Step-line" loading="lazy"><figcaption>Step-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Step-pending.svg" alt="Step-pending" loading="lazy"><figcaption>Step-pending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Steps.svg" alt="Steps" loading="lazy"><figcaption>Steps</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Stop.svg" alt="Stop" loading="lazy"><figcaption>Stop</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sub - duplicate.svg" alt="Sub - duplicate" loading="lazy"><figcaption>Sub - duplicate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sub - pin.svg" alt="Sub - pin" loading="lazy"><figcaption>Sub - pin</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sublayer.svg" alt="Sublayer" loading="lazy"><figcaption>Sublayer</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Subtable.svg" alt="Subtable" loading="lazy"><figcaption>Subtable</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Success.svg" alt="Success" loading="lazy"><figcaption>Success</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Sync.svg" alt="Sync" loading="lazy"><figcaption>Sync</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/TXT view.svg" alt="TXT view" loading="lazy"><figcaption>TXT view</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Table.svg" alt="Table" loading="lazy"><figcaption>Table</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Teams.svg" alt="Teams" loading="lazy"><figcaption>Teams</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Thinking content.svg" alt="Thinking content" loading="lazy"><figcaption>Thinking content</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Thread-flat.svg" alt="Thread-flat" loading="lazy"><figcaption>Thread-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Thread.svg" alt="Thread" loading="lazy"><figcaption>Thread</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Tiles.svg" alt="Tiles" loading="lazy"><figcaption>Tiles</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Translate.svg" alt="Translate" loading="lazy"><figcaption>Translate</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Travel.svg" alt="Travel" loading="lazy"><figcaption>Travel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Triangle-down.svg" alt="Triangle-down" loading="lazy"><figcaption>Triangle-down</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Triangle-right.svg" alt="Triangle-right" loading="lazy"><figcaption>Triangle-right</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/UpAgent.svg" alt="UpAgent" loading="lazy"><figcaption>UpAgent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/UpChat.svg" alt="UpChat" loading="lazy"><figcaption>UpChat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/UpGPT-color.svg" alt="UpGPT-color" loading="lazy"><figcaption>UpGPT-color</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/UpGPT.svg" alt="UpGPT" loading="lazy"><figcaption>UpGPT</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Update todo list.svg" alt="Update todo list" loading="lazy"><figcaption>Update todo list</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Upload record.svg" alt="Upload record" loading="lazy"><figcaption>Upload record</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Upload.svg" alt="Upload" loading="lazy"><figcaption>Upload</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/User management.svg" alt="User management" loading="lazy"><figcaption>User management</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/User.svg" alt="User" loading="lazy"><figcaption>User</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Video.svg" alt="Video" loading="lazy"><figcaption>Video</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/View PW.svg" alt="View PW" loading="lazy"><figcaption>View PW</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/View details.svg" alt="View details" loading="lazy"><figcaption>View details</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/View schedule.svg" alt="View schedule" loading="lazy"><figcaption>View schedule</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/Warning.svg" alt="Warning" loading="lazy"><figcaption>Warning</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/account.svg" alt="account" loading="lazy"><figcaption>account</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/add cloud file.svg" alt="add cloud file" loading="lazy"><figcaption>add cloud file</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/attach.svg" alt="attach" loading="lazy"><figcaption>attach</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/broom.svg" alt="broom" loading="lazy"><figcaption>broom</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/camera-flat.svg" alt="camera-flat" loading="lazy"><figcaption>camera-flat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/camera.svg" alt="camera" loading="lazy"><figcaption>camera</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/chat.svg" alt="chat" loading="lazy"><figcaption>chat</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/cloud.svg" alt="cloud" loading="lazy"><figcaption>cloud</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/company.svg" alt="company" loading="lazy"><figcaption>company</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/cosmetic.svg" alt="cosmetic" loading="lazy"><figcaption>cosmetic</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/details.svg" alt="details" loading="lazy"><figcaption>details</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/dislike-line.svg" alt="dislike-line" loading="lazy"><figcaption>dislike-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/done-border.svg" alt="done-border" loading="lazy"><figcaption>done-border</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/earth.svg" alt="earth" loading="lazy"><figcaption>earth</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/edit form.svg" alt="edit form" loading="lazy"><figcaption>edit form</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/email reply.svg" alt="email reply" loading="lazy"><figcaption>email reply</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/email.svg" alt="email" loading="lazy"><figcaption>email</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/enlarge.svg" alt="enlarge" loading="lazy"><figcaption>enlarge</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/export excel.svg" alt="export excel" loading="lazy"><figcaption>export excel</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/folder-line.svg" alt="folder-line" loading="lazy"><figcaption>folder-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/folder-yellow.svg" alt="folder-yellow" loading="lazy"><figcaption>folder-yellow</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/generate steps.svg" alt="generate steps" loading="lazy"><figcaption>generate steps</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/group.svg" alt="group" loading="lazy"><figcaption>group</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/history.svg" alt="history" loading="lazy"><figcaption>history</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/image understanding-500.svg" alt="image understanding-500" loading="lazy"><figcaption>image understanding-500</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/image understanding.svg" alt="image understanding" loading="lazy"><figcaption>image understanding</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/image understanding2.svg" alt="image understanding2" loading="lazy"><figcaption>image understanding2</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/image understanding3.svg" alt="image understanding3" loading="lazy"><figcaption>image understanding3</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/intelligent file.svg" alt="intelligent file" loading="lazy"><figcaption>intelligent file</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/keypoint.svg" alt="keypoint" loading="lazy"><figcaption>keypoint</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/knowledge.svg" alt="knowledge" loading="lazy"><figcaption>knowledge</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/lang.svg" alt="lang" loading="lazy"><figcaption>lang</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/left drawer-collapse.svg" alt="left drawer-collapse" loading="lazy"><figcaption>left drawer-collapse</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/left drawer-open.svg" alt="left drawer-open" loading="lazy"><figcaption>left drawer-open</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/license active.svg" alt="license active" loading="lazy"><figcaption>license active</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/license inactive.svg" alt="license inactive" loading="lazy"><figcaption>license inactive</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/like-line.svg" alt="like-line" loading="lazy"><figcaption>like-line</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/mobile.svg" alt="mobile" loading="lazy"><figcaption>mobile</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/new thread.svg" alt="new thread" loading="lazy"><figcaption>new thread</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/no reference.svg" alt="no reference" loading="lazy"><figcaption>no reference</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/open link.svg" alt="open link" loading="lazy"><figcaption>open link</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/password.svg" alt="password" loading="lazy"><figcaption>password</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/pending.svg" alt="pending" loading="lazy"><figcaption>pending</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/private.svg" alt="private" loading="lazy"><figcaption>private</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/progress.svg" alt="progress" loading="lazy"><figcaption>progress</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/python.svg" alt="python" loading="lazy"><figcaption>python</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/question analysis.svg" alt="question analysis" loading="lazy"><figcaption>question analysis</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/question.svg" alt="question" loading="lazy"><figcaption>question</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/read.svg" alt="read" loading="lazy"><figcaption>read</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/record review.svg" alt="record review" loading="lazy"><figcaption>record review</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/rename.svg" alt="rename" loading="lazy"><figcaption>rename</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/rewrite.svg" alt="rewrite" loading="lazy"><figcaption>rewrite</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/right drawer-collapse.svg" alt="right drawer-collapse" loading="lazy"><figcaption>right drawer-collapse</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/right drawer-open.svg" alt="right drawer-open" loading="lazy"><figcaption>right drawer-open</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/save n run.svg" alt="save n run" loading="lazy"><figcaption>save n run</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/security.svg" alt="security" loading="lazy"><figcaption>security</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/share.svg" alt="share" loading="lazy"><figcaption>share</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/skill.svg" alt="skill" loading="lazy"><figcaption>skill</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/step-process.svg" alt="step-process" loading="lazy"><figcaption>step-process</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/storage.svg" alt="storage" loading="lazy"><figcaption>storage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/web.svg" alt="web" loading="lazy"><figcaption>web</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/webpage.svg" alt="webpage" loading="lazy"><figcaption>webpage</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/website.svg" alt="website" loading="lazy"><figcaption>website</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/width.svg" alt="width" loading="lazy"><figcaption>width</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/windows.svg" alt="windows" loading="lazy"><figcaption>windows</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/work agent.svg" alt="work agent" loading="lazy"><figcaption>work agent</figcaption></figure>
+          <figure class="icon-grid__item"><img src="../img/icons/write.svg" alt="write" loading="lazy"><figcaption>write</figcaption></figure>
         </div>
       </section>
 
@@ -4259,7 +4259,7 @@ body {
         <span>AI</span><span class="sep">×</span><span>UI</span><span class="sep">×</span><span>Web</span><span class="sep">×</span><span>Visual</span>
       </div>
     </div>
-    <div><img src="img/rachelLogo.png" alt="" class="footer__logo" /></div>
+    <div><img src="../img/rachelLogo.png" alt="" class="footer__logo" /></div>
     <div class="footer__right">
       For any feedback regarding my website or work, please send it to my email. I will get back to you as soon as possible!<br />
       <a href="mailto:epeilee@gmail.com">epeilee@gmail.com</a>
@@ -4267,7 +4267,7 @@ body {
   </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script src="../js/script.js"></script>
 <script>
   // Theme Switcher
   const themeBtns = document.querySelectorAll('.theme-btn');

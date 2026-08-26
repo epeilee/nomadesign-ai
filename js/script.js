@@ -50,6 +50,12 @@
             navMenu.classList.toggle('is-open');
             navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             document.body.style.overflow = open ? 'hidden' : '';
+            /* .nav__lang becomes a fixed-position child of .nav while the
+               mobile menu is open (pinned to the bottom of the slide-out
+               panel) — if .nav is also mid-transform from the scroll-hide
+               behavior (1b), that transform would carry .nav__lang along
+               with it, so drop it whenever the menu opens. */
+            if (open) nav.classList.remove('is-up');
         });
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMenu);
@@ -78,17 +84,18 @@
     const currentFile = location.pathname.split('/').pop() || 'index.html';
     /* Case-study pages highlight their category tab (keyed by tab href).
        Pages whose filename equals a tab href (portfolio.html, -sonar,
-       -erp, -good, -visual) match automatically and are not listed. */
+       -erp, -cmc, -visual-design) match automatically and are not listed. */
     const tabCategory = {
         'portfolio-vmware.html': 'portfolio-sonar.html',  /* Web UI */
         'portfolio-cmq.html':    'portfolio-sonar.html',  /* Web UI */
         'portfolio-system.html': 'portfolio-sonar.html',  /* Web UI */
         'portfolio-mutok.html':  'portfolio-erp.html',    /* Mobile UI */
         'portfolio-flu.html':    'portfolio-erp.html',    /* Mobile UI */
-        'portfolio-ww.html':     'portfolio-good.html',   /* Web */
-        'portfolio-aft.html':    'portfolio-good.html',   /* Web */
-        'portfolio-taish.html':  'portfolio-good.html',   /* Web */
-        'portfolio-game.html':   'portfolio-good.html'    /* Web */
+        'portfolio-good.html':   'portfolio-cmc.html',    /* Web */
+        'portfolio-ww.html':     'portfolio-cmc.html',    /* Web */
+        'portfolio-aft.html':    'portfolio-cmc.html',    /* Web */
+        'portfolio-taish.html':  'portfolio-cmc.html',    /* Web */
+        'portfolio-game.html':   'portfolio-cmc.html'     /* Web */
     };
     const activeFile = currentFile.startsWith('portfolio-design-system')
         ? 'portfolio.html' /* AI Agent Design System pages → AI Agent tab */
@@ -100,6 +107,22 @@
 
     /* ---------- 4. pf-tabs scroll arrows ---------- */
     const pfTabsInner = document.getElementById('pfTabs');
+
+    /* Center the active tab in the scrollable strip on load, so it's
+       visible even when it sits off-screen (e.g. "Visual" or "Web"
+       scrolled past the right edge on mobile). Uses getBoundingClientRect
+       rather than offsetLeft because .pf-tabs is position:sticky, which
+       makes it (not the #pfTabs scroller) the tab's offsetParent. */
+    if (pfTabsInner) {
+        const activeTab = pfTabsInner.querySelector('.pf-tab.is-active');
+        if (activeTab) {
+            const scrollerRect = pfTabsInner.getBoundingClientRect();
+            const tabRect = activeTab.getBoundingClientRect();
+            const tabOffset = pfTabsInner.scrollLeft + (tabRect.left - scrollerRect.left);
+            const target = tabOffset - (pfTabsInner.clientWidth - activeTab.clientWidth) / 2;
+            pfTabsInner.scrollLeft = Math.max(0, target);
+        }
+    }
     const tabBtnPrev = document.querySelector('.pf-tabs__btn--prev');
     const tabBtnNext = document.querySelector('.pf-tabs__btn--next');
     if (pfTabsInner && tabBtnPrev && tabBtnNext) {
